@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      px-vis-bar-chart Demo</title>
+
+    <link rel="import" href="../px-theme/px-theme-styles.html">
+    <!-- <link rel="import" href="../px-dark-theme/px-dark-theme-styles.html"> -->
+    <custom-style>
+      <style include="px-theme-styles" is="custom-style"></style>
+    </custom-style>
+
+    <link rel="import" href="../promise-polyfill/promise-polyfill-lite.html">
+    <link rel="import" href="px-vis-bar-chart.html" />
+    <link rel="import" href="../iron-ajax/iron-ajax.html" />
+  </head>
+
+  <body>
+    <dom-bind>
+      <template id="demo" is="dom-bind">
+        <h3>Demo</h3>
+        <iron-ajax
+          url="../px-demo-data/demo-data/apm/polar.json"
+          handle-as="json"
+          last-response="{{data}}" auto>
+        </iron-ajax>
+
+        <div id="wrap">
+          <px-vis-bar-chart
+            width="800"
+            height="500"
+            margin='{
+              "left": 50,
+              "top": 10,
+              "bottom": 50,
+              "right": 0
+            }'
+            include-all-series
+            chart-data='[{
+              "x": "A",
+              "y": 0.56
+            },{
+              "x": "B",
+              "y": 0.4
+            },{
+              "x": "C",
+              "y": 0.43
+            },{
+              "x": "D",
+              "y": 0.33
+            },{
+              "x": "E",
+              "y": 0.47
+            },{
+              "x": "F",
+              "y": 0.41
+            }]'>
+          </px-vis-bar-chart>
+        </div>
+      </template>
+    </dom-bind>
+  </body>
+
+  <script type="text/javascript">
+    (function() {
+      'use strict';
+
+      var onload = function() {
+        // For native Imports, manually fire WebComponentsReady so user code
+        // can use the same code path for native and polyfill'd imports.
+        if (!window.HTMLImports) {
+          document.dispatchEvent(
+            new CustomEvent('WebComponentsReady', {bubbles: true})
+          );
+        }
+      };
+
+      var webComponentsSupported = (
+        'registerElement' in document && 'import' in document.createElement('link') && 'content' in document.createElement('template')
+      );
+
+      if (!webComponentsSupported) {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '../webcomponentsjs/webcomponents-lite.js';
+        script.onload = onload;
+        document.head.appendChild(script);
+      } else {
+        onload();
+      }
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+
+    });
+  </script>
+
+</html>

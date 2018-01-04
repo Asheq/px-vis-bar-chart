@@ -1,0 +1,274 @@
+<link rel="import" href="../polymer/polymer.html"/>
+
+<link rel="import" href="../px-vis/px-vis-behavior-common.html" />
+<link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
+<link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
+<link rel="import" href="../px-vis/px-vis-behavior-scale.html" />
+<link rel="import" href="../px-vis/px-vis-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-line-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-axis.html"/>
+<link rel="import" href="../px-vis/px-vis-gridlines.html"/>
+<link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
+<link rel="import" href="../px-vis/px-vis-cursor.html"/>
+<link rel="import" href="../px-vis/px-vis-tooltip.html"/>
+<link rel="import" href="../px-vis/px-vis-register.html"/>
+<link rel="import" href="../px-vis/px-vis-threshold.html"/>
+<link rel="import" href="../px-vis/px-vis-clip-path.html"/>
+<link rel="import" href="../px-vis/px-vis-toolbar.html"/>
+<link rel="import" href="../px-vis/px-vis-annotations.html"/>
+<link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
+
+<link rel="import" href="css/px-vis-bar-chart-styles.html">
+
+<!--
+REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
+
+### Usage
+
+    <px-vis-bar-chart counter-value="1"></px-vis-bar-chart>
+
+@element px-vis-bar-chart
+@blurb REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
+@homepage index.html
+@demo index.html
+-->
+
+<dom-module id="px-vis-bar-chart">
+  <template>
+    <style include="px-vis-bar-chart-styles"></style>
+
+    <div id="wrapper" class$="{{_chartWrapperClass}}" >
+      <!--[chart + navigator] + register-->
+      <div class$="{{_registerWrapperClass}} safari-flex-fix">
+        <px-vis-register
+          id="register"
+          dynamic-menu-config="[[dynamicMenuConfig]]"
+          chart-width="[[width]]"
+          height="[[_verticalRegisterHeight]]"
+          margin="[[margin]]"
+          class$="{{_getHideClass(hideRegister)}}"
+          units="[[units]]"
+          tooltip-data="[[_registerTooltipData]]"
+          chart-data="[[chartData]]"
+          complete-series-config="[[completeSeriesConfig]]"
+          muted-series="{{mutedSeries}}"
+          type="{{_registerType}}"
+          x-axis-type="time"
+          y-axis-type="[[yAxisType]]"
+          inert-register="[[hideRegister]]"
+          current-page="[[_registerCurrentPage]]"
+          total-pages="[[_registerTotalPages]]"
+          display-page-arrows="[[_registerDisplayPageArrows]]">
+        </px-vis-register>
+
+        <!-- chart + navigator -->
+        <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
+          <px-vis-toolbar
+            id="toolbar"
+            current-sub-config='[[toolbarSubConfig]]'
+            action-config='{{actionConfig}}'
+            within-chart
+            chart-margin="[[margin]]"
+            config='{"zoom": true, "pan": true, "tooltip": true}'>
+          </px-vis-toolbar>
+          <px-vis-svg
+            id="svgCanvas"
+            class="flex__item--no-grow"
+            width="[[width]]"
+            height="[[height]]"
+            margin="[[margin]]"
+            svg="{{svg}}"
+            px-svg-elem="{{pxSvgElem}}"
+            svg-lower="{{svgLower}}"
+            px-svg-elem-lower="{{pxSvgElemLower}}">
+              <px-vis-annotations
+                slot="4"
+                svg="[[svg]]"
+                x="[[x]]"
+                y="[[y]]"
+                margin="[[margin]]"
+                domain-changed="[[domainChanged]]"
+                complete-series-config="[[completeSeriesConfig]]"
+                annotation-data="[[annotationData]]"
+                show-strong-icon="[[showStrongIcon]]">
+              </px-vis-annotations>
+          </px-vis-svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- <px-vis-tooltip
+      id="tooltip"
+      hover-target=[[mouseRect]]
+      mouse-position="[[mousePosition]]"
+      width="250"
+      margin="[[margin]]"
+      chart-data="[[chartData]]"
+      tooltip-data="[[tooltipData]]"
+      complete-series-config="[[completeSeriesConfig]]"
+      x-axis-type="time"
+      y-axis-type="linear"
+      tooltip-style="light"
+      muted-series="[[mutedSeries]]"
+      hide="[[!_computedShowTooltip]]"
+      series-keys="[[_seriesKeys]]">
+    </px-vis-tooltip> -->
+
+    <px-vis-clip-path
+      svg="[[layer.1]]"
+      width="[[width]]"
+      height="[[height]]"
+      margin="[[margin]]"
+      clip-path="{{clipPath}}"
+      series-clip-path="{{seriesClipPath}}">
+    </px-vis-clip-path>
+
+    <template is="dom-repeat" items="[[_stackedChartData]]">
+      <px-vis-bar-svg
+        svg="[[layer.1]]"
+        complete-series-config="[[completeSeriesConfig]]"
+        chart-data="[[item]]"
+        series-key="[[item.key]]"
+        x="[[x]]"
+        y="[[y]]"
+        type="column"
+        domain-changed="[[domainChanged]]">
+      </px-vis-bar-svg>
+    </template>
+
+    <!-- <template id="lineTemplate" is="dom-repeat" items="[[_seriesKeys]]">
+      <template is="dom-if" if="[[_chartTypeLine(item,completeSeriesConfig)]]" restamp>
+          <px-vis-line-svg
+            id="lineSVG"
+            svg="[[layer.1]]"
+            series-id="[[item]]"
+            chart-data="[[chartData]]"
+            complete-series-config="[[completeSeriesConfig]]"
+            domain-changed="[[domainChanged]]"
+            x="[[x]]"
+            y="[[_returnYScale(item, completeSeriesConfig, domainChanged)]]"
+            show-gaps="[[showGaps]]"
+            clip-path="[[seriesClipPath]]"
+            muted-series="[[mutedSeries]]"
+            stroke-width="[[_returnStrokeWidth(item, completeSeriesConfig)]]"
+            interpolation-function="[[interpolationFunction]]"
+            serie-to-redraw-on-top="[[serieToRedrawOnTop]]">
+          </px-vis-line-svg>
+      </template>
+    </template> -->
+
+    <px-vis-threshold
+      svg="[[layer.2]]"
+      complete-series-config="[[completeSeriesConfig]]"
+      threshold-data="[[thresholdData]]"
+      threshold-config="[[thresholdConfig]]"
+      width="[[width]]"
+      margin="[[margin]]"
+      y="[[y]]"
+      domain-changed="[[domainChanged]]"
+      clip-path="[[seriesClipPath]]"
+      show-threshold-box="[[showThresholdBox]]"
+      language="[[language]]">
+    </px-vis-threshold>
+
+    <px-vis-axis
+      id="xAxis"
+      svg="[[layer.0]]"
+      domain-changed="[[domainChanged]]"
+      axis="[[x]]"
+      axis-type="[[xAxisType]]"
+      margin="[[margin]]"
+      width="[[width]]"
+      height="[[height]]"
+      orientation="[[xAxisLocation]]"
+      label-position="after"
+      complete-series-config="[[completeSeriesConfig]]"
+      prevent-series-bar>
+    </px-vis-axis>
+    <px-vis-axis
+      id="yAxis"
+      svg="[[layer.0]]"
+      domain-changed="[[domainChanged]]"
+      axis="[[y]]"
+      axis-type="[[yAxisType]]"
+      margin="[[margin]]"
+      width="[[width]]"
+      height="[[height]]"
+      orientation="[[yAxisLocation]]"
+      label-position="after"
+      complete-series-config="[[completeSeriesConfig]]"
+      prevent-series-bar>
+    </px-vis-axis>
+
+    <template is="dom-if" if="[[!hideGridlinesX]]" restamp>
+      <px-vis-gridlines
+        svg="[[svgLower]]"
+        axis="[[x]]"
+        margin="[[margin]]"
+        length="[[height]]"
+        orientation="bottom"
+        domain-changed="[[domainChanged]]">
+      </px-vis-gridlines>
+    </template>
+    <template is="dom-if" if="[[!hideGridlinesY]]" restamp>
+      <px-vis-gridlines
+        svg="[[svgLower]]"
+        axis="[[y]]"
+        margin="[[margin]]"
+        length="[[width]]"
+        orientation="left"
+        domain-changed="[[domainChanged]]">
+      </px-vis-gridlines>
+    </template>
+
+    <px-vis-interaction-space
+      id="interactionSpace"
+      svg="[[layer.3]]"
+      width="[[width]]"
+      height="[[height]]"
+      margin="[[margin]]"
+      x-axis-type="[[xAxisType]]"
+      series-keys="[[_seriesKeys]]"
+      complete-series-config="[[completeSeriesConfig]]"
+      chart-data="[[chartData]]"
+      chart-id="[[chartId]]"
+      x="[[x]]"
+      y="[[y]]"
+      domain-changed="[[domainChanged]]"
+      mouse-rect="{{mouseRect}}"
+      tooltip-data="{{tooltipData}}"
+      crosshair-data="{{crosshairData}}"
+      default-empty-data="[[defaultEmptyData]]"
+      generating-crosshair-data="{{generatingCrosshairData}}"
+      interaction-svg="{{interactionSvg}}"
+      extents-data="{{extentsData}}"
+      action-config="[[actionConfig]]"
+      selection-type="[[selectionType]]"
+      extents-action="{{extentsAction}}"
+      muted-series="[[mutedSeries]]"
+      hard-mute="[[hardMute]]"
+      use-quadtree
+      time-data="[[_getXKey(completeSeriesConfig)]]"
+      prevent-web-worker-synchronization="[[preventWebWorkerSynchronization]]"
+      ww-data-sync-counter="[[wwDataSyncCounter]]">
+    </px-vis-interaction-space>
+
+    <px-vis-cursor
+      id="cursor"
+      svg="[[layer.2]]"
+      width="[[width]]"
+      height="[[height]]"
+      margin="[[margin]]"
+      complete-series-config="[[completeSeriesConfig]]"
+      chart-data="[[chartData]]"
+      tooltip-data="[[_registerTooltipData]]"
+      clip-path="[[seriesClipPath]]"
+      muted-series="[[mutedSeries]]"
+      hard-mute="[[hardMute]]"
+      series-keys="[[_seriesKeys]]">
+    </px-vis-cursor>
+
+  </template>
+</dom-module>
+
+<script src="px-vis-bar-chart.es6.js"></script>
