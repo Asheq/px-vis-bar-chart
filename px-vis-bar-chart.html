@@ -401,10 +401,16 @@ No
     }
 
     _returnStack() {
-      if(this.chartData && this._seriesKeys) {
-        var stack = Px.d3.stack();
+      if(this.chartData && this._seriesKeys && this.completeSeriesConfig) {
+        let stack = Px.d3.stack();
+        const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+        let keys = [];
 
-        stack.keys(this._seriesKeys);
+        this._seriesKeys.forEach((k) => {
+          keys.push(this.completeSeriesConfig[k][axis]);
+        });
+
+        stack.keys(keys);
         return stack(this.chartData);
       }
     }

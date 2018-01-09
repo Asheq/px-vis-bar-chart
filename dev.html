@@ -70,26 +70,31 @@
                 "right": 0
               }'
               chart-type="bar"
-              include-all-series
               chart-data='[{
-                "x": "A",
-                "y": 0.56
+                "a": "A",
+                "c": 0.56
               },{
-                "x": "B",
-                "y": 0.4
+                "a": "B",
+                "c": 0.4
               },{
-                "x": "C",
-                "y": 0.43
+                "a": "C",
+                "c": 0.43
               },{
-                "x": "D",
-                "y": 0.33
+                "a": "D",
+                "c": 0.33
               },{
-                "x": "E",
-                "y": 0.47
+                "a": "E",
+                "c": 0.47
               },{
-                "x": "F",
-                "y": 0.41
-              }]'>
+                "a": "F",
+                "c": 0.41
+              }]'
+              series-config='{
+                "myBars": {
+                  "x":"c",
+                  "y":"a"
+                }
+              }'>
             </px-vis-bar-chart>
           </div>
       </template>
