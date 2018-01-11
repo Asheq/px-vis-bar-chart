@@ -17,6 +17,7 @@
 <link rel="import" href="../px-vis/px-vis-toolbar.html"/>
 <link rel="import" href="../px-vis/px-vis-annotations.html"/>
 <link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html">
 
@@ -55,12 +56,13 @@ No
           complete-series-config="[[completeSeriesConfig]]"
           muted-series="{{mutedSeries}}"
           type="{{_registerType}}"
-          x-axis-type="time"
+          x-axis-type="[[xAxisType]]"
           y-axis-type="[[yAxisType]]"
           inert-register="[[hideRegister]]"
           current-page="[[_registerCurrentPage]]"
           total-pages="[[_registerTotalPages]]"
-          display-page-arrows="[[_registerDisplayPageArrows]]">
+          display-page-arrows="[[_registerDisplayPageArrows]]"
+          reverse-display-order="[[_getRegisterDisplayOrder(yAxisType)]]">
         </px-vis-register>
 
         <!-- chart + navigator -->
@@ -80,9 +82,7 @@ No
             height="[[height]]"
             margin="[[margin]]"
             svg="{{svg}}"
-            px-svg-elem="{{pxSvgElem}}"
-            svg-lower="{{svgLower}}"
-            px-svg-elem-lower="{{pxSvgElemLower}}">
+            px-svg-elem="{{pxSvgElem}}">
               <px-vis-annotations
                 slot="4"
                 svg="[[svg]]"
@@ -99,7 +99,7 @@ No
       </div>
     </div>
 
-    <!-- <px-vis-tooltip
+    <px-vis-tooltip
       id="tooltip"
       hover-target=[[mouseRect]]
       mouse-position="[[mousePosition]]"
@@ -108,16 +108,16 @@ No
       chart-data="[[chartData]]"
       tooltip-data="[[tooltipData]]"
       complete-series-config="[[completeSeriesConfig]]"
-      x-axis-type="time"
-      y-axis-type="linear"
+      x-axis-type="[[xAxisType]]"
+      y-axis-type="[[yAxisType]]"
       tooltip-style="light"
       muted-series="[[mutedSeries]]"
       hide="[[!_computedShowTooltip]]"
       series-keys="[[_seriesKeys]]">
-    </px-vis-tooltip> -->
+    </px-vis-tooltip>
 
     <px-vis-clip-path
-      svg="[[layer.1]]"
+      svg="[[layer.2]]"
       width="[[width]]"
       height="[[height]]"
       margin="[[margin]]"
@@ -125,17 +125,42 @@ No
       series-clip-path="{{seriesClipPath}}">
     </px-vis-clip-path>
 
-    <template is="dom-repeat" items="[[_stackedChartData]]">
-      <px-vis-bar-svg
-        svg="[[layer.1]]"
+    <template is="dom-if" if="[[!grouped]]">
+      <template is="dom-repeat" items="[[_stackedChartData]]">
+        <px-vis-bar-svg
+          id="bars"
+          svg="[[layer.2]]"
+          complete-series-config="[[completeSeriesConfig]]"
+          chart-data="[[item]]"
+          series-key="[[item.key]]"
+          x="[[x]]"
+          y="[[y]]"
+          type="[[chartType]]"
+          domain-changed="[[domainChanged]]"
+          clip-path="[[seriesClipPath]]"
+          highlight-bar="[[_getOrdSet(tooltipData.*)]]">
+        </px-vis-bar-svg>
+      </template>
+    </template>
+
+    <template is="dom-if" if="[[grouped]]">
+      <px-vis-bar-grouped-svg
+        id="bars"
+        svg="[[layer.2]]"
+        height="[[height]]"
+        margin="[[margin]]"
         complete-series-config="[[completeSeriesConfig]]"
-        chart-data="[[item]]"
-        series-key="[[item.key]]"
+        chart-data="[[chartData]]"
         x="[[x]]"
         y="[[y]]"
+        ordinal-key="[[_ordinalKey]]"
+        group-scale="[[_groupScale]]"
+        series-keys="[[_seriesKeys]]"
         type="[[chartType]]"
-        domain-changed="[[domainChanged]]">
-      </px-vis-bar-svg>
+        domain-changed="[[domainChanged]]"
+        clip-path="[[seriesClipPath]]"
+        highlight-bar="[[_getOrdSet(tooltipData.*)]]">
+      </px-vis-bar-grouped-svg>
     </template>
 
     <!-- <template id="lineTemplate" is="dom-repeat" items="[[_seriesKeys]]">
@@ -160,7 +185,7 @@ No
     </template> -->
 
     <px-vis-threshold
-      svg="[[layer.2]]"
+      svg="[[layer.3]]"
       complete-series-config="[[completeSeriesConfig]]"
       threshold-data="[[thresholdData]]"
       threshold-config="[[thresholdConfig]]"
@@ -175,7 +200,7 @@ No
 
     <px-vis-axis
       id="xAxis"
-      svg="[[layer.0]]"
+      svg="[[layer.1]]"
       domain-changed="[[domainChanged]]"
       axis="[[x]]"
       axis-type="[[xAxisType]]"
@@ -189,7 +214,7 @@ No
     </px-vis-axis>
     <px-vis-axis
       id="yAxis"
-      svg="[[layer.0]]"
+      svg="[[layer.1]]"
       domain-changed="[[domainChanged]]"
       axis="[[y]]"
       axis-type="[[yAxisType]]"
@@ -202,9 +227,9 @@ No
       prevent-series-bar>
     </px-vis-axis>
 
-    <template is="dom-if" if="[[!hideGridlinesX]]" restamp>
+    <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'bar')]]" restamp>
       <px-vis-gridlines
-        svg="[[svgLower]]"
+        svg="[[layer.0]]"
         axis="[[x]]"
         margin="[[margin]]"
         length="[[height]]"
@@ -212,9 +237,9 @@ No
         domain-changed="[[domainChanged]]">
       </px-vis-gridlines>
     </template>
-    <template is="dom-if" if="[[!hideGridlinesY]]" restamp>
+    <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'column')]]" restamp>
       <px-vis-gridlines
-        svg="[[svgLower]]"
+        svg="[[layer.0]]"
         axis="[[y]]"
         margin="[[margin]]"
         length="[[width]]"
@@ -225,11 +250,12 @@ No
 
     <px-vis-interaction-space
       id="interactionSpace"
-      svg="[[layer.3]]"
+      svg="[[layer.4]]"
       width="[[width]]"
       height="[[height]]"
       margin="[[margin]]"
       x-axis-type="[[xAxisType]]"
+      y-axis-type="[[yAxisType]]"
       series-keys="[[_seriesKeys]]"
       complete-series-config="[[completeSeriesConfig]]"
       chart-data="[[chartData]]"
@@ -249,15 +275,14 @@ No
       extents-action="{{extentsAction}}"
       muted-series="[[mutedSeries]]"
       hard-mute="[[hardMute]]"
-      use-quadtree
-      time-data="[[_getXKey(completeSeriesConfig)]]"
+      is-bar
       prevent-web-worker-synchronization="[[preventWebWorkerSynchronization]]"
       ww-data-sync-counter="[[wwDataSyncCounter]]">
     </px-vis-interaction-space>
 
     <px-vis-cursor
       id="cursor"
-      svg="[[layer.2]]"
+      svg="[[layer.3]]"
       width="[[width]]"
       height="[[height]]"
       margin="[[margin]]"
@@ -313,15 +338,15 @@ No
     PxVisBehaviorChart.chartToolbarConfig,
     PxVisBehaviorChart.showTooltip,
     // PxVisBehaviorChart.sizeVerticalRegister,
-    // PxVisBehaviorChart.tooltipFollowMouseCalculation,
     PxVisBehaviorChart.thresholdConfig,
     PxVisBehavior.selectionType,
     PxVisBehaviorChart.webWorkerSynchronization,
-    Polymer.AppLocalizeBehavior,
+    // Polymer.AppLocalizeBehavior,
     PxVisBehavior.updateStylesOverride,
     PxVisBehavior.annotationData,
     PxVisBehaviorChart.cursorConfig,
-    PxVisBehaviorChart.registerPagnation
+    PxVisBehaviorChart.registerPagnation,
+    PxVisBehaviorChart.tooltipSizing
   ];
 
   class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
@@ -329,6 +354,11 @@ No
 
     static get properties() {
       return {
+        preventWebWorkerSynchronization: {
+          type: Boolean,
+          value: true,
+          readOnly: true
+        },
         /**
         * Specfies what type of bar chart:
         * - `bar`
@@ -373,6 +403,21 @@ No
         startFromZero: {
           type: Boolean,
           value: true
+        },
+
+        _ordinalKey: {
+          type: String,
+          computed: '_getOrdKey(completeSeriesConfig.*)'
+        },
+
+        _stackedDataExtentsTrigger: {
+          type: Number,
+          value: 0
+        },
+
+        grouped: {
+          type: Boolean,
+          value: false
         }
 
       };
@@ -383,17 +428,19 @@ No
         '_setAxisTypes(chartType)',
         '_setXScale(width, margin, xAxisType)',
         '_setYScale(height, margin, yAxisType)',
-        '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, dataExtents)',
-        '_setDomain(chartExtents, dataExtents)',
+        '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
+        '_setDomain(chartExtents, _stackedDataExtentsTrigger)',
         '_updateDomain(selectedDomain)',
-        '_chartDataChanged(chartData.*)'
+        '_chartDataChanged(chartData.*)',
+        '_calcTooltipPos(tooltipData.*)',
+        '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
+        '_createGroupScale(x,y, completeSeriesConfig, grouped)'
       ];
     }
 
     ready() {
       super.ready();
-      this.preventWebWorkerSynchronization = true;
-      this.set('numberOfLayers', 4);
+      this.set('numberOfLayers', 5);
     }
 
     connectedCallback() {
@@ -401,9 +448,13 @@ No
     }
 
     _returnStack() {
+      if(this.grouped) {
+        return [];
+      }
+
       if(this.chartData && this._seriesKeys && this.completeSeriesConfig) {
-        let stack = Px.d3.stack();
         const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+        let stack = Px.d3.stack();
         let keys = [];
 
         this._seriesKeys.forEach((k) => {
@@ -429,17 +480,103 @@ No
       }
     }
 
-    _getXKey() {
+    _getOrdKey() {
       if(this.hasUndefinedArguments(arguments)) {
         return;
       }
 
       if(this._seriesKeys && this._seriesKeys.length) {
-        return this.completeSeriesConfig[this._seriesKeys[0]]['x'];
+        const k = this.xAxisType === 'scaleBand' ? 'x' : 'y';
+        return this.completeSeriesConfig[this._seriesKeys[0]][k];
       } else {
         return '';
       }
     }
+
+    _getRegisterDisplayOrder(yAxisType) {
+      return yAxisType === 'scaleBand'
+    }
+
+    _showGridlines(hideGridlines, chartType, type) {
+      if(chartType === type && !hideGridlines) {
+        return true;
+      }
+
+      return false;
+    }
+
+    _calcTooltipPos() {
+      if(this.showTooltip && this.tooltipData && this.tooltipData.series && this.tooltipData.series.length && this.tooltipData.series[0].coord) {
+        if(!this._svgClientRect) {
+          this._getImmediateSizing();
+        }
+
+        //calc the screen positions for the tooltip
+        var screenX = this.tooltipData.series[0]['coord'][0] + this._svgClientRect.left + this._winX + 15,
+            screenY = this.tooltipData.series[0]['coord'][1] + this.margin.top + this._svgClientRect.top + this._winY;
+
+        this.set('mousePosition', [screenX, screenY]);
+      }
+    }
+
+    _getOrdSet() {
+      if(this.tooltipData && this.tooltipData.ordinalSet) {
+        return this.tooltipData.ordinalSet;
+      }
+
+      return '';
+    }
+
+    _calcStackedDataExt() {
+      if(this.grouped) {
+        this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
+      }
+
+      if(this.completeSeriesConfig && this._doesObjHaveValues(this._stackedChartData)) {
+        const min = Px.d3.min(this._stackedChartData, (dataset) => {
+          return Px.d3.min(dataset, (d) => { return d[0]; });
+        });
+        const max = Px.d3.max(this._stackedChartData, (dataset) => {
+          return Px.d3.max(dataset, (d) => { return d[1]; });
+        });
+
+        if(this.xAxisType === 'scaleBand') {
+          this.dataExtents = {
+            "x": this.dataExtents.x,
+            "y": [min,max]
+          };
+        } else {
+          this.dataExtents = {
+            "x": [min,max],
+            "y": this.dataExtents.y
+          };
+        }
+
+        this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
+      }
+    }
+
+    _createGroupScale() {
+      if(!this.grouped || !this.x || !this.y || !this.completeSeriesConfig) {
+        return;
+      }
+
+      const ordScale = this.xAxisType === 'scaleBand' ? 'x' : 'y';
+      const valScale = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+      let keys = [];
+
+      this._seriesKeys.forEach((k) => {
+        keys.push(this.completeSeriesConfig[k][valScale]);
+      });
+
+      let scale = Px.d3.scaleBand()
+        .padding(0.05)
+        .rangeRound([0, this[ordScale].bandwidth()])
+        .domain(keys);
+
+      this.set('_groupScale', scale);
+    }
+
   }
 
   window.customElements.define(PxVisBarChart.is, PxVisBarChart);
