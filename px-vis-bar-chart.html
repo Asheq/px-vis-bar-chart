@@ -418,7 +418,9 @@ No
         grouped: {
           type: Boolean,
           value: false
-        }
+        },
+
+        _baseline: Object
 
       };
     }
@@ -434,7 +436,8 @@ No
         '_chartDataChanged(chartData.*)',
         '_calcTooltipPos(tooltipData.*)',
         '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
-        '_createGroupScale(x,y, completeSeriesConfig, grouped)'
+        '_createGroupScale(x,y, completeSeriesConfig, grouped)',
+        '_drawBaseline(domainChanged)'
       ];
     }
 
@@ -461,6 +464,7 @@ No
           keys.push(this.completeSeriesConfig[k][axis]);
         });
 
+        stack.offset(Px.d3.stackOffsetDiverging);
         stack.keys(keys);
         return stack(this.chartData);
       }
@@ -534,7 +538,7 @@ No
 
       if(this.completeSeriesConfig && this._doesObjHaveValues(this._stackedChartData)) {
         const min = Px.d3.min(this._stackedChartData, (dataset) => {
-          return Px.d3.min(dataset, (d) => { return d[0]; });
+          return Px.d3.min(dataset, (d) => { return Math.min(d[0],d[1]); });
         });
         const max = Px.d3.max(this._stackedChartData, (dataset) => {
           return Px.d3.max(dataset, (d) => { return d[1]; });
@@ -575,6 +579,49 @@ No
         .domain(keys);
 
       this.set('_groupScale', scale);
+    }
+
+    _drawBaseline() {
+      const valScale = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+
+      if(this[valScale].domain()[0] < 0) {
+        let x1, x2,
+            y1, y2;
+
+        if(this.xAxisType === 'scaleBand') {
+          x1 = this.x.range()[0];
+          x2 = this.x.range()[1];
+          y1 = this.y(0);
+          y2 = this.y(0);
+
+        } else {
+          x1 = this.x(0);
+          x2 = this.x(0);
+          y1 = this.y.range()[0];
+          y2 = this.y.range()[1];
+
+        }
+
+        if(!this._baseline) {
+          this._baseline = this.layer[3]
+            .append('line')
+        }
+
+        this._baseline
+          .attr('x1', x1)
+          .attr('x2', x2)
+          .attr('y1', y1)
+          .attr('y2', y2)
+          .attr('stroke', this._checkThemeVariable("--px-vis-axis-color", 'black'));
+
+      } else {
+        if(this._baseline) {
+          if(this._baseline.remove) {
+            this._baseline.remove();
+          }
+          this._baseline = null;
+        }
+      }
     }
 
   }
