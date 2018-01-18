@@ -1,11 +1,10 @@
-<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../polymer/polymer-element.html">
 
 <link rel="import" href="../px-vis/px-vis-behavior-common.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-scale.html" />
 <link rel="import" href="../px-vis/px-vis-svg.html"/>
-<link rel="import" href="../px-vis/px-vis-line-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-axis.html"/>
 <link rel="import" href="../px-vis/px-vis-gridlines.html"/>
 <link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
@@ -42,7 +41,7 @@ No
     <style include="px-vis-bar-chart-styles"></style>
 
     <div id="wrapper" class$="{{_chartWrapperClass}}" >
-      <!--[chart + navigator] + register-->
+      <!--chart + register-->
       <div class$="{{_registerWrapperClass}} safari-flex-fix">
         <px-vis-register
           id="register"
@@ -66,7 +65,7 @@ No
           reverse-display-order="[[_getRegisterDisplayOrder(yAxisType)]]">
         </px-vis-register>
 
-        <!-- chart + navigator -->
+        <!-- chart -->
         <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
           <px-vis-toolbar
             id="toolbar"
@@ -263,21 +262,6 @@ No
       ww-data-sync-counter="[[wwDataSyncCounter]]">
     </px-vis-interaction-space>
 
-    <px-vis-cursor
-      id="cursor"
-      svg="[[layer.3]]"
-      width="[[width]]"
-      height="[[height]]"
-      margin="[[margin]]"
-      complete-series-config="[[completeSeriesConfig]]"
-      chart-data="[[chartData]]"
-      tooltip-data="[[_registerTooltipData]]"
-      clip-path="[[seriesClipPath]]"
-      muted-series="[[mutedSeries]]"
-      hard-mute="[[hardMute]]"
-      series-keys="[[_seriesKeys]]">
-    </px-vis-cursor>
-
     <px-vis-reference-curve
       id="referenceCurve"
       svg="[[layer.3]]"
@@ -293,339 +277,334 @@ No
   </template>
   <script>
     const behaviours = [
-    PxVisBehavior.observerCheck,
-    PxVisBehavior.baseSize,
-    PxVisBehavior.margins,
-    PxVisBehavior.dataset,
-    PxVisBehavior.completeSeriesConfig,
-    PxVisBehavior.muteUnmuteSeries,
-    PxVisBehavior.tooltipData,
-    PxVisBehavior.extentsData,
-    PxVisBehavior.commonMethods,
-    PxVisBehavior.zoomSelection,
-    PxVisBehavior.chartExtents,
-    PxVisBehavior.dataExtents,
-    PxVisBehavior.events,
-    PxVisBehaviorD3.svg,
-    PxVisBehaviorD3.svgLower,
-    PxVisBehaviorD3.axes,
-    PxVisBehaviorD3.clipPath,
-    PxVisBehaviorChart.chartCommon,
-    PxVisBehaviorChart.saveImage,
-    PxVisBehaviorD3.domainUpdate,
-    PxVisBehaviorChart.subConfiguration,
-    PxVisBehaviorChart.registerConfigs,
-    PxVisBehaviorChart.axisConfigs,
-    PxVisBehaviorChart.registerPositioning,
-    PxVisBehaviorChart.chartAutoResize,
-    PxVisBehavior.thresholds,
-    PxVisBehaviorChart.layers,
-    PxVisBehaviorChart.navigatorConfig,
-    PxVisBehavior.dynamicMenuConfig,
-    PxColorsBehavior.dataVisColorTheming,
-    PxVisBehavior.axisTypes,
-    PxVisBehaviorScale.scale,
-    PxVisBehavior.actionConfig,
-    PxVisBehaviorChart.zooming,
-    PxVisBehaviorChart.actionRequest,
-    PxVisBehaviorChart.toolbarSubConfig,
-    PxVisBehaviorChart.noDebounceOnPanning,
-    PxVisBehaviorChart.chartToolbarConfig,
-    PxVisBehaviorChart.showTooltip,
-    // PxVisBehaviorChart.sizeVerticalRegister,
-    PxVisBehaviorChart.thresholdConfig,
-    PxVisBehavior.selectionType,
-    PxVisBehaviorChart.webWorkerSynchronization,
-    // Polymer.AppLocalizeBehavior,
-    PxVisBehavior.updateStylesOverride,
-    PxVisBehavior.annotationData,
-    PxVisBehaviorChart.cursorConfig,
-    PxVisBehaviorChart.registerPagnation,
-    PxVisBehaviorChart.tooltipSizing,
-    PxVisBehavior.referenceCurveProps
-  ];
+      PxVisBehavior.observerCheck,
+      PxVisBehavior.baseSize,
+      PxVisBehavior.margins,
+      PxVisBehavior.dataset,
+      PxVisBehavior.completeSeriesConfig,
+      PxVisBehavior.muteUnmuteSeries,
+      PxVisBehavior.tooltipData,
+      PxVisBehavior.extentsData,
+      PxVisBehavior.commonMethods,
+      PxVisBehavior.zoomSelection,
+      PxVisBehavior.chartExtents,
+      PxVisBehavior.dataExtents,
+      PxVisBehaviorD3.svg,
+      PxVisBehaviorD3.axes,
+      PxVisBehaviorD3.clipPath,
+      PxVisBehaviorChart.chartCommon,
+      PxVisBehaviorChart.saveImage,
+      PxVisBehaviorD3.domainUpdate,
+      PxVisBehaviorChart.subConfiguration,
+      PxVisBehaviorChart.registerConfigs,
+      PxVisBehaviorChart.axisConfigs,
+      PxVisBehaviorChart.registerPositioning,
+      PxVisBehaviorChart.chartAutoResize,
+      PxVisBehavior.thresholds,
+      PxVisBehaviorChart.layers,
+      PxVisBehavior.dynamicMenuConfig,
+      PxColorsBehavior.dataVisColorTheming,
+      PxVisBehavior.axisTypes,
+      PxVisBehaviorScale.scale,
+      PxVisBehavior.actionConfig,
+      PxVisBehaviorChart.zooming,
+      PxVisBehaviorChart.actionRequest,
+      PxVisBehaviorChart.toolbarSubConfig,
+      PxVisBehaviorChart.noDebounceOnPanning,
+      PxVisBehaviorChart.chartToolbarConfig,
+      PxVisBehaviorChart.showTooltip,
+      // PxVisBehaviorChart.sizeVerticalRegister,
+      PxVisBehaviorChart.thresholdConfig,
+      PxVisBehavior.selectionType,
+      PxVisBehaviorChart.webWorkerSynchronization,
+      // Polymer.AppLocalizeBehavior,
+      PxVisBehavior.updateStylesOverride,
+      PxVisBehavior.annotationData,
+      PxVisBehaviorChart.tooltipSizing,
+      PxVisBehavior.referenceCurveProps
+    ];
 
-  class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
-    static get is() { return 'px-vis-bar-chart'; }
+    class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
+      static get is() { return 'px-vis-bar-chart'; }
 
-    static get properties() {
-      return {
-        preventWebWorkerSynchronization: {
-          type: Boolean,
-          value: true,
-          readOnly: true
-        },
-        /**
-        * Specfies what type of bar chart:
-        * - `bar`
-        * - `horizontal`
-        */
-        chartType: {
-          type: String,
-          value: 'column'
-        },
+      static get properties() {
+        return {
+          preventWebWorkerSynchronization: {
+            type: Boolean,
+            value: true,
+            readOnly: true
+          },
+          /**
+          * Specfies what type of bar chart:
+          * - `bar`
+          * - `horizontal`
+          */
+          chartType: {
+            type: String,
+            value: 'column'
+          },
 
-        _stackedChartData: {
-          type: Array,
-          computed: '_returnStack(chartData.*, _seriesKeys.*)'
-        },
+          _stackedChartData: {
+            type: Array,
+            computed: '_returnStack(chartData.*, _seriesKeys.*)'
+          },
 
-        /**
-         * Defines where to locate the X-axis.
-         * - `bottom`
-         * - `top`
-         *
-         */
-        xAxisLocation: {
-          type:String,
-          value:'bottom'
-        },
-        /**
-         * Defines where to locate the Y-axis.
-         * - `left`
-         * - `right`
-         *
-         */
-        yAxisLocation: {
-          type: String,
-          value:'left'
-        },
+          /**
+          * Defines where to locate the X-axis.
+          * - `bottom`
+          * - `top`
+          *
+          */
+          xAxisLocation: {
+            type:String,
+            value:'bottom'
+          },
+          /**
+          * Defines where to locate the Y-axis.
+          * - `left`
+          * - `right`
+          *
+          */
+          yAxisLocation: {
+            type: String,
+            value:'left'
+          },
 
-        /**
-         * DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-         *
-         * Bar charts in nearly all cases should start from 0. If you have a special case and understand the ramifications, change this to false to allow it to use the `min` value from your data
-         */
-        startFromZero: {
-          type: Boolean,
-          value: true
-        },
+          /**
+          * DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
+          *
+          * Bar charts in nearly all cases should start from 0. If you have a special case and understand the ramifications, change this to false to allow it to use the `min` value from your data
+          */
+          startFromZero: {
+            type: Boolean,
+            value: true
+          },
 
-        _ordinalKey: {
-          type: String,
-          computed: '_getOrdKey(completeSeriesConfig.*)'
-        },
+          _ordinalKey: {
+            type: String,
+            computed: '_getOrdKey(completeSeriesConfig.*)'
+          },
 
-        _stackedDataExtentsTrigger: {
-          type: Number,
-          value: 0
-        },
+          _stackedDataExtentsTrigger: {
+            type: Number,
+            value: 0
+          },
 
-        grouped: {
-          type: Boolean,
-          value: false
-        },
+          grouped: {
+            type: Boolean,
+            value: false
+          },
 
-        _baseline: Object
+          _baseline: Object
 
-      };
-    }
-
-    static get observers() {
-      return [
-        '_setAxisTypes(chartType)',
-        '_setXScale(width, margin, xAxisType)',
-        '_setYScale(height, margin, yAxisType)',
-        '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
-        '_setDomain(chartExtents, _stackedDataExtentsTrigger)',
-        '_updateDomain(selectedDomain)',
-        '_chartDataChanged(chartData.*)',
-        '_calcTooltipPos(tooltipData.*)',
-        '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
-        '_createGroupScale(x,y, completeSeriesConfig, grouped)',
-        '_drawBaseline(domainChanged)'
-      ];
-    }
-
-    ready() {
-      super.ready();
-      this.set('numberOfLayers', 5);
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-    }
-
-    _returnStack() {
-      if(this.grouped) {
-        return [];
+        };
       }
 
-      if(this.chartData && this._seriesKeys && this.completeSeriesConfig) {
-        const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
-        let stack = Px.d3.stack();
+      static get observers() {
+        return [
+          '_setAxisTypes(chartType)',
+          '_setXScale(width, margin, xAxisType)',
+          '_setYScale(height, margin, yAxisType)',
+          '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
+          '_setDomain(chartExtents, _stackedDataExtentsTrigger)',
+          '_updateDomain(selectedDomain)',
+          '_chartDataChanged(chartData.*)',
+          '_calcTooltipPos(tooltipData.*)',
+          '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
+          '_createGroupScale(x,y, completeSeriesConfig, grouped)',
+          '_drawBaseline(domainChanged)'
+        ];
+      }
+
+      ready() {
+        super.ready();
+        this.set('numberOfLayers', 5);
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      _returnStack() {
+        if(this.grouped) {
+          return [];
+        }
+
+        if(this.chartData && this._seriesKeys && this.completeSeriesConfig) {
+          const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+          let stack = Px.d3.stack();
+          let keys = [];
+
+          this._seriesKeys.forEach((k) => {
+            keys.push(this.completeSeriesConfig[k][axis]);
+          });
+
+          stack.offset(Px.d3.stackOffsetDiverging);
+          stack.keys(keys);
+          return stack(this.chartData);
+        }
+      }
+
+      _setAxisTypes(chartType) {
+        switch(chartType) {
+          case 'bar':
+            this.set('xAxisType', "linear");
+            this.set('yAxisType', "scaleBand");
+            break;
+
+          default:  //column
+            this.set('xAxisType', "scaleBand");
+            this.set('yAxisType', "linear");
+            break;
+        }
+      }
+
+      _getOrdKey() {
+        if(this.hasUndefinedArguments(arguments)) {
+          return;
+        }
+
+        if(this._seriesKeys && this._seriesKeys.length) {
+          const k = this.xAxisType === 'scaleBand' ? 'x' : 'y';
+          return this.completeSeriesConfig[this._seriesKeys[0]][k];
+        } else {
+          return '';
+        }
+      }
+
+      _getRegisterDisplayOrder(yAxisType) {
+        return yAxisType === 'scaleBand'
+      }
+
+      _showGridlines(hideGridlines, chartType, type) {
+        if(chartType === type && !hideGridlines) {
+          return true;
+        }
+
+        return false;
+      }
+
+      _calcTooltipPos() {
+        if(this.showTooltip && this.tooltipData && this.tooltipData.series && this.tooltipData.series.length && this.tooltipData.series[0].coord) {
+          if(!this._svgClientRect) {
+            this._getImmediateSizing();
+          }
+
+          //calc the screen positions for the tooltip
+          var screenX = this.tooltipData.series[0]['coord'][0] + this._svgClientRect.left + this._winX + 15,
+              screenY = this.tooltipData.series[0]['coord'][1] + this.margin.top + this._svgClientRect.top + this._winY;
+
+          this.set('mousePosition', [screenX, screenY]);
+        }
+      }
+
+      _getOrdSet() {
+        if(this.tooltipData && this.tooltipData.ordinalSet) {
+          return this.tooltipData.ordinalSet;
+        }
+
+        return '';
+      }
+
+      _calcStackedDataExt() {
+        if(this.grouped) {
+          this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
+        }
+
+        if(this.completeSeriesConfig && this._doesObjHaveValues(this._stackedChartData)) {
+          const min = Px.d3.min(this._stackedChartData, (dataset) => {
+            return Px.d3.min(dataset, (d) => { return Math.min(d[0],d[1]); });
+          });
+          const max = Px.d3.max(this._stackedChartData, (dataset) => {
+            return Px.d3.max(dataset, (d) => { return d[1]; });
+          });
+
+          if(this.xAxisType === 'scaleBand') {
+            this.dataExtents = {
+              "x": this.dataExtents.x,
+              "y": [min,max]
+            };
+          } else {
+            this.dataExtents = {
+              "x": [min,max],
+              "y": this.dataExtents.y
+            };
+          }
+
+          this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
+        }
+      }
+
+      _createGroupScale() {
+        if(!this.grouped || !this.x || !this.y || !this.completeSeriesConfig) {
+          return;
+        }
+
+        const ordScale = this.xAxisType === 'scaleBand' ? 'x' : 'y';
+        const valScale = this._getValueKey();
         let keys = [];
 
         this._seriesKeys.forEach((k) => {
-          keys.push(this.completeSeriesConfig[k][axis]);
+          keys.push(this.completeSeriesConfig[k][valScale]);
         });
 
-        stack.offset(Px.d3.stackOffsetDiverging);
-        stack.keys(keys);
-        return stack(this.chartData);
-      }
-    }
+        let scale = Px.d3.scaleBand()
+          .padding(0.05)
+          .rangeRound([0, this[ordScale].bandwidth()])
+          .domain(keys);
 
-    _setAxisTypes(chartType) {
-      switch(chartType) {
-        case 'bar':
-          this.set('xAxisType', "linear");
-          this.set('yAxisType', "scaleBand");
-          break;
-
-        default:  //column
-          this.set('xAxisType', "scaleBand");
-          this.set('yAxisType', "linear");
-          break;
-      }
-    }
-
-    _getOrdKey() {
-      if(this.hasUndefinedArguments(arguments)) {
-        return;
+        this.set('_groupScale', scale);
       }
 
-      if(this._seriesKeys && this._seriesKeys.length) {
-        const k = this.xAxisType === 'scaleBand' ? 'x' : 'y';
-        return this.completeSeriesConfig[this._seriesKeys[0]][k];
-      } else {
-        return '';
-      }
-    }
+      _drawBaseline() {
+        const valScale = this._getValueKey();
 
-    _getRegisterDisplayOrder(yAxisType) {
-      return yAxisType === 'scaleBand'
-    }
+        if(this[valScale].domain()[0] < 0) {
+          let x1, x2,
+              y1, y2;
 
-    _showGridlines(hideGridlines, chartType, type) {
-      if(chartType === type && !hideGridlines) {
-        return true;
-      }
+          if(this.xAxisType === 'scaleBand') {
+            x1 = this.x.range()[0];
+            x2 = this.x.range()[1];
+            y1 = this.y(0);
+            y2 = this.y(0);
 
-      return false;
-    }
+          } else {
+            x1 = this.x(0);
+            x2 = this.x(0);
+            y1 = this.y.range()[0];
+            y2 = this.y.range()[1];
 
-    _calcTooltipPos() {
-      if(this.showTooltip && this.tooltipData && this.tooltipData.series && this.tooltipData.series.length && this.tooltipData.series[0].coord) {
-        if(!this._svgClientRect) {
-          this._getImmediateSizing();
-        }
-
-        //calc the screen positions for the tooltip
-        var screenX = this.tooltipData.series[0]['coord'][0] + this._svgClientRect.left + this._winX + 15,
-            screenY = this.tooltipData.series[0]['coord'][1] + this.margin.top + this._svgClientRect.top + this._winY;
-
-        this.set('mousePosition', [screenX, screenY]);
-      }
-    }
-
-    _getOrdSet() {
-      if(this.tooltipData && this.tooltipData.ordinalSet) {
-        return this.tooltipData.ordinalSet;
-      }
-
-      return '';
-    }
-
-    _calcStackedDataExt() {
-      if(this.grouped) {
-        this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
-      }
-
-      if(this.completeSeriesConfig && this._doesObjHaveValues(this._stackedChartData)) {
-        const min = Px.d3.min(this._stackedChartData, (dataset) => {
-          return Px.d3.min(dataset, (d) => { return Math.min(d[0],d[1]); });
-        });
-        const max = Px.d3.max(this._stackedChartData, (dataset) => {
-          return Px.d3.max(dataset, (d) => { return d[1]; });
-        });
-
-        if(this.xAxisType === 'scaleBand') {
-          this.dataExtents = {
-            "x": this.dataExtents.x,
-            "y": [min,max]
-          };
-        } else {
-          this.dataExtents = {
-            "x": [min,max],
-            "y": this.dataExtents.y
-          };
-        }
-
-        this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
-      }
-    }
-
-    _createGroupScale() {
-      if(!this.grouped || !this.x || !this.y || !this.completeSeriesConfig) {
-        return;
-      }
-
-      const ordScale = this.xAxisType === 'scaleBand' ? 'x' : 'y';
-      const valScale = this._getValueKey();
-      let keys = [];
-
-      this._seriesKeys.forEach((k) => {
-        keys.push(this.completeSeriesConfig[k][valScale]);
-      });
-
-      let scale = Px.d3.scaleBand()
-        .padding(0.05)
-        .rangeRound([0, this[ordScale].bandwidth()])
-        .domain(keys);
-
-      this.set('_groupScale', scale);
-    }
-
-    _drawBaseline() {
-      const valScale = this._getValueKey();
-
-      if(this[valScale].domain()[0] < 0) {
-        let x1, x2,
-            y1, y2;
-
-        if(this.xAxisType === 'scaleBand') {
-          x1 = this.x.range()[0];
-          x2 = this.x.range()[1];
-          y1 = this.y(0);
-          y2 = this.y(0);
-
-        } else {
-          x1 = this.x(0);
-          x2 = this.x(0);
-          y1 = this.y.range()[0];
-          y2 = this.y.range()[1];
-
-        }
-
-        if(!this._baseline) {
-          this._baseline = this.layer[3]
-            .append('line')
-        }
-
-        this._baseline
-          .attr('x1', x1)
-          .attr('x2', x2)
-          .attr('y1', y1)
-          .attr('y2', y2)
-          .attr('stroke', this._checkThemeVariable("--px-vis-axis-color", 'black'));
-
-      } else {
-        if(this._baseline) {
-          if(this._baseline.remove) {
-            this._baseline.remove();
           }
-          this._baseline = null;
+
+          if(!this._baseline) {
+            this._baseline = this.layer[3]
+              .append('line')
+          }
+
+          this._baseline
+            .attr('x1', x1)
+            .attr('x2', x2)
+            .attr('y1', y1)
+            .attr('y2', y2)
+            .attr('stroke', this._checkThemeVariable("--px-vis-axis-color", 'black'));
+
+        } else {
+          if(this._baseline) {
+            if(this._baseline.remove) {
+              this._baseline.remove();
+            }
+            this._baseline = null;
+          }
         }
       }
+
+      _getValueKey() {
+        return this.xAxisType === 'scaleBand' ? 'y' : 'x'
+      }
+
     }
 
-    _getValueKey() {
-      return this.xAxisType === 'scaleBand' ? 'y' : 'x'
-    }
-
-  }
-
-  window.customElements.define(PxVisBarChart.is, PxVisBarChart);
+    window.customElements.define(PxVisBarChart.is, PxVisBarChart);
   </script>
 </dom-module>
