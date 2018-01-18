@@ -18,6 +18,7 @@
 <link rel="import" href="../px-vis/px-vis-annotations.html"/>
 <link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html">
 
@@ -163,38 +164,20 @@ No
       </px-vis-bar-grouped-svg>
     </template>
 
-    <!-- <template id="lineTemplate" is="dom-repeat" items="[[_seriesKeys]]">
-      <template is="dom-if" if="[[_chartTypeLine(item,completeSeriesConfig)]]" restamp>
-          <px-vis-line-svg
-            id="lineSVG"
-            svg="[[layer.1]]"
-            series-id="[[item]]"
-            chart-data="[[chartData]]"
-            complete-series-config="[[completeSeriesConfig]]"
-            domain-changed="[[domainChanged]]"
-            x="[[x]]"
-            y="[[_returnYScale(item, completeSeriesConfig, domainChanged)]]"
-            show-gaps="[[showGaps]]"
-            clip-path="[[seriesClipPath]]"
-            muted-series="[[mutedSeries]]"
-            stroke-width="[[_returnStrokeWidth(item, completeSeriesConfig)]]"
-            interpolation-function="[[interpolationFunction]]"
-            serie-to-redraw-on-top="[[serieToRedrawOnTop]]">
-          </px-vis-line-svg>
-      </template>
-    </template> -->
-
     <px-vis-threshold
       svg="[[layer.3]]"
       complete-series-config="[[completeSeriesConfig]]"
       threshold-data="[[thresholdData]]"
       threshold-config="[[thresholdConfig]]"
       width="[[width]]"
+      height="[[height]]"
       margin="[[margin]]"
+      x="[[x]]"
       y="[[y]]"
       domain-changed="[[domainChanged]]"
       clip-path="[[seriesClipPath]]"
       show-threshold-box="[[showThresholdBox]]"
+      type="[[_getValueKey(xAxisType)]]"
       language="[[language]]">
     </px-vis-threshold>
 
@@ -295,6 +278,18 @@ No
       series-keys="[[_seriesKeys]]">
     </px-vis-cursor>
 
+    <px-vis-reference-curve
+      id="referenceCurve"
+      svg="[[layer.3]]"
+      x="[[x]]"
+      y="[[y]]"
+      reverse-data="[[_isOrdinalType(yAxisType)]]"
+      domain-changed="[[domainChanged]]"
+      reference-config="[[referenceConfig]]"
+      reference-data="[[referenceData]]"
+      clip-path="[[seriesClipPath]]">
+    </px-vis-reference-curve>
+
   </template>
   <script>
     const behaviours = [
@@ -346,7 +341,8 @@ No
     PxVisBehavior.annotationData,
     PxVisBehaviorChart.cursorConfig,
     PxVisBehaviorChart.registerPagnation,
-    PxVisBehaviorChart.tooltipSizing
+    PxVisBehaviorChart.tooltipSizing,
+    PxVisBehavior.referenceCurveProps
   ];
 
   class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
@@ -566,7 +562,7 @@ No
       }
 
       const ordScale = this.xAxisType === 'scaleBand' ? 'x' : 'y';
-      const valScale = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+      const valScale = this._getValueKey();
       let keys = [];
 
       this._seriesKeys.forEach((k) => {
@@ -582,7 +578,7 @@ No
     }
 
     _drawBaseline() {
-      const valScale = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+      const valScale = this._getValueKey();
 
       if(this[valScale].domain()[0] < 0) {
         let x1, x2,
@@ -622,6 +618,10 @@ No
           this._baseline = null;
         }
       }
+    }
+
+    _getValueKey() {
+      return this.xAxisType === 'scaleBand' ? 'y' : 'x'
     }
 
   }
