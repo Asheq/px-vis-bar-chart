@@ -1,25 +1,25 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer-element.html" />
 
 <link rel="import" href="../px-vis/px-vis-behavior-common.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-scale.html" />
-<link rel="import" href="../px-vis/px-vis-svg.html"/>
-<link rel="import" href="../px-vis/px-vis-axis.html"/>
-<link rel="import" href="../px-vis/px-vis-gridlines.html"/>
-<link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
-<link rel="import" href="../px-vis/px-vis-cursor.html"/>
-<link rel="import" href="../px-vis/px-vis-tooltip.html"/>
-<link rel="import" href="../px-vis/px-vis-register.html"/>
-<link rel="import" href="../px-vis/px-vis-threshold.html"/>
-<link rel="import" href="../px-vis/px-vis-clip-path.html"/>
-<link rel="import" href="../px-vis/px-vis-toolbar.html"/>
-<link rel="import" href="../px-vis/px-vis-annotations.html"/>
-<link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
-<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
-<link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
+<link rel="import" href="../px-vis/px-vis-svg.html" />
+<link rel="import" href="../px-vis/px-vis-axis.html" />
+<link rel="import" href="../px-vis/px-vis-gridlines.html" />
+<link rel="import" href="../px-vis/px-vis-interaction-space.html" />
+<link rel="import" href="../px-vis/px-vis-cursor.html" />
+<link rel="import" href="../px-vis/px-vis-tooltip.html" />
+<link rel="import" href="../px-vis/px-vis-register.html" />
+<link rel="import" href="../px-vis/px-vis-threshold.html" />
+<link rel="import" href="../px-vis/px-vis-clip-path.html" />
+<link rel="import" href="../px-vis/px-vis-toolbar.html" />
+<link rel="import" href="../px-vis/px-vis-annotations.html" />
+<link rel="import" href="../px-vis/px-vis-bar-svg.html" />
+<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html" />
+<link rel="import" href="../px-vis/px-vis-reference-curve.html" />
 
-<link rel="import" href="css/px-vis-bar-chart-styles.html">
+<link rel="import" href="css/px-vis-bar-chart-styles.html" />
 
 <!--
 REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
@@ -101,6 +101,7 @@ No
 
     <px-vis-tooltip
       id="tooltip"
+      orientation="[[_getTooltipOrientation(xAxisType)]]"
       hover-target=[[mouseRect]]
       mouse-position="[[mousePosition]]"
       width="250"
@@ -407,12 +408,15 @@ No
           '_setYScale(height, margin, yAxisType)',
           '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
           '_setDomain(chartExtents, _stackedDataExtentsTrigger)',
-          '_updateDomain(selectedDomain)',
           '_chartDataChanged(chartData.*)',
           '_calcTooltipPos(tooltipData.*)',
           '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
           '_createGroupScale(x,y, completeSeriesConfig, grouped)',
-          '_drawBaseline(domainChanged)'
+          '_drawBaseline(domainChanged)',
+
+          '_xAxisConfigChanged(xAxisConfig.*)',
+          '_yAxisConfigChanged(yAxisConfig.*)'
+
         ];
       }
 
@@ -432,8 +436,8 @@ No
 
         if(this.chartData && this._seriesKeys && this.completeSeriesConfig) {
           const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
-          let stack = Px.d3.stack();
-          let keys = [];
+          const stack = Px.d3.stack();
+          const keys = [];
 
           this._seriesKeys.forEach((k) => {
             keys.push(this.completeSeriesConfig[k][axis]);
@@ -491,11 +495,35 @@ No
           }
 
           //calc the screen positions for the tooltip
-          var screenX = this.tooltipData.series[0]['coord'][0] + this._svgClientRect.left + this._winX + 15,
-              screenY = this.tooltipData.series[0]['coord'][1] + this.margin.top + this._svgClientRect.top + this._winY;
+          let screenX = this._svgClientRect.left + this._winX + this.margin.left;
+          let screenY = this.margin.top + this._svgClientRect.top + this._winY;
+
+          if(this.xAxisType === 'scaleBand') {
+            screenX += this.x.bandwidth()/2 + this.tooltipData.series[0]['coord'][0];
+            screenY += this.grouped ?
+                        this._getLargestCoord(1, 'min') :
+                        this.y(this._getSummedVal('x'));
+
+          } else {
+            screenY += this.y.bandwidth()/2 + this.tooltipData.series[0]['coord'][1];
+            screenX += this.grouped ?
+                        this._getLargestCoord(0, 'max') :
+                        this.x(this._getSummedVal('y'));
+
+          }
 
           this.set('mousePosition', [screenX, screenY]);
         }
+      }
+
+      _getLargestCoord(index, type) {
+        return Px.d3[type](this.tooltipData.series, (d) => { return d.coord[index]; });
+      }
+
+      _getSummedVal(axis) {
+        const index = Px.d3.bisectLeft(this[axis].domain(), this.tooltipData.ordinalSet);
+
+        return Px.d3.max(this._stackedChartData, (d) => { return d[index][1] });
       }
 
       _getOrdSet() {
@@ -542,13 +570,13 @@ No
 
         const ordScale = this.xAxisType === 'scaleBand' ? 'x' : 'y';
         const valScale = this._getValueKey();
-        let keys = [];
+        const keys = [];
 
         this._seriesKeys.forEach((k) => {
           keys.push(this.completeSeriesConfig[k][valScale]);
         });
 
-        let scale = Px.d3.scaleBand()
+        const scale = Px.d3.scaleBand()
           .padding(0.05)
           .rangeRound([0, this[ordScale].bandwidth()])
           .domain(keys);
@@ -601,6 +629,26 @@ No
 
       _getValueKey() {
         return this.xAxisType === 'scaleBand' ? 'y' : 'x'
+      }
+
+      _xAxisConfigChanged(conf) {
+        if(this.hasUndefinedArguments(arguments)) {
+          return;
+        }
+
+        this._applyConfigToElement(this.xAxisConfig, this.$.xAxis);
+      }
+
+      _yAxisConfigChanged(conf) {
+        if(this.hasUndefinedArguments(arguments)) {
+          return;
+        }
+
+        this._applyConfigToElement(this.yAxisConfig, this.$.yAxis);
+      }
+
+      _getTooltipOrientation(xAxisType) {
+        return xAxisType === 'scaleBand' ? 'top' : 'right';
       }
 
     }
