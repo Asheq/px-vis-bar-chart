@@ -446,7 +446,7 @@ No
           return;
         }
 
-        this._debounce('iron-resize', this._onIronResizeDebounced, this.debounceResizeTiming);
+        this._debounce('ironresize', this._onIronResizeDebounced, this.debounceResizeTiming);
       }
 
       _onIronResizeDebounced() {
@@ -612,7 +612,7 @@ No
       }
 
       _createGroupScale() {
-        if(!this.grouped || !this.x || !this.y || !this.completeSeriesConfig) {
+        if(!this.grouped || !this.x || !this.y || !this.completeSeriesConfig || this.domainChanged === null) {
           return;
         }
 
