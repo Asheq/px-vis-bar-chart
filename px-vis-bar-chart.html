@@ -18,6 +18,9 @@
 <link rel="import" href="../px-vis/px-vis-bar-svg.html" />
 <link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html" />
 <link rel="import" href="../px-vis/px-vis-reference-curve.html" />
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
+<link rel="import" href="../polymer/lib/utils/debounce.html">
+
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html" />
 
@@ -76,7 +79,7 @@ No
             config='{"zoom": true, "pan": true, "tooltip": true}'>
           </px-vis-toolbar>
           <px-vis-svg
-            id="svgCanvas"
+            id="svg"
             class="flex__item--no-grow"
             width="[[width]]"
             height="[[height]]"
@@ -314,7 +317,7 @@ No
       PxVisBehaviorChart.noDebounceOnPanning,
       PxVisBehaviorChart.chartToolbarConfig,
       PxVisBehaviorChart.showTooltip,
-      // PxVisBehaviorChart.sizeVerticalRegister,
+      PxVisBehaviorChart.sizeVerticalRegister,
       PxVisBehaviorChart.thresholdConfig,
       PxVisBehavior.selectionType,
       PxVisBehaviorChart.webWorkerSynchronization,
@@ -411,7 +414,7 @@ No
           '_chartDataChanged(chartData.*)',
           '_calcTooltipPos(tooltipData.*)',
           '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
-          '_createGroupScale(x,y, completeSeriesConfig, grouped)',
+          '_createGroupScale(x,y, domainChanged, completeSeriesConfig, grouped)',
           '_drawBaseline(domainChanged)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
@@ -423,10 +426,55 @@ No
       ready() {
         super.ready();
         this.set('numberOfLayers', 5);
+        this.set('_verticalRegisterDrawingCanvasId', 'svg');
+        this.addEventListener('iron-resize', this._onIronResize.bind(this));
       }
 
       connectedCallback() {
         super.connectedCallback();
+      }
+
+      _debounce(name, cb, time) {
+        this[name] = Polymer.Debouncer.debounce(
+          this[name],
+          Polymer.Async.timeOut.after(time),
+          cb.bind(this));
+      }
+
+      _onIronResize() {
+        if(this.preventResize) {
+          return;
+        }
+
+        this._debounce('iron-resize', this._onIronResizeDebounced, this.debounceResizeTiming);
+      }
+
+      _onIronResizeDebounced() {
+        //make sure we are not preventing resize in case it changed while debouncing
+        if(this.preventResize) {
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          var wrapperRect = this.$.wrapper.getBoundingClientRect(),
+              registerRect = this.$.register.getBoundingClientRect(),
+              toolbarRect = this.$.toolbar.getBoundingClientRect(),
+              heightDeduct = 0,
+              widthDeduct = 0;
+
+
+          if(this.$.register.type === 'horizontal') {
+            heightDeduct += registerRect.height;
+          } else {
+            widthDeduct += registerRect.width;
+          }
+
+          heightDeduct += toolbarRect.height;
+
+          this.set('width', Math.max(wrapperRect.width - widthDeduct, 0));
+          this.set('height', Math.max(wrapperRect.height - heightDeduct, 0));
+          this._computeVerticalRegisterHeight([toolbarRect.height]);
+        });
       }
 
       _returnStack() {
