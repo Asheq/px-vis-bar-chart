@@ -571,7 +571,7 @@ No
       _getSummedVal(axis) {
         const index = Px.d3.bisectLeft(this[axis].domain(), this.tooltipData.ordinalSet);
 
-        return Px.d3.max(this._stackedChartData, (d) => { return d[index][1] });
+        return Px.d3.max(this._stackedChartData, (d) => { return Math.max(d[index][0],d[index][1]); });
       }
 
       _getOrdSet() {
