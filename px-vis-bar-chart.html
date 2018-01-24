@@ -65,7 +65,10 @@ No
           current-page="[[_registerCurrentPage]]"
           total-pages="[[_registerTotalPages]]"
           display-page-arrows="[[_registerDisplayPageArrows]]"
-          reverse-display-order="[[_getRegisterDisplayOrder(yAxisType)]]">
+          display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
+          display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
+          display-ordinal-value
+          disable-click>
         </px-vis-register>
 
         <!-- chart -->
@@ -117,7 +120,10 @@ No
       tooltip-style="light"
       muted-series="[[mutedSeries]]"
       hide="[[!_computedShowTooltip]]"
-      series-keys="[[_seriesKeys]]">
+      series-keys="[[_seriesKeys]]"
+      display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
+      display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
+      display-ordinal-value>
     </px-vis-tooltip>
 
     <px-vis-clip-path
@@ -524,8 +530,8 @@ No
         }
       }
 
-      _getRegisterDisplayOrder(yAxisType) {
-        return yAxisType === 'scaleBand'
+      _getRegisterDisplay(axisType) {
+        return axisType === 'scaleBand'
       }
 
       _showGridlines(hideGridlines, chartType, type) {
