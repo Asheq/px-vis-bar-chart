@@ -28,27 +28,56 @@
     <!-- Interactive -->
     <px-demo-interactive>
       <!-- Configs -->
-      <px-demo-configs configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
+      <px-demo-configs slot="px-demo-configs" configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
 
       <!-- Props -->
-      <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
+      <px-demo-props slot="px-demo-props" props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
 
       <!-- Component ---------------------------------------------------------->
-      <px-demo-component>
+      <px-demo-component slot="px-demo-component">
         <px-vis-bar-chart
-          counter-value="{{props.counterValue.value}}">
+          prevent-resize="{{props.preventResize.value}}"
+          width="{{props.width.value}}"
+          height="{{props.height.value}}"
+          debounce-resize-timing="{{props.debounceResizeTiming.value}}"
+          margin="{{props.margin.value}}"
+          chart-type="{{props.chartType.value}}"
+          grouped="{{props.grouped.value}}"
+          show-tooltip="{{props.showTooltip.value}}"
+          tooltip-config="{{props.tooltipConfig.value}}"
+          hide-register="{{props.hideRegister.value}}"
+          register-config="{{props.registerConfig.value}}"
+          chart-data="{{props.chartData.value}}"
+          series-config="{{props.seriesConfig.value}}"
+          scale-padding="{{props.scalePadding.value}}"
+          threshold-data="{{props.thresholdData.value}}"
+          display-threshold-title="{{props.displayThresholdTitle.value}}"
+          threshold-config="{{props.thresholdConfig.value}}"
+          reference-data="{{props.referenceData.value}}"
+          right-reference-config="{{props.rightReferenceConfig.value}}"
+          left-reference-config="{{props.leftReferenceConfig.value}}"
+          x-axis-config="{{props.xAxisConfig.value}}"
+          y-axis-config="{{props.yAxisConfig.value}}">
         </px-vis-bar-chart>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
 
       <px-demo-component-snippet
-          element-properties="{{props}}"
-          element-name="px-vis-bar-chart">
+        slot="px-demo-component-snippet"
+        element-properties="{{props}}"
+        element-name="px-vis-bar-chart">
       </px-demo-component-snippet>
     </px-demo-interactive>
 
     <!-- API Viewer -->
-    <px-demo-api-viewer source="px-vis-bar-chart"></px-demo-api-viewer>
+    <px-demo-api-viewer
+      source="px-vis-bar-chart"
+      hide="[[apiHide]]"
+      mark-private="[[apiMarkPrivate]]"
+      mark-read-only="[[apliMarkReadOnly]]"
+      change-description="[[apiChangeDescription]]"
+      api-source-file-path="px-vis-bar-chart-api.json">
+    </px-demo-api-viewer>
 
     <!-- Footer -->
     <px-demo-footer></px-demo-footer>
@@ -184,11 +213,260 @@
        */
       configs: {
         type: Array,
-        value: function(){
+        value: function() {
+          return [{
+            configName: "Column",
+            configReset: true,
+            chartType: 'column',
+            margin: {
+              "left": 50,
+              "top": 10,
+              "bottom": 50,
+              "right": 50
+            },
+            scalePadding: '0.4',
+            seriesConfig: {
+              beers: {
+                name: "Unique Beers",
+                x: "beer",
+                y: "elliot"
+              }
+            },
+            xAxisConfig: { title: "Beers" },
+            yAxisConfig: { title: "Unique Beers" }
+          },{
+            configName: "Bar",
+            configReset: true,
+            chartType: 'bar',
+            margin: {
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 0
+            },
+            scalePadding: '0.2',
+            seriesConfig: {
+              beers: {
+                name: "Unique Beers",
+                x: "elliot",
+                y: "beer"
+              }
+            },
+            xAxisConfig: { title: "Unique Beers" },
+            yAxisConfig: { title: "Beers" }
+          },{
+            configName: "Stacked Column",
+            configReset: true,
+            chartType: 'column',
+            margin: {
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 50
+            },
+            scalePadding: '0.4',
+            seriesConfig: {
+              elliot: {
+                name: "Elliot",
+                x: "beer",
+                y: "elliot"
+              },
+              ben: {
+                name: "Ben",
+                x: "beer",
+                y: "ben"
+              },
+              kate: {
+                name: "Kate",
+                x: "beer",
+                y: "kate"
+              },
+              dan: {
+                name: "Dan",
+                x: "beer",
+                y: "dan"
+              },
+              martin: {
+                name: "Martin",
+                x: "beer",
+                y: "martin"
+              }
+            },
+            xAxisConfig: { title: "Beers" },
+            yAxisConfig: { title: "Unique Beers" }
+          },{
+            configName: "Stacked Bar",
+            configReset: true,
+            chartType: 'bar',
+            margin: {
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 0
+            },
+            scalePadding: '0.2',
+            seriesConfig: {
+              elliot: {
+                name: "Elliot",
+                y: "beer",
+                x: "elliot"
+              },
+              ben: {
+                name: "Ben",
+                y: "beer",
+                x: "ben"
+              },
+              kate: {
+                name: "Kate",
+                y: "beer",
+                x: "kate"
+              },
+              dan: {
+                name: "Dan",
+                y: "beer",
+                x: "dan"
+              },
+              martin: {
+                name: "Martin",
+                y: "beer",
+                x: "martin"
+              }
+            },
+            xAxisConfig: { title: "Unique Beers" },
+            yAxisConfig: { title: "Beers" }
+          },{
+            configName: "Grouped Column",
+            configReset: true,
+            chartType: 'column',
+            grouped: true,
+            margin: {
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 50
+            },
+            scalePadding: '0.4',
+            seriesConfig: {
+              elliot: {
+                name: "Elliot",
+                x: "beer",
+                y: "elliot"
+              },
+              ben: {
+                name: "Ben",
+                x: "beer",
+                y: "ben"
+              },
+              dan: {
+                name: "Dan",
+                x: "beer",
+                y: "dan"
+              },
+              martin: {
+                name: "Martin",
+                x: "beer",
+                y: "martin"
+              }
+            },
+            xAxisConfig: { title: "Beers" },
+            yAxisConfig: { title: "Unique Beers" }
+          },{
+            configName: "Grouped Bar",
+            configReset: true,
+            chartType: 'bar',
+            grouped: true,
+            margin: {
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 0
+            },
+            scalePadding: '0.2',
+            seriesConfig: {
+              elliot: {
+                name: "Elliot",
+                x: "beer",
+                y: "elliot"
+              },
+              ben: {
+                name: "Ben",
+                x: "beer",
+                y: "ben"
+              },
+              kate: {
+                name: "Kate",
+                x: "beer",
+                y: "kate"
+              },
+              dan: {
+                name: "Dan",
+                x: "beer",
+                y: "dan"
+              },
+              martin: {
+                name: "Martin",
+                x: "beer",
+                y: "martin"
+              }
+            },
+            xAxisConfig: { title: "Unique Beers" },
+            yAxisConfig: { title: "Beers" }
+          }]
+        }
+      },
+      apiHide: {
+        type: Array,
+        value: function() {
           return [
-            { configName: "Default",
-              configReset: true }
+            "generateLayers",
+            "numberOfLayers",
+            "svg",
+            "addClipPath",
+            "cloneSVGElem",
+            "domainChanged",
+            "generateRandomID",
+            "isMultiY",
+            "mutedSeries",
+            "hardMute",
+            "selectedDomain",
+            "wwDataSyncCounter"
           ]
+        }
+      },
+      apiMarkPrivate: {
+        type: Array,
+        value: function() {
+          return [
+            "clipPath",
+            "completeSeriesConfig",
+            "dataExtents",
+            "_domainChanged",
+            "layer",
+            "pxSvgElem",
+            "seriesClipPath"
+          ]
+        }
+      },
+      apliMarkReadOnly: {
+        type: Array,
+        value: function() {
+          return [
+            "drawnTickValues",
+            "extentsData",
+            "mousePosition",
+            "tooltipData",
+            "x",
+            "y"
+          ]
+        }
+      },
+      apiChangeDescription: {
+        type: Array,
+        value: function() {
+          return [{
+            "name": "chartExtents",
+            "desc": 'Developer set chart extents for the chart. The chart will draw to whatever values are specified in the chartExtents. Setting this and not using "dynamic" will prevent the chart from having to parse the data to find the extents and therefore improve performance for initial rendering ``` { "x": ["low","medium","high"], "y": [5,50] }```'
+          }]
         }
       }
     },
@@ -197,10 +475,231 @@
      * A reference for `this.props`. Read the documentation there.
      */
     demoProps: {
-      counterValue: {
+      preventResize: {
+        type: Boolean,
+        defaultValue: true,
+        inputType: 'toggle'
+      },
+      width: {
         type: Number,
-        defaultValue: '0',
+        defaultValue: '1000',
         inputType: 'text'
+      },
+      height: {
+        type: Number,
+        defaultValue: '500',
+        inputType: 'text'
+      },
+      debounceResizeTiming: {
+        type: Number,
+        defaultValue: 250,
+        inputType: 'text'
+      },
+      margin: {
+        type: Object,
+        defaultValue: {
+          "left": 50,
+          "top": 10,
+          "bottom": 50,
+          "right": 50
+        },
+        inputType: 'code:JSON'
+      },
+
+      chartType: {
+        type: String,
+        defaultValue: 'column'
+      },
+      grouped: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      showTooltip: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      tooltipConfig: {
+        type: Object,
+        defaultValue: {},
+        inputType: 'code:JSON'
+      },
+
+      hideRegister: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      registerConfig: {
+        type: Object,
+        defaultValue: { "type": "horizontal"},
+        inputType: 'code:JSON'
+      },
+
+      chartData: {
+        type: Array,
+        defaultValue: [{
+              "beer": "Blonde",
+              "elliot": 10,
+              "ben": 17,
+              "kate": 0,
+              "dan": 5,
+              "martin": 5
+            },{
+              "beer": "Cider",
+              "elliot": 9,
+              "ben": 0,
+              "kate": 23,
+              "dan": null,
+              "martin": 1
+            },{
+              "beer": "Hefeweizen",
+              "elliot": 4,
+              "ben": 9,
+              "kate": 0,
+              "dan": 5,
+              "martin": null
+            },{
+              "beer": "IPA",
+              "elliot": 5,
+              "ben": 458,
+              "kate": 0,
+              "dan": 500,
+              "martin": 65
+            },{
+              "beer": "Kolsch",
+              "elliot": 1,
+              "ben": 3,
+              "kate": 0,
+              "dan": null,
+              "martin": null
+            },{
+              "beer": "Lager",
+              "elliot": 12,
+              "ben": 39,
+              "kate": 0,
+              "dan": 55,
+              "martin": 5
+            },{
+              "beer": "Radler",
+              "elliot": 1,
+              "ben": 1,
+              "kate": 0,
+              "dan": null,
+              "martin": null
+            },{
+              "beer": "Pale",
+              "elliot": 0,
+              "ben": 114,
+              "kate": 0,
+              "dan": 140,
+              "martin": 25
+            },{
+              "beer": "Pilsners",
+              "elliot": 7,
+              "ben": 14,
+              "kate": 0,
+              "dan": 10,
+              "martin": null
+            },{
+              "beer": "Saison",
+              "elliot": 19,
+              "ben": 75,
+              "kate": 0,
+              "dan": null,
+              "martin": null
+            },{
+              "beer": "Sours",
+              "elliot": 89,
+              "ben": 113,
+              "kate": 0,
+              "dan": 5,
+              "martin": 5
+            },{
+              "beer": "Stout/Poter",
+              "elliot": 20,
+              "ben": 200,
+              "kate": 0,
+              "dan": 120,
+              "martin": 20
+            }],
+        inputType: 'code:JSON'
+      },
+
+      includeAllSeries: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      seriesConfig: {
+        type: Object,
+        defaultValue: {
+          beers: {
+            name: "Unique Beers",
+            x: "beer",
+            y: "elliot"
+          }
+        },
+        inputType: 'code:JSON'
+      },
+
+      scalePadding:{
+        type: Number,
+        defaultValue: "0.4",
+        inputType: "text"
+      },
+
+      thresholdData: {
+        type: Array,
+        defaultValue: [
+          {type: 'Yum', value: 25}
+        ],
+        inputType: 'code:JSON'
+      },
+
+      displayThresholdTitle: {
+        type: Boolean,
+        defaultValue: true,
+        inputType: 'toggle'
+      },
+
+      thresholdConfig: {
+        type: Object,
+        defaultValue: {
+          Yum: {
+            title: "Yum"
+          }
+        },
+        inputType: 'code:JSON'
+      },
+
+      referencedData: {
+        type: Array,
+        defaultValue: [],
+        inputType: 'code:JSON'
+      },
+
+      referenceConfig: {
+        type: Object,
+        defaultValue: {},
+        inputType: 'code:JSON'
+      },
+
+      xAxisConfig: {
+        type: Object,
+        defaultValue: { title: "Beers" },
+        inputType: 'code:JSON'
+      },
+
+      yAxisConfig: {
+        type: Object,
+        defaultValue: { title: "Unique Beers" },
+        inputType: 'code:JSON'
       }
     }
   });

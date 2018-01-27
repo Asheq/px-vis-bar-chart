@@ -1,40 +1,94 @@
-<link rel="import" href="../polymer/polymer-element.html" />
+<link rel="import" href="../polymer/polymer-element.html"/>
+<link rel="import" href="../polymer/lib/utils/async.html"/>
 
-<link rel="import" href="../px-vis/px-vis-behavior-common.html" />
-<link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
-<link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
-<link rel="import" href="../px-vis/px-vis-behavior-scale.html" />
-<link rel="import" href="../px-vis/px-vis-svg.html" />
-<link rel="import" href="../px-vis/px-vis-axis.html" />
-<link rel="import" href="../px-vis/px-vis-gridlines.html" />
-<link rel="import" href="../px-vis/px-vis-interaction-space.html" />
-<link rel="import" href="../px-vis/px-vis-cursor.html" />
-<link rel="import" href="../px-vis/px-vis-tooltip.html" />
-<link rel="import" href="../px-vis/px-vis-register.html" />
-<link rel="import" href="../px-vis/px-vis-threshold.html" />
-<link rel="import" href="../px-vis/px-vis-clip-path.html" />
-<link rel="import" href="../px-vis/px-vis-toolbar.html" />
-<link rel="import" href="../px-vis/px-vis-annotations.html" />
-<link rel="import" href="../px-vis/px-vis-bar-svg.html" />
-<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html" />
-<link rel="import" href="../px-vis/px-vis-reference-curve.html" />
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
-<link rel="import" href="../polymer/lib/utils/debounce.html">
+<link rel="import" href="../px-vis/px-vis-behavior-common.html"/>
+<link rel="import" href="../px-vis/px-vis-behavior-d3.html"/>
+<link rel="import" href="../px-vis/px-vis-behavior-chart.html"/>
+<link rel="import" href="../px-vis/px-vis-behavior-scale.html"/>
+<link rel="import" href="../px-vis/px-vis-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-axis.html"/>
+<link rel="import" href="../px-vis/px-vis-gridlines.html"/>
+<link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
+<link rel="import" href="../px-vis/px-vis-cursor.html"/>
+<link rel="import" href="../px-vis/px-vis-tooltip.html"/>
+<link rel="import" href="../px-vis/px-vis-register.html"/>
+<link rel="import" href="../px-vis/px-vis-threshold.html"/>
+<link rel="import" href="../px-vis/px-vis-clip-path.html"/>
+<link rel="import" href="../px-vis/px-vis-toolbar.html"/>
+<link rel="import" href="../px-vis/px-vis-annotations.html"/>
+<link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html"/>
 
-
-<link rel="import" href="css/px-vis-bar-chart-styles.html" />
+<link rel="import" href="css/px-vis-bar-chart-styles.html"/>
 
 <!--
-REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
-
-No
+Creates an interactive bar chart, column chart, stacked bar, stacked column, grouped bar, grouped column, deviation bar, and deviation column
 
 ### Usage
 
-    <px-vis-bar-chart counter-value="1"></px-vis-bar-chart>
+    <px-vis-paired-bar
+      width="1200"
+      height="500"
+      scale-padding="0.1"
+      margin='{
+        "left": 130,
+        "right": 130,
+        "top": 10,
+        "bottom": 50
+      }'
+      chart-data="[[chartData]]"
+      series-config="[[seriesConfig]]">
+    </px-vis-paired-bar>
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description
+----------------|-------------
+  `--px-vis-axis-color` | The color for the axis lines, axis ticks, and axis tick labels
+  `--px-vis-axis-title-color` | The color for the axis title
+  |
+  |
+  |
+  `--px-vis-gridlines-color` | The color for the gridlines
+  |
+  |
+  |
+  `--px-vis-threshold-color` | The default color for a threshold
+  |
+  |
+  |
+  `--px-vis-reference-curve-default-color` | default color for the reference curve
+  |
+  |
+  |
+  `--px-vis-register-series-name` | The color of the data series name
+  `--px-vis-register-data-value` | The color of the data series value
+  `--px-vis-register-box` | The color of the box around the register when a scrollbar is present
+  |
+  |
+  |
+  `--px-vis-series-color-0` | These are the colors used to represent the data series on the charts. Used in numerical order by default. Colors MUST start at 0 and cannot contain gaps between numbers.
+  `--px-vis-series-color-1` |
+  `--px-vis-series-color-2` |
+  `--px-vis-series-color-n` |
+  |
+  |
+  |
+  `--px-tooltip-background-color` | The color of the tooltip
+  `--px-tooltip-text-color` | The color of the tooltip text
+  `--px-tooltip-light-background-color` | The color of the light version tooltip
+  `--px-tooltip-light-text-color` | The color of the light version tooltip text
+  `--px-tooltip-light-border-color`| The color of the light version tooltip border
+  |
+  |
+  |
+  `--px-vis-font-family` | The font family for all labels and text
 
 @element px-vis-bar-chart
-@blurb REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
+@blurb Creates an interactive bar chart
 @homepage index.html
 @demo index.html
 -->
@@ -79,7 +133,7 @@ No
             action-config='{{actionConfig}}'
             within-chart
             chart-margin="[[margin]]"
-            config='{"zoom": true, "pan": true, "tooltip": true}'>
+            config='{"tooltip": true}'>
           </px-vis-toolbar>
           <px-vis-svg
             id="svg"
@@ -135,7 +189,7 @@ No
       series-clip-path="{{seriesClipPath}}">
     </px-vis-clip-path>
 
-    <template is="dom-if" if="[[!grouped]]">
+    <template is="dom-if" if="[[!grouped]]" restamp>
       <template is="dom-repeat" items="[[_stackedChartData]]">
         <px-vis-bar-svg
           id="bars"
@@ -153,7 +207,7 @@ No
       </template>
     </template>
 
-    <template is="dom-if" if="[[grouped]]">
+    <template is="dom-if" if="[[grouped]]" restamp>
       <px-vis-bar-grouped-svg
         id="bars"
         svg="[[layer.2]]"
@@ -193,6 +247,7 @@ No
     <px-vis-axis
       id="xAxis"
       svg="[[layer.1]]"
+      rebuild-on-draw
       domain-changed="[[domainChanged]]"
       axis="[[x]]"
       axis-type="[[xAxisType]]"
@@ -207,6 +262,7 @@ No
     <px-vis-axis
       id="yAxis"
       svg="[[layer.1]]"
+      rebuild-on-draw
       domain-changed="[[domainChanged]]"
       axis="[[y]]"
       axis-type="[[yAxisType]]"
@@ -327,12 +383,63 @@ No
       PxVisBehaviorChart.thresholdConfig,
       PxVisBehavior.selectionType,
       PxVisBehaviorChart.webWorkerSynchronization,
-      // Polymer.AppLocalizeBehavior,
+      Polymer.AppLocalizeBehavior,
       PxVisBehavior.updateStylesOverride,
       PxVisBehavior.annotationData,
       PxVisBehaviorChart.tooltipSizing,
       PxVisBehavior.referenceCurveProps
     ];
+
+    /**
+    *
+    * @polymer
+    * @customElement
+    * @appliesMixin PxVisBehavior.observerCheck
+    * @appliesMixin PxVisBehavior.baseSize
+    * @appliesMixin PxVisBehavior.margins
+    * @appliesMixin PxVisBehavior.dataset
+    * @appliesMixin PxVisBehavior.completeSeriesConfig
+    * @appliesMixin PxVisBehavior.muteUnmuteSeries
+    * @appliesMixin PxVisBehavior.tooltipData
+    * @appliesMixin PxVisBehavior.extentsData
+    * @appliesMixin PxVisBehavior.commonMethods
+    * @appliesMixin PxVisBehavior.zoomSelection
+    * @appliesMixin PxVisBehavior.chartExtents
+    * @appliesMixin PxVisBehavior.dataExtents
+    * @appliesMixin PxVisBehaviorD3.svg
+    * @appliesMixin PxVisBehaviorD3.axes
+    * @appliesMixin PxVisBehaviorD3.clipPath
+    * @appliesMixin PxVisBehaviorChart.chartCommon
+    * @appliesMixin PxVisBehaviorChart.saveImage
+    * @appliesMixin PxVisBehaviorD3.domainUpdate
+    * @appliesMixin PxVisBehaviorChart.subConfiguration
+    * @appliesMixin PxVisBehaviorChart.registerConfigs
+    * @appliesMixin PxVisBehaviorChart.axisConfigs
+    * @appliesMixin PxVisBehaviorChart.registerPositioning
+    * @appliesMixin PxVisBehaviorChart.chartAutoResize
+    * @appliesMixin PxVisBehavior.thresholds
+    * @appliesMixin PxVisBehaviorChart.layers
+    * @appliesMixin PxVisBehavior.dynamicMenuConfig
+    * @appliesMixin PxColorsBehavior.dataVisColorTheming
+    * @appliesMixin PxVisBehavior.axisTypes
+    * @appliesMixin PxVisBehaviorScale.scale
+    * @appliesMixin PxVisBehavior.actionConfig
+    * @appliesMixin PxVisBehaviorChart.zooming
+    * @appliesMixin PxVisBehaviorChart.actionRequest
+    * @appliesMixin PxVisBehaviorChart.toolbarSubConfig
+    * @appliesMixin PxVisBehaviorChart.noDebounceOnPanning
+    * @appliesMixin PxVisBehaviorChart.chartToolbarConfig
+    * @appliesMixin PxVisBehaviorChart.showTooltip
+    * @appliesMixin PxVisBehaviorChart.sizeVerticalRegister
+    * @appliesMixin PxVisBehaviorChart.thresholdConfig
+    * @appliesMixin PxVisBehavior.selectionType
+    * @appliesMixin PxVisBehaviorChart.webWorkerSynchronization
+    * @appliesMixin Polymer.AppLocalizeBehavior
+    * @appliesMixin PxVisBehavior.updateStylesOverride
+    * @appliesMixin PxVisBehavior.annotationData
+    * @appliesMixin PxVisBehaviorChart.tooltipSizing
+    * @appliesMixin PxVisBehavior.referenceCurveProps
+    */
 
     class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
       static get is() { return 'px-vis-bar-chart'; }
@@ -355,8 +462,7 @@ No
           },
 
           _stackedChartData: {
-            type: Array,
-            computed: '_returnStack(chartData.*, _seriesKeys.*)'
+            type: Array
           },
 
           /**
@@ -392,7 +498,7 @@ No
 
           _ordinalKey: {
             type: String,
-            computed: '_getOrdKey(completeSeriesConfig.*)'
+            computed: '_getOrdKey(completeSeriesConfig.*, _seriesKeys.*)'
           },
 
           _stackedDataExtentsTrigger: {
@@ -412,7 +518,9 @@ No
 
       static get observers() {
         return [
-          '_setAxisTypes(chartType)',
+          // magic order, do not touch
+          '_returnStack(chartData.*, completeSeriesConfig.*)',
+          '_setAxisTypes(chartType, grouped)',
           '_setXScale(width, margin, xAxisType)',
           '_setYScale(height, margin, yAxisType)',
           '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
@@ -420,12 +528,11 @@ No
           '_chartDataChanged(chartData.*)',
           '_calcTooltipPos(tooltipData.*)',
           '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
-          '_createGroupScale(x,y, domainChanged, completeSeriesConfig, grouped)',
+          '_createGroupScale(x,y, domainChanged, completeSeriesConfig, _seriesKeys, grouped)',
           '_drawBaseline(domainChanged)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
           '_yAxisConfigChanged(yAxisConfig.*)'
-
         ];
       }
 
@@ -488,33 +595,47 @@ No
           return [];
         }
 
-        if(this.chartData && this._seriesKeys && this.completeSeriesConfig) {
-          const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
-          const stack = Px.d3.stack();
-          const keys = [];
-
-          this._seriesKeys.forEach((k) => {
-            keys.push(this.completeSeriesConfig[k][axis]);
-          });
-
-          stack.offset(Px.d3.stackOffsetDiverging);
-          stack.keys(keys);
-          return stack(this.chartData);
+        if(!this.chartData ||
+            !this.completeSeriesConfig) {
+          return;
         }
+        const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
+        const stack = Px.d3.stack();
+        const keys = [];
+
+        Object.keys(this.completeSeriesConfig).forEach((k) => {
+          keys.push(this.completeSeriesConfig[k][axis]);
+        });
+
+        stack.offset(Px.d3.stackOffsetDiverging);
+        stack.keys(keys);
+        this.set('_stackedChartData', stack(this.chartData));
       }
 
       _setAxisTypes(chartType) {
-        switch(chartType) {
-          case 'bar':
-            this.set('xAxisType', "linear");
-            this.set('yAxisType', "scaleBand");
-            break;
+        if(this.domainChanged !== null) {
+          this.setProperties({
+            domainChanged: null,
+            x: null,
+            y: null,
+            dataExtents: null
+          });
 
-          default:  //column
-            this.set('xAxisType', "scaleBand");
-            this.set('yAxisType', "linear");
-            break;
         }
+
+        if(chartType === 'bar') {
+          this.setProperties({
+            'xAxisType': "linear",
+            'yAxisType': "scaleBand"
+          });
+        } else { //column
+          this.setProperties({
+            'xAxisType': "scaleBand",
+            'yAxisType': "linear"
+          });
+        }
+
+        this._setCompleteSeriesConfig();
       }
 
       _getOrdKey() {
@@ -618,7 +739,12 @@ No
       }
 
       _createGroupScale() {
-        if(!this.grouped || !this.x || !this.y || !this.completeSeriesConfig || this.domainChanged === null) {
+        if(!this.grouped ||
+            !this.x ||
+            !this.y ||
+            !this.completeSeriesConfig ||
+            this._seriesKeys.length === 0 ||
+            this.domainChanged === null) {
           return;
         }
 
@@ -639,6 +765,10 @@ No
       }
 
       _drawBaseline() {
+        if(this.domainChanged === undefined || this.domainChanged === null) {
+          return;
+        }
+
         const valScale = this._getValueKey();
 
         if(this[valScale].domain()[0] < 0) {

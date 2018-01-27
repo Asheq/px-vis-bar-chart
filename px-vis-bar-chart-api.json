@@ -1,0 +1,749 @@
+{
+  "schema_version": "1.0.0",
+  "elements": [
+    {
+      "description": "Creates an interactive bar chart, column chart, stacked bar, stacked column, grouped bar, grouped column, deviation bar, and deviation column\n\n### Usage\n\n    <px-vis-paired-bar\n      width=\"1200\"\n      height=\"500\"\n      scale-padding=\"0.1\"\n      margin='{\n        \"left\": 130,\n        \"right\": 130,\n        \"top\": 10,\n        \"bottom\": 50\n      }'\n      chart-data=\"[[chartData]]\"\n      series-config=\"[[seriesConfig]]\">\n    </px-vis-paired-bar>\n\n### Styling\nThe following custom properties are available for styling:\n\nCustom property | Description\n----------------|-------------\n  `--px-vis-axis-color` | The color for the axis lines, axis ticks, and axis tick labels\n  `--px-vis-axis-title-color` | The color for the axis title\n  |\n  |\n  |\n  `--px-vis-gridlines-color` | The color for the gridlines\n  |\n  |\n  |\n  `--px-vis-threshold-color` | The default color for a threshold\n  |\n  |\n  |\n  `--px-vis-reference-curve-default-color` | default color for the reference curve\n  |\n  |\n  |\n  `--px-vis-register-series-name` | The color of the data series name\n  `--px-vis-register-data-value` | The color of the data series value\n  `--px-vis-register-box` | The color of the box around the register when a scrollbar is present\n  |\n  |\n  |\n  `--px-vis-series-color-0` | These are the colors used to represent the data series on the charts. Used in numerical order by default. Colors MUST start at 0 and cannot contain gaps between numbers.\n  `--px-vis-series-color-1` |\n  `--px-vis-series-color-2` |\n  `--px-vis-series-color-n` |\n  |\n  |\n  |\n  `--px-tooltip-background-color` | The color of the tooltip\n  `--px-tooltip-text-color` | The color of the tooltip text\n  `--px-tooltip-light-background-color` | The color of the light version tooltip\n  `--px-tooltip-light-text-color` | The color of the light version tooltip text\n  `--px-tooltip-light-border-color`| The color of the light version tooltip border\n  |\n  |\n  |\n  `--px-vis-font-family` | The font family for all labels and text",
+      "summary": "",
+      "path": "px-vis-bar-chart.html",
+      "properties": [
+        {
+          "name": "preventWebWorkerSynchronization",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 448,
+              "column": 10
+            },
+            "end": {
+              "line": 452,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "chartType",
+          "type": "string",
+          "description": "Specfies what type of bar chart:\n- `bar`\n- `horizontal`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 458,
+              "column": 10
+            },
+            "end": {
+              "line": 461,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"column\""
+        },
+        {
+          "name": "_stackedChartData",
+          "type": "Array",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 463,
+              "column": 10
+            },
+            "end": {
+              "line": 465,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "xAxisLocation",
+          "type": "string",
+          "description": "Defines where to locate the X-axis.\n- `bottom`\n- `top`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 473,
+              "column": 10
+            },
+            "end": {
+              "line": 476,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"bottom\""
+        },
+        {
+          "name": "yAxisLocation",
+          "type": "string",
+          "description": "Defines where to locate the Y-axis.\n- `left`\n- `right`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 483,
+              "column": 10
+            },
+            "end": {
+              "line": 486,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"left\""
+        },
+        {
+          "name": "startFromZero",
+          "type": "boolean",
+          "description": "DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING\n\nBar charts in nearly all cases should start from 0. If you have a special case and understand the ramifications, change this to false to allow it to use the `min` value from your data",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 493,
+              "column": 10
+            },
+            "end": {
+              "line": 496,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "_ordinalKey",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 498,
+              "column": 10
+            },
+            "end": {
+              "line": 501,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          }
+        },
+        {
+          "name": "_stackedDataExtentsTrigger",
+          "type": "number",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 503,
+              "column": 10
+            },
+            "end": {
+              "line": 506,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "0"
+        },
+        {
+          "name": "grouped",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 508,
+              "column": 10
+            },
+            "end": {
+              "line": 511,
+              "column": 11
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "_baseline",
+          "type": "Object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 513,
+              "column": 10
+            },
+            "end": {
+              "line": 513,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "ready",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 538,
+              "column": 6
+            },
+            "end": {
+              "line": 543,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "connectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 545,
+              "column": 6
+            },
+            "end": {
+              "line": 547,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_debounce",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 549,
+              "column": 6
+            },
+            "end": {
+              "line": 554,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "cb"
+            },
+            {
+              "name": "time"
+            }
+          ]
+        },
+        {
+          "name": "_onIronResize",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 556,
+              "column": 6
+            },
+            "end": {
+              "line": 562,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_onIronResizeDebounced",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 564,
+              "column": 6
+            },
+            "end": {
+              "line": 590,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_returnStack",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 592,
+              "column": 6
+            },
+            "end": {
+              "line": 612,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_setAxisTypes",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 614,
+              "column": 6
+            },
+            "end": {
+              "line": 638,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "chartType"
+            }
+          ]
+        },
+        {
+          "name": "_getOrdKey",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 640,
+              "column": 6
+            },
+            "end": {
+              "line": 651,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_getRegisterDisplay",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 653,
+              "column": 6
+            },
+            "end": {
+              "line": 655,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "axisType"
+            }
+          ]
+        },
+        {
+          "name": "_showGridlines",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 657,
+              "column": 6
+            },
+            "end": {
+              "line": 663,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "hideGridlines"
+            },
+            {
+              "name": "chartType"
+            },
+            {
+              "name": "type"
+            }
+          ]
+        },
+        {
+          "name": "_calcTooltipPos",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 665,
+              "column": 6
+            },
+            "end": {
+              "line": 691,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_getLargestCoord",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 693,
+              "column": 6
+            },
+            "end": {
+              "line": 695,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "index"
+            },
+            {
+              "name": "type"
+            }
+          ]
+        },
+        {
+          "name": "_getSummedVal",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 697,
+              "column": 6
+            },
+            "end": {
+              "line": 701,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "axis"
+            }
+          ]
+        },
+        {
+          "name": "_getOrdSet",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 703,
+              "column": 6
+            },
+            "end": {
+              "line": 709,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_calcStackedDataExt",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 711,
+              "column": 6
+            },
+            "end": {
+              "line": 738,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_createGroupScale",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 740,
+              "column": 6
+            },
+            "end": {
+              "line": 764,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_drawBaseline",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 766,
+              "column": 6
+            },
+            "end": {
+              "line": 811,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_getValueKey",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 813,
+              "column": 6
+            },
+            "end": {
+              "line": 815,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_xAxisConfigChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 817,
+              "column": 6
+            },
+            "end": {
+              "line": 823,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "conf"
+            }
+          ]
+        },
+        {
+          "name": "_yAxisConfigChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 825,
+              "column": 6
+            },
+            "end": {
+              "line": 831,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "conf"
+            }
+          ]
+        },
+        {
+          "name": "_getTooltipOrientation",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 833,
+              "column": 6
+            },
+            "end": {
+              "line": 835,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "xAxisType"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 443,
+          "column": 4
+        },
+        "end": {
+          "line": 837,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "name": "PxVisBarChart",
+      "attributes": [
+        {
+          "name": "prevent-web-worker-synchronization",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 448,
+              "column": 10
+            },
+            "end": {
+              "line": 452,
+              "column": 11
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "chart-type",
+          "description": "Specfies what type of bar chart:\n- `bar`\n- `horizontal`",
+          "sourceRange": {
+            "start": {
+              "line": 458,
+              "column": 10
+            },
+            "end": {
+              "line": 461,
+              "column": 11
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "x-axis-location",
+          "description": "Defines where to locate the X-axis.\n- `bottom`\n- `top`",
+          "sourceRange": {
+            "start": {
+              "line": 473,
+              "column": 10
+            },
+            "end": {
+              "line": 476,
+              "column": 11
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "y-axis-location",
+          "description": "Defines where to locate the Y-axis.\n- `left`\n- `right`",
+          "sourceRange": {
+            "start": {
+              "line": 483,
+              "column": 10
+            },
+            "end": {
+              "line": 486,
+              "column": 11
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "start-from-zero",
+          "description": "DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING\n\nBar charts in nearly all cases should start from 0. If you have a special case and understand the ramifications, change this to false to allow it to use the `min` value from your data",
+          "sourceRange": {
+            "start": {
+              "line": 493,
+              "column": 10
+            },
+            "end": {
+              "line": 496,
+              "column": 11
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "grouped",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 508,
+              "column": 10
+            },
+            "end": {
+              "line": 511,
+              "column": 11
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "px-vis-bar-chart"
+    }
+  ]
+}
