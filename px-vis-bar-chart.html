@@ -28,7 +28,7 @@ Creates an interactive bar chart, column chart, stacked bar, stacked column, gro
 
 ### Usage
 
-    <px-vis-paired-bar
+    <px-vis-bar-chart
       width="1200"
       height="500"
       scale-padding="0.1"
@@ -40,7 +40,7 @@ Creates an interactive bar chart, column chart, stacked bar, stacked column, gro
       }'
       chart-data="[[chartData]]"
       series-config="[[seriesConfig]]">
-    </px-vis-paired-bar>
+    </px-vis-bar-chart>
 
 ### Styling
 The following custom properties are available for styling:
@@ -434,13 +434,11 @@ Custom property | Description
     * @appliesMixin PxVisBehaviorChart.thresholdConfig
     * @appliesMixin PxVisBehavior.selectionType
     * @appliesMixin PxVisBehaviorChart.webWorkerSynchronization
-    * @appliesMixin Polymer.AppLocalizeBehavior
     * @appliesMixin PxVisBehavior.updateStylesOverride
     * @appliesMixin PxVisBehavior.annotationData
     * @appliesMixin PxVisBehaviorChart.tooltipSizing
     * @appliesMixin PxVisBehavior.referenceCurveProps
     */
-
     class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
       static get is() { return 'px-vis-bar-chart'; }
 
@@ -454,7 +452,7 @@ Custom property | Description
           /**
           * Specfies what type of bar chart:
           * - `bar`
-          * - `horizontal`
+          * - `column`
           */
           chartType: {
             type: String,
@@ -505,7 +503,11 @@ Custom property | Description
             type: Number,
             value: 0
           },
-
+          /**
+           * Create a grouped bar chart.
+           *
+           * Default is to create a stacked bar chart
+           * */
           grouped: {
             type: Boolean,
             value: false

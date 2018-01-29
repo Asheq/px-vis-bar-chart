@@ -2,7 +2,7 @@
 
 ## Overview
 
-px-vis-bar-chart is a Predix UI component
+px-vis-bar-chart is a Predix UI component that creates bar and column charts
 
 ## Usage
 
