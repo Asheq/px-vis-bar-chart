@@ -518,7 +518,6 @@ Custom property | Description
 
       static get observers() {
         return [
-          // magic order, do not touch
           '_returnStack(chartData.*, completeSeriesConfig.*)',
           '_setAxisTypes(chartType, grouped)',
           '_setXScale(width, margin, xAxisType)',
@@ -712,6 +711,7 @@ Custom property | Description
       _calcStackedDataExt() {
         if(this.grouped) {
           this.set('_stackedDataExtentsTrigger', this._stackedDataExtentsTrigger += 1);
+          return;
         }
 
         if(this.completeSeriesConfig && this._doesObjHaveValues(this._stackedChartData)) {

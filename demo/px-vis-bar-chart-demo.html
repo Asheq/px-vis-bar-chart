@@ -216,8 +216,8 @@
         value: function() {
           return [{
             configName: "Column",
-            configReset: true,
             chartType: 'column',
+            grouped: false,
             margin: {
               "left": 50,
               "top": 10,
@@ -236,7 +236,6 @@
             yAxisConfig: { title: "Unique Beers" }
           },{
             configName: "Bar",
-            configReset: true,
             chartType: 'bar',
             margin: {
               "left": 100,
@@ -256,7 +255,6 @@
             yAxisConfig: { title: "Beers" }
           },{
             configName: "Stacked Column",
-            configReset: true,
             chartType: 'column',
             margin: {
               "left": 100,
@@ -264,6 +262,7 @@
               "bottom": 50,
               "right": 50
             },
+            grouped: false,
             scalePadding: '0.4',
             seriesConfig: {
               elliot: {
@@ -302,8 +301,9 @@
               "left": 100,
               "top": 10,
               "bottom": 50,
-              "right": 0
+              "right": 50
             },
+            grouped: false,
             scalePadding: '0.2',
             seriesConfig: {
               elliot: {
@@ -336,52 +336,15 @@
             yAxisConfig: { title: "Beers" }
           },{
             configName: "Grouped Column",
-            configReset: true,
             chartType: 'column',
             grouped: true,
             margin: {
               "left": 100,
-              "top": 10,
+              "top": 20,
               "bottom": 50,
               "right": 50
             },
             scalePadding: '0.4',
-            seriesConfig: {
-              elliot: {
-                name: "Elliot",
-                x: "beer",
-                y: "elliot"
-              },
-              ben: {
-                name: "Ben",
-                x: "beer",
-                y: "ben"
-              },
-              dan: {
-                name: "Dan",
-                x: "beer",
-                y: "dan"
-              },
-              martin: {
-                name: "Martin",
-                x: "beer",
-                y: "martin"
-              }
-            },
-            xAxisConfig: { title: "Beers" },
-            yAxisConfig: { title: "Unique Beers" }
-          },{
-            configName: "Grouped Bar",
-            configReset: true,
-            chartType: 'bar',
-            grouped: true,
-            margin: {
-              "left": 100,
-              "top": 10,
-              "bottom": 50,
-              "right": 0
-            },
-            scalePadding: '0.2',
             seriesConfig: {
               elliot: {
                 name: "Elliot",
@@ -407,6 +370,46 @@
                 name: "Martin",
                 x: "beer",
                 y: "martin"
+              }
+            },
+            xAxisConfig: { title: "Beers" },
+            yAxisConfig: { title: "Unique Beers" }
+          },{
+            configName: "Grouped Bar",
+            chartType: 'bar',
+            grouped: true,
+            margin: {
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 0
+            },
+            scalePadding: '0.4',
+            seriesConfig: {
+              elliot: {
+                name: "Elliot",
+                y: "beer",
+                x: "elliot"
+              },
+              ben: {
+                name: "Ben",
+                y: "beer",
+                x: "ben"
+              },
+              kate: {
+                name: "Kate",
+                y: "beer",
+                x: "kate"
+              },
+              dan: {
+                name: "Dan",
+                y: "beer",
+                x: "dan"
+              },
+              martin: {
+                name: "Martin",
+                y: "beer",
+                x: "martin"
               }
             },
             xAxisConfig: { title: "Unique Beers" },
@@ -600,7 +603,7 @@
               "martin": 25
             },{
               "beer": "Pilsners",
-              "elliot": 7,
+              "elliot": 6,
               "ben": 14,
               "kate": 0,
               "dan": 10,
@@ -614,7 +617,7 @@
               "martin": null
             },{
               "beer": "Sours",
-              "elliot": 89,
+              "elliot": 93,
               "ben": 113,
               "kate": 0,
               "dan": 5,
@@ -657,7 +660,8 @@
       thresholdData: {
         type: Array,
         defaultValue: [
-          {type: 'Yum', value: 25}
+          {type: 'yum', value: 25},
+          {type: 'too_much', value: 225},
         ],
         inputType: 'code:JSON'
       },
@@ -671,8 +675,11 @@
       thresholdConfig: {
         type: Object,
         defaultValue: {
-          Yum: {
+          yum: {
             title: "Yum"
+          },
+          too_much: {
+            title: "Too many"
           }
         },
         inputType: 'code:JSON'
