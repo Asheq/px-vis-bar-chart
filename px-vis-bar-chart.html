@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html"/>
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html"/>
+<link rel="import" href="../polymer/lib/elements/dom-if.html"/>
 <link rel="import" href="../polymer/lib/utils/async.html"/>
 
 <link rel="import" href="../px-vis/px-vis-behavior-common.html"/>
@@ -330,6 +332,7 @@ Custom property | Description
 
     <px-vis-reference-curve
       id="referenceCurve"
+      chart-id="[[chartId]]"
       svg="[[layer.3]]"
       x="[[x]]"
       y="[[y]]"
@@ -513,7 +516,12 @@ Custom property | Description
             value: false
           },
 
-          _baseline: Object
+          _baseline: Object,
+
+          _defaultSeriesConfig: {
+            type: Object,
+            value: function() { return {x: "x"}; }
+          },
 
         };
       }
@@ -522,10 +530,11 @@ Custom property | Description
         return [
           '_returnStack(chartData.*, completeSeriesConfig.*)',
           '_setAxisTypes(chartType, grouped)',
-          '_setXScale(width, margin, xAxisType)',
-          '_setYScale(height, margin, yAxisType)',
+          '_setXScale(width, margin, xAxisType, scalePadding)',
+          '_setYScale(height, margin, yAxisType, scalePadding)',
           '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
           '_setDomain(chartExtents, _stackedDataExtentsTrigger)',
+          '_updatePadding(scalePadding)',
           '_chartDataChanged(chartData.*)',
           '_calcTooltipPos(tooltipData.*)',
           '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
@@ -542,10 +551,6 @@ Custom property | Description
         this.set('numberOfLayers', 5);
         this.set('_verticalRegisterDrawingCanvasId', 'svg');
         this.addEventListener('iron-resize', this._onIronResize.bind(this));
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
       }
 
       _debounce(name, cb, time) {
