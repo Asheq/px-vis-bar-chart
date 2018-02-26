@@ -102,11 +102,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 375,
+              "line": 345,
               "column": 6
             },
             "end": {
-              "line": 377,
+              "line": 347,
               "column": 7
             }
           },
@@ -123,11 +123,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 399,
+              "line": 384,
               "column": 7
             },
             "end": {
-              "line": 402,
+              "line": 387,
               "column": 8
             }
           },
@@ -146,11 +146,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 461,
+              "line": 446,
               "column": 4
             },
             "end": {
-              "line": 465,
+              "line": 450,
               "column": 5
             }
           },
@@ -170,11 +170,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 472,
+              "line": 457,
               "column": 5
             },
             "end": {
-              "line": 475,
+              "line": 460,
               "column": 5
             }
           },
@@ -192,11 +192,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 677,
+              "line": 662,
               "column": 4
             },
             "end": {
-              "line": 680,
+              "line": 665,
               "column": 5
             }
           },
@@ -215,11 +215,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 685,
+              "line": 670,
               "column": 4
             },
             "end": {
-              "line": 689,
+              "line": 674,
               "column": 5
             }
           },
@@ -239,11 +239,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 786,
+              "line": 771,
               "column": 4
             },
             "end": {
-              "line": 789,
+              "line": 774,
               "column": 5
             }
           },
@@ -262,11 +262,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 793,
+              "line": 778,
               "column": 4
             },
             "end": {
-              "line": 796,
+              "line": 781,
               "column": 5
             }
           },
@@ -285,11 +285,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2330,
+              "line": 2329,
               "column": 4
             },
             "end": {
-              "line": 2334,
+              "line": 2333,
               "column": 5
             }
           },
@@ -309,11 +309,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1180,
+              "line": 1172,
               "column": 4
             },
             "end": {
-              "line": 1183,
+              "line": 1175,
               "column": 5
             }
           },
@@ -332,11 +332,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1216,
+              "line": 1208,
               "column": 4
             },
             "end": {
-              "line": 1219,
+              "line": 1211,
               "column": 5
             }
           },
@@ -378,11 +378,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2243,
+              "line": 2242,
               "column": 5
             },
             "end": {
-              "line": 2248,
+              "line": 2247,
               "column": 6
             }
           },
@@ -555,16 +555,16 @@
         {
           "name": "xAxisType",
           "type": "string",
-          "description": "Sets the type of data for the x values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `time`: for time domains.\n- `timeLocal`: for local time domains.\n- `linear`: for continuous input domains, such as numbers.\n- `pie`: for pie/donut charts",
+          "description": "Sets the type of data for the x values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `scaleBand`: another ordinal type meant to create a bar instead of a point.\n- `time`: for time domains.\n- `timeLocal`: for local time domains.\n- `linear`: for continuous input domains, such as numbers.\n- `log`: for continuous input domains displayed logarithmicly. NOTE: Per d3 docs, this scale cannot cross or include 0.\n- `pie`: for pie/donut charts",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1090,
+              "line": 1080,
               "column": 4
             },
             "end": {
-              "line": 1093,
+              "line": 1083,
               "column": 5
             }
           },
@@ -577,16 +577,16 @@
         {
           "name": "yAxisType",
           "type": "string",
-          "description": "Sets the type of data for the y values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `linear`: for continuous input domains, such as numbers.\n- `pie`: for pie/donut charts",
+          "description": "Sets the type of data for the y values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `scaleBand`: another ordinal type meant to create a bar instead of a point.\n- `linear`: for continuous input domains, such as numbers.\n- `log`: for continuous input domains, such as numbers.\n- `pie`: for pie/donut charts",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1102,
+              "line": 1094,
               "column": 4
             },
             "end": {
-              "line": 1105,
+              "line": 1097,
               "column": 5
             }
           },
@@ -599,16 +599,16 @@
         {
           "name": "seriesConfig",
           "type": "Object",
-          "description": "A configuration file to associate series order, name, type, and colors.\n\nAssociation of name, type, and seriesNumber should be developer set. Color and axis are optional.\n\n```\n {\n    \"seriesKey\": {  //seriesKey is a unique identifier for the configuration\n        \"type\": \"line\",  //line or scatter or both\n        \"markerSymbol\": \"diamond\" //if using scatter different markerSymbol can be used. See \"markerSymbol\" in px-vis-scatter\n        \"markerSize\": \"64\" //if using scatter allows to change the size of markers\n        \"markerScale\": \"2\" //if using scatter allows to scale the size of markers\n        \"markerFillOpacity\": \"0.5\" //if using scatter allows to specify the opacity of the inside of the marker\n        \"markerStrokeOpacity\": \"1\" //if using scatter allows to specify the opacity of the outside of the marker\n        \"strokeWidth\": \"1\" //if using line, allows you to specify the thickness of the line\n        \"mutedOpacity\": \"0.3\" //opacity value to use when muting a serie\n        \"name\": \"My Series\",  //human readable name\n        \"x\": \"x\",  //index or key name for independent variable\n        \"y\": \"y\",  //index or key name for dependent variable\n        \"xAxisUnit\": \"Volt\" //Unit to be used for the X axis. Can be ignored if x axis is time based\n        \"yAxisUnit\": \"Oranges\" //unit to be used for the Y axis.\n        \"xMin\": 0,  // minimum x value\n        \"xMax\": 100,  //maximum x value\n        \"yMin\": 5,  //minimum y value\n        \"yMax\": 50,  //maximum y value\n        \"hideInRegister\": true, //dont show in the register\n        \"color\": \"rgb(0,0,0)\", //color you want for the series\n        \"negativeColor\": \"rgb(255,255,255)\", //color you want negative values of the series to be (not all charts)\n        \"interpolationFunction\": Px.d3.curveBasis, //The line interpretor you want to use. See property 'interpolationFunction'\n        \"axis\": {\n            \"id\": \"AXIS_ID\"   //a unique identifier\n            \"side\": \"left\"    //the side that you want the axis to draw on, `left` or `right`\n            \"number\": 1       //the order of the axis on each side\n         }\n    }\n }\n```",
+          "description": "A configuration file to associate series order, name, type, and colors.\n\nAssociation of name, type, and seriesNumber should be developer set. Color and axis are optional.\n\n```\n {\n    \"seriesKey\": {  //seriesKey is a unique identifier for the configuration\n        \"type\": \"line\",  //line or scatter or both\n        \"priority\": 0, //relative priority is used to decide which series draw on top of each other. priority 0 => smaller priority. 2 draws over 1, which itself draws over 0, etc.. CANVAS ONLY\n        \"markerSymbol\": \"diamond\" //if using scatter different markerSymbol can be used. See \"markerSymbol\" in px-vis-scatter\n        \"markerSize\": \"64\" //if using scatter allows to change the size of markers\n        \"markerScale\": \"2\" //if using scatter allows to scale the size of markers\n        \"markerFillOpacity\": \"0.5\" //if using scatter allows to specify the opacity of the inside of the marker\n        \"markerStrokeOpacity\": \"1\" //if using scatter allows to specify the opacity of the outside of the marker\n        \"strokeWidth\": \"1\" //if using line, allows you to specify the thickness of the line\n        \"mutedOpacity\": \"0.3\" //opacity value to use when muting a serie\n        \"name\": \"My Series\",  //human readable name\n        \"x\": \"x\",  //index or key name for independent variable\n        \"y\": \"y\",  //index or key name for dependent variable\n        \"xAxisUnit\": \"Volt\" //Unit to be used for the X axis. Can be ignored if x axis is time based\n        \"yAxisUnit\": \"Oranges\" //unit to be used for the Y axis.\n        \"xMin\": 0,  // minimum x value\n        \"xMax\": 100,  //maximum x value\n        \"yMin\": 5,  //minimum y value\n        \"yMax\": 50,  //maximum y value\n        \"color\": \"rgb(0,0,0)\", //color you want the chart\n        \"interpolationFunction\": Px.d3.curveBasis, //The line interpretor you want to use. See property 'interpolationFunction'\n        \"axis\": {\n            \"id\": \"AXIS_ID\"   //a unique identifier\n            \"side\": \"left\"    //the side that you want the axis to draw on, `left` or `right`\n            \"number\": 1       //the order of the axis on each side\n         }\n    }\n }\n```",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 91,
+              "line": 90,
               "column": 6
             },
             "end": {
-              "line": 96,
+              "line": 95,
               "column": 7
             }
           },
@@ -626,11 +626,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 114,
+              "line": 113,
               "column": 6
             },
             "end": {
-              "line": 127,
+              "line": 126,
               "column": 7
             }
           },
@@ -648,11 +648,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 133,
+              "line": 132,
               "column": 6
             },
             "end": {
-              "line": 137,
+              "line": 136,
               "column": 7
             }
           },
@@ -672,11 +672,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 144,
+              "line": 143,
               "column": 6
             },
             "end": {
-              "line": 147,
+              "line": 146,
               "column": 7
             }
           },
@@ -694,11 +694,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 152,
+              "line": 151,
               "column": 6
             },
             "end": {
-              "line": 154,
+              "line": 153,
               "column": 7
             }
           },
@@ -715,11 +715,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 156,
+              "line": 155,
               "column": 6
             },
             "end": {
-              "line": 159,
+              "line": 158,
               "column": 7
             }
           },
@@ -761,11 +761,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1101,
+              "line": 1100,
               "column": 4
             },
             "end": {
-              "line": 1103,
+              "line": 1102,
               "column": 5
             }
           },
@@ -782,11 +782,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1109,
+              "line": 1108,
               "column": 4
             },
             "end": {
-              "line": 1111,
+              "line": 1110,
               "column": 5
             }
           },
@@ -803,11 +803,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1187,
+              "line": 1186,
               "column": 4
             },
             "end": {
-              "line": 1189,
+              "line": 1188,
               "column": 5
             }
           },
@@ -824,11 +824,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1195,
+              "line": 1194,
               "column": 4
             },
             "end": {
-              "line": 1197,
+              "line": 1196,
               "column": 5
             }
           },
@@ -845,11 +845,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1035,
+              "line": 1034,
               "column": 4
             },
             "end": {
-              "line": 1039,
+              "line": 1038,
               "column": 5
             }
           },
@@ -869,11 +869,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1040,
+              "line": 1039,
               "column": 4
             },
             "end": {
-              "line": 1042,
+              "line": 1041,
               "column": 5
             }
           },
@@ -890,11 +890,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1043,
+              "line": 1042,
               "column": 4
             },
             "end": {
-              "line": 1046,
+              "line": 1045,
               "column": 5
             }
           },
@@ -958,11 +958,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 763,
+              "line": 762,
               "column": 6
             },
             "end": {
-              "line": 767,
+              "line": 766,
               "column": 7
             }
           },
@@ -982,11 +982,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 777,
+              "line": 776,
               "column": 6
             },
             "end": {
-              "line": 780,
+              "line": 779,
               "column": 7
             }
           },
@@ -1004,11 +1004,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 790,
+              "line": 789,
               "column": 6
             },
             "end": {
-              "line": 793,
+              "line": 792,
               "column": 7
             }
           },
@@ -1026,11 +1026,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 797,
+              "line": 796,
               "column": 6
             },
             "end": {
-              "line": 800,
+              "line": 799,
               "column": 7
             }
           },
@@ -1049,11 +1049,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 805,
+              "line": 804,
               "column": 6
             },
             "end": {
-              "line": 808,
+              "line": 807,
               "column": 7
             }
           },
@@ -1071,11 +1071,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2845,
+              "line": 2738,
               "column": 4
             },
             "end": {
-              "line": 2847,
+              "line": 2740,
               "column": 5
             }
           },
@@ -1092,11 +1092,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1593,
+              "line": 1586,
               "column": 4
             },
             "end": {
-              "line": 1601,
+              "line": 1594,
               "column": 5
             }
           },
@@ -1114,11 +1114,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1614,
+              "line": 1607,
               "column": 4
             },
             "end": {
-              "line": 1616,
+              "line": 1609,
               "column": 5
             }
           },
@@ -1135,11 +1135,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1425,
+              "line": 1424,
               "column": 4
             },
             "end": {
-              "line": 1428,
+              "line": 1427,
               "column": 5
             }
           },
@@ -1158,11 +1158,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1429,
+              "line": 1428,
               "column": 4
             },
             "end": {
-              "line": 1431,
+              "line": 1430,
               "column": 5
             }
           },
@@ -1179,11 +1179,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1432,
+              "line": 1431,
               "column": 4
             },
             "end": {
-              "line": 1435,
+              "line": 1434,
               "column": 5
             }
           },
@@ -1201,11 +1201,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2073,
+              "line": 2072,
               "column": 4
             },
             "end": {
-              "line": 2075,
+              "line": 2074,
               "column": 5
             }
           },
@@ -1435,25 +1435,25 @@
           "inheritedFrom": "PxVisBehaviorScale.scale"
         },
         {
-          "name": "scalePadding",
-          "type": "number",
-          "description": "The padding for ordinal type scales - effective controls the spacing between ordinal groups\n\nExpressed as a percent of the ordinal group width, so a value of 0.5 for a bar chart means your bar and the gap between bars are the same size",
+          "name": "logBase",
+          "type": "string",
+          "description": "The base for logarithmic type scales",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 88,
+              "line": 86,
               "column": 4
             },
             "end": {
-              "line": 91,
+              "line": 89,
               "column": 5
             }
           },
           "metadata": {
             "polymer": {}
           },
-          "defaultValue": "0.5",
+          "defaultValue": "10",
           "inheritedFrom": "PxVisBehaviorScale.scale"
         },
         {
@@ -1464,11 +1464,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2096,
+              "line": 2095,
               "column": 4
             },
             "end": {
-              "line": 2099,
+              "line": 2098,
               "column": 5
             }
           },
@@ -1487,11 +1487,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1599,
+              "line": 1598,
               "column": 4
             },
             "end": {
-              "line": 1608,
+              "line": 1607,
               "column": 5
             }
           },
@@ -1508,11 +1508,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1651,
+              "line": 1650,
               "column": 4
             },
             "end": {
-              "line": 1656,
+              "line": 1655,
               "column": 5
             }
           },
@@ -1530,11 +1530,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1661,
+              "line": 1660,
               "column": 4
             },
             "end": {
-              "line": 1664,
+              "line": 1663,
               "column": 5
             }
           },
@@ -1552,11 +1552,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1669,
+              "line": 1668,
               "column": 4
             },
             "end": {
-              "line": 1672,
+              "line": 1671,
               "column": 5
             }
           },
@@ -1574,11 +1574,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1674,
+              "line": 1673,
               "column": 4
             },
             "end": {
-              "line": 1677,
+              "line": 1676,
               "column": 5
             }
           },
@@ -1596,11 +1596,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1728,
+              "line": 1727,
               "column": 4
             },
             "end": {
-              "line": 1730,
+              "line": 1729,
               "column": 5
             }
           },
@@ -1617,11 +1617,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2019,
+              "line": 2018,
               "column": 4
             },
             "end": {
-              "line": 2021,
+              "line": 2020,
               "column": 5
             }
           },
@@ -1638,11 +1638,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2039,
+              "line": 2038,
               "column": 4
             },
             "end": {
-              "line": 2041,
+              "line": 2040,
               "column": 5
             }
           },
@@ -1659,11 +1659,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2045,
+              "line": 2044,
               "column": 4
             },
             "end": {
-              "line": 2047,
+              "line": 2046,
               "column": 5
             }
           },
@@ -1680,11 +1680,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2051,
+              "line": 2050,
               "column": 4
             },
             "end": {
-              "line": 2053,
+              "line": 2052,
               "column": 5
             }
           },
@@ -1701,11 +1701,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1133,
+              "line": 1132,
               "column": 4
             },
             "end": {
-              "line": 1136,
+              "line": 1135,
               "column": 5
             }
           },
@@ -1723,11 +1723,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1162,
+              "line": 1161,
               "column": 4
             },
             "end": {
-              "line": 1164,
+              "line": 1163,
               "column": 5
             }
           },
@@ -1744,11 +1744,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2124,
+              "line": 2123,
               "column": 4
             },
             "end": {
-              "line": 2127,
+              "line": 2126,
               "column": 5
             }
           },
@@ -1766,11 +1766,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2128,
+              "line": 2127,
               "column": 4
             },
             "end": {
-              "line": 2131,
+              "line": 2130,
               "column": 5
             }
           },
@@ -1788,11 +1788,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2132,
+              "line": 2131,
               "column": 4
             },
             "end": {
-              "line": 2135,
+              "line": 2134,
               "column": 5
             }
           },
@@ -1811,11 +1811,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2593,
+              "line": 2602,
               "column": 4
             },
             "end": {
-              "line": 2595,
+              "line": 2604,
               "column": 5
             }
           },
@@ -1832,11 +1832,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2602,
+              "line": 2611,
               "column": 4
             },
             "end": {
-              "line": 2604,
+              "line": 2613,
               "column": 5
             }
           },
@@ -1853,11 +1853,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2608,
+              "line": 2617,
               "column": 4
             },
             "end": {
-              "line": 2610,
+              "line": 2619,
               "column": 5
             }
           },
@@ -1874,11 +1874,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3136,
+              "line": 3132,
               "column": 4
             },
             "end": {
-              "line": 3139,
+              "line": 3135,
               "column": 5
             }
           },
@@ -1895,11 +1895,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 489,
+              "line": 488,
               "column": 6
             },
             "end": {
-              "line": 492,
+              "line": 491,
               "column": 7
             }
           },
@@ -1917,11 +1917,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 493,
+              "line": 492,
               "column": 6
             },
             "end": {
-              "line": 496,
+              "line": 495,
               "column": 7
             }
           },
@@ -1939,11 +1939,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 503,
+              "line": 502,
               "column": 6
             },
             "end": {
-              "line": 506,
+              "line": 505,
               "column": 7
             }
           },
@@ -1961,11 +1961,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 511,
+              "line": 510,
               "column": 6
             },
             "end": {
-              "line": 514,
+              "line": 513,
               "column": 7
             }
           },
@@ -1983,11 +1983,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3240,
+              "line": 3236,
               "column": 4
             },
             "end": {
-              "line": 3242,
+              "line": 3238,
               "column": 5
             }
           },
@@ -2004,11 +2004,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3243,
+              "line": 3239,
               "column": 4
             },
             "end": {
-              "line": 3246,
+              "line": 3242,
               "column": 5
             }
           },
@@ -2021,16 +2021,16 @@
         {
           "name": "annotationData",
           "type": "Array",
-          "description": "The annotation data: x and y values + the series which scale should be used.\nData is an arbitrary object you want to store for use when showing the\nannotation\n```\n   [{\n       x: 1325897523,\n       y: 15.7,\n       series: y0,\n       data: {...}\n   },{\n    ...\n    }]\n```",
+          "description": "The annotation data: x and y values + the series which scale should be used.\nData is an arbitrary object you want to store for use when showing the\nannotation\n\n[{\n x: 1325897523,\n y: 15.7,\n series: y0,\n data: {\n\n },\n...\n}\n]",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3389,
+              "line": 3379,
               "column": 4
             },
             "end": {
-              "line": 3394,
+              "line": 3384,
               "column": 5
             }
           },
@@ -2048,11 +2048,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3396,
+              "line": 3386,
               "column": 4
             },
             "end": {
-              "line": 3399,
+              "line": 3389,
               "column": 5
             }
           },
@@ -2070,11 +2070,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3162,
+              "line": 3055,
               "column": 4
             },
             "end": {
-              "line": 3162,
+              "line": 3055,
               "column": 26
             }
           },
@@ -2091,11 +2091,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3163,
+              "line": 3056,
               "column": 4
             },
             "end": {
-              "line": 3163,
+              "line": 3056,
               "column": 29
             }
           },
@@ -2112,11 +2112,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3164,
+              "line": 3057,
               "column": 4
             },
             "end": {
-              "line": 3164,
+              "line": 3057,
               "column": 17
             }
           },
@@ -2133,11 +2133,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3165,
+              "line": 3058,
               "column": 4
             },
             "end": {
-              "line": 3165,
+              "line": 3058,
               "column": 17
             }
           },
@@ -2145,48 +2145,6 @@
             "polymer": {}
           },
           "inheritedFrom": "PxVisBehaviorChart.tooltipSizing"
-        },
-        {
-          "name": "referenceData",
-          "type": "Array",
-          "description": "Data to create reference curves. Format matches chartData and requires a referenceConfig with similar props to seriesConfig.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 3462,
-              "column": 4
-            },
-            "end": {
-              "line": 3462,
-              "column": 24
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "inheritedFrom": "PxVisBehavior.referenceCurveProps"
-        },
-        {
-          "name": "referenceConfig",
-          "type": "Object",
-          "description": "A configuration object needed to draw reference curves. Format is similar to seriesConfig. Valid entries:\n- `x` : default: 'x'\n- `y`: default: 'y'\n- `interpolationFunction` : default: Px.d3.curveCardinal\n- `color` :\n- `strokeWidth` default: 1",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 3473,
-              "column": 4
-            },
-            "end": {
-              "line": 3473,
-              "column": 27
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "inheritedFrom": "PxVisBehavior.referenceCurveProps"
         },
         {
           "name": "chartType",
@@ -2399,12 +2357,12 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 339,
+              "line": 352,
               "column": 4
             },
             "end": {
-              "line": 342,
-              "column": 3
+              "line": 355,
+              "column": 5
             }
           },
           "metadata": {},
@@ -2413,7 +2371,7 @@
               "name": "d"
             }
           ],
-          "inheritedFrom": "PxVisBehavior.dataChecks"
+          "inheritedFrom": "PxVisBehavior.dataset"
         },
         {
           "name": "_isDataNotNull",
@@ -2422,12 +2380,12 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 347,
-              "column": 2
+              "line": 360,
+              "column": 4
             },
             "end": {
-              "line": 350,
-              "column": 3
+              "line": 363,
+              "column": 5
             }
           },
           "metadata": {},
@@ -2436,7 +2394,7 @@
               "name": "d"
             }
           ],
-          "inheritedFrom": "PxVisBehavior.dataChecks"
+          "inheritedFrom": "PxVisBehavior.dataset"
         },
         {
           "name": "muteUnmuteSeries",
@@ -2445,11 +2403,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 591,
+              "line": 576,
               "column": 2
             },
             "end": {
-              "line": 610,
+              "line": 595,
               "column": 3
             }
           },
@@ -2471,11 +2429,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 819,
+              "line": 807,
               "column": 2
             },
             "end": {
-              "line": 827,
+              "line": 815,
               "column": 3
             }
           },
@@ -2497,11 +2455,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 835,
+              "line": 823,
               "column": 2
             },
             "end": {
-              "line": 840,
+              "line": 828,
               "column": 3
             }
           },
@@ -2523,11 +2481,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 848,
+              "line": 836,
               "column": 2
             },
             "end": {
-              "line": 853,
+              "line": 841,
               "column": 3
             }
           },
@@ -2549,11 +2507,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 861,
+              "line": 849,
               "column": 2
             },
             "end": {
-              "line": 870,
+              "line": 858,
               "column": 3
             }
           },
@@ -2575,11 +2533,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 872,
+              "line": 860,
               "column": 2
             },
             "end": {
-              "line": 884,
+              "line": 872,
               "column": 3
             }
           },
@@ -2593,6 +2551,32 @@
         },
         {
           "name": "_isVarDefined",
+          "description": "Checks to see if an object is defined",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-vis/px-vis-behavior-common.html",
+            "start": {
+              "line": 880,
+              "column": 2
+            },
+            "end": {
+              "line": 885,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "obj"
+            }
+          ],
+          "return": {
+            "type": "bool"
+          },
+          "inheritedFrom": "PxVisBehavior.commonMethods"
+        },
+        {
+          "name": "_isVarUndefined",
           "description": "Checks to see if an object is defined",
           "privacy": "protected",
           "sourceRange": {
@@ -2618,43 +2602,17 @@
           "inheritedFrom": "PxVisBehavior.commonMethods"
         },
         {
-          "name": "_isVarUndefined",
-          "description": "Checks to see if an object is defined",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 904,
-              "column": 2
-            },
-            "end": {
-              "line": 909,
-              "column": 3
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "obj"
-            }
-          ],
-          "return": {
-            "type": "bool"
-          },
-          "inheritedFrom": "PxVisBehavior.commonMethods"
-        },
-        {
           "name": "_escapeCssSelector",
           "description": "escapes '.' in css selectors so that we can appropriately select stuff with dots in thei ids",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 914,
+              "line": 902,
               "column": 2
             },
             "end": {
-              "line": 916,
+              "line": 904,
               "column": 3
             }
           },
@@ -2673,11 +2631,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 921,
+              "line": 909,
               "column": 2
             },
             "end": {
-              "line": 938,
+              "line": 926,
               "column": 3
             }
           },
@@ -2699,11 +2657,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 943,
+              "line": 931,
               "column": 2
             },
             "end": {
-              "line": 948,
+              "line": 936,
               "column": 3
             }
           },
@@ -2722,11 +2680,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 953,
+              "line": 941,
               "column": 2
             },
             "end": {
-              "line": 964,
+              "line": 952,
               "column": 3
             }
           },
@@ -2745,11 +2703,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 969,
+              "line": 957,
               "column": 2
             },
             "end": {
-              "line": 986,
+              "line": 974,
               "column": 3
             }
           },
@@ -2780,11 +2738,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 991,
+              "line": 979,
               "column": 2
             },
             "end": {
-              "line": 1008,
+              "line": 996,
               "column": 3
             }
           },
@@ -2818,11 +2776,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1010,
+              "line": 998,
               "column": 2
             },
             "end": {
-              "line": 1040,
+              "line": 1028,
               "column": 3
             }
           },
@@ -2859,11 +2817,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1045,
+              "line": 1033,
               "column": 2
             },
             "end": {
-              "line": 1058,
+              "line": 1046,
               "column": 3
             }
           },
@@ -2885,11 +2843,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1060,
+              "line": 1048,
               "column": 2
             },
             "end": {
-              "line": 1062,
+              "line": 1050,
               "column": 3
             }
           },
@@ -2908,11 +2866,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3172,
+              "line": 3065,
               "column": 2
             },
             "end": {
-              "line": 3174,
+              "line": 3067,
               "column": 3
             }
           },
@@ -3247,11 +3205,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 169,
+              "line": 168,
               "column": 4
             },
             "end": {
-              "line": 178,
+              "line": 177,
               "column": 5
             }
           },
@@ -3276,11 +3234,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 184,
+              "line": 183,
               "column": 4
             },
             "end": {
-              "line": 383,
+              "line": 382,
               "column": 5
             }
           },
@@ -3295,11 +3253,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 389,
+              "line": 388,
               "column": 4
             },
             "end": {
-              "line": 391,
+              "line": 390,
               "column": 5
             }
           },
@@ -3318,11 +3276,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 397,
+              "line": 396,
               "column": 4
             },
             "end": {
-              "line": 399,
+              "line": 398,
               "column": 5
             }
           },
@@ -3341,11 +3299,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 405,
+              "line": 404,
               "column": 4
             },
             "end": {
-              "line": 410,
+              "line": 409,
               "column": 5
             }
           },
@@ -3367,11 +3325,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 416,
+              "line": 415,
               "column": 4
             },
             "end": {
-              "line": 421,
+              "line": 420,
               "column": 5
             }
           },
@@ -3393,11 +3351,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 427,
+              "line": 426,
               "column": 4
             },
             "end": {
-              "line": 429,
+              "line": 428,
               "column": 5
             }
           },
@@ -3416,11 +3374,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 431,
+              "line": 430,
               "column": 4
             },
             "end": {
-              "line": 445,
+              "line": 444,
               "column": 5
             }
           },
@@ -3439,11 +3397,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 447,
+              "line": 446,
               "column": 4
             },
             "end": {
-              "line": 452,
+              "line": 451,
               "column": 5
             }
           },
@@ -3465,11 +3423,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 599,
+              "line": 598,
               "column": 4
             },
             "end": {
-              "line": 670,
+              "line": 669,
               "column": 5
             }
           },
@@ -3491,11 +3449,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 671,
+              "line": 670,
               "column": 4
             },
             "end": {
-              "line": 676,
+              "line": 675,
               "column": 5
             }
           },
@@ -3526,11 +3484,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 677,
+              "line": 676,
               "column": 4
             },
             "end": {
-              "line": 711,
+              "line": 710,
               "column": 5
             }
           },
@@ -3552,11 +3510,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 715,
+              "line": 714,
               "column": 4
             },
             "end": {
-              "line": 743,
+              "line": 742,
               "column": 5
             }
           },
@@ -3581,11 +3539,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 875,
+              "line": 874,
               "column": 4
             },
             "end": {
-              "line": 893,
+              "line": 892,
               "column": 5
             }
           },
@@ -3607,11 +3565,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1006,
+              "line": 1005,
               "column": 2
             },
             "end": {
-              "line": 1014,
+              "line": 1013,
               "column": 3
             }
           },
@@ -3630,11 +3588,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1051,
+              "line": 1050,
               "column": 2
             },
             "end": {
-              "line": 1068,
+              "line": 1067,
               "column": 3
             }
           },
@@ -3649,11 +3607,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1069,
+              "line": 1068,
               "column": 2
             },
             "end": {
-              "line": 1075,
+              "line": 1074,
               "column": 3
             }
           },
@@ -3668,11 +3626,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3249,
+              "line": 3245,
               "column": 2
             },
             "end": {
-              "line": 3270,
+              "line": 3259,
               "column": 3
             }
           },
@@ -3687,11 +3645,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3176,
+              "line": 3069,
               "column": 2
             },
             "end": {
-              "line": 3179,
+              "line": 3072,
               "column": 3
             }
           },
@@ -3930,11 +3888,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 811,
+              "line": 810,
               "column": 4
             },
             "end": {
-              "line": 819,
+              "line": 818,
               "column": 5
             }
           },
@@ -3949,11 +3907,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 820,
+              "line": 819,
               "column": 4
             },
             "end": {
-              "line": 828,
+              "line": 827,
               "column": 5
             }
           },
@@ -3972,11 +3930,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 829,
+              "line": 828,
               "column": 4
             },
             "end": {
-              "line": 853,
+              "line": 852,
               "column": 5
             }
           },
@@ -3998,11 +3956,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1445,
+              "line": 1444,
               "column": 2
             },
             "end": {
-              "line": 1468,
+              "line": 1467,
               "column": 3
             }
           },
@@ -4027,11 +3985,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1469,
+              "line": 1468,
               "column": 2
             },
             "end": {
-              "line": 1480,
+              "line": 1479,
               "column": 3
             }
           },
@@ -4179,63 +4137,17 @@
           "inheritedFrom": "PxColorsBehavior.dataVisColorTheming"
         },
         {
-          "name": "_isTimeType",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 3437,
-              "column": 2
-            },
-            "end": {
-              "line": 3439,
-              "column": 3
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "scale"
-            }
-          ],
-          "inheritedFrom": "PxVisBehavior.scaleTypeCheck"
-        },
-        {
-          "name": "_isOrdinalType",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 3441,
-              "column": 2
-            },
-            "end": {
-              "line": 3443,
-              "column": 3
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "scale"
-            }
-          ],
-          "inheritedFrom": "PxVisBehavior.scaleTypeCheck"
-        },
-        {
           "name": "_recreateScales",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 98,
+              "line": 96,
               "column": 2
             },
             "end": {
-              "line": 115,
+              "line": 113,
               "column": 3
             }
           },
@@ -4260,11 +4172,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 122,
+              "line": 120,
               "column": 2
             },
             "end": {
-              "line": 127,
+              "line": 125,
               "column": 3
             }
           },
@@ -4286,11 +4198,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 128,
+              "line": 126,
               "column": 2
             },
             "end": {
-              "line": 148,
+              "line": 141,
               "column": 3
             }
           },
@@ -4315,11 +4227,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 155,
+              "line": 148,
               "column": 2
             },
             "end": {
-              "line": 160,
+              "line": 153,
               "column": 3
             }
           },
@@ -4341,11 +4253,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 161,
+              "line": 154,
               "column": 2
             },
             "end": {
-              "line": 181,
+              "line": 169,
               "column": 3
             }
           },
@@ -4370,11 +4282,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 188,
+              "line": 176,
               "column": 2
             },
             "end": {
-              "line": 193,
+              "line": 181,
               "column": 3
             }
           },
@@ -4399,11 +4311,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 194,
+              "line": 182,
               "column": 2
             },
             "end": {
-              "line": 229,
+              "line": 217,
               "column": 3
             }
           },
@@ -4431,11 +4343,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 236,
+              "line": 224,
               "column": 2
             },
             "end": {
-              "line": 267,
+              "line": 258,
               "column": 3
             }
           },
@@ -4466,42 +4378,16 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 276,
+              "line": 267,
               "column": 3
             },
             "end": {
-              "line": 341,
+              "line": 324,
               "column": 3
             }
           },
           "metadata": {},
           "params": [],
-          "inheritedFrom": "PxVisBehaviorScale.scale"
-        },
-        {
-          "name": "_createOrdinalInvert",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-scale.html",
-            "start": {
-              "line": 343,
-              "column": 2
-            },
-            "end": {
-              "line": 355,
-              "column": 3
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "scale"
-            },
-            {
-              "name": "invert"
-            }
-          ],
           "inheritedFrom": "PxVisBehaviorScale.scale"
         },
         {
@@ -4511,11 +4397,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 357,
+              "line": 326,
               "column": 2
             },
             "end": {
-              "line": 395,
+              "line": 376,
               "column": 3
             }
           },
@@ -4534,11 +4420,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 401,
+              "line": 382,
               "column": 2
             },
             "end": {
-              "line": 495,
+              "line": 464,
               "column": 3
             }
           },
@@ -4553,11 +4439,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 501,
+              "line": 470,
               "column": 2
             },
             "end": {
-              "line": 536,
+              "line": 505,
               "column": 3
             }
           },
@@ -4585,11 +4471,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 542,
+              "line": 511,
               "column": 2
             },
             "end": {
-              "line": 550,
+              "line": 519,
               "column": 3
             }
           },
@@ -4611,11 +4497,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 556,
+              "line": 525,
               "column": 2
             },
             "end": {
-              "line": 573,
+              "line": 542,
               "column": 3
             }
           },
@@ -4646,11 +4532,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 580,
+              "line": 549,
               "column": 2
             },
             "end": {
-              "line": 605,
+              "line": 575,
               "column": 3
             }
           },
@@ -4690,11 +4576,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 611,
+              "line": 581,
               "column": 2
             },
             "end": {
-              "line": 625,
+              "line": 595,
               "column": 3
             }
           },
@@ -4719,11 +4605,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 631,
+              "line": 601,
               "column": 2
             },
             "end": {
-              "line": 638,
+              "line": 608,
               "column": 3
             }
           },
@@ -4757,11 +4643,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 644,
+              "line": 614,
               "column": 2
             },
             "end": {
-              "line": 648,
+              "line": 618,
               "column": 3
             }
           },
@@ -4783,11 +4669,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 654,
+              "line": 624,
               "column": 2
             },
             "end": {
-              "line": 658,
+              "line": 628,
               "column": 3
             }
           },
@@ -4809,11 +4695,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 664,
+              "line": 634,
               "column": 2
             },
             "end": {
-              "line": 680,
+              "line": 650,
               "column": 3
             }
           },
@@ -4859,11 +4745,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 687,
+              "line": 657,
               "column": 0
             },
             "end": {
-              "line": 699,
+              "line": 669,
               "column": 1
             }
           },
@@ -4885,11 +4771,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 705,
+              "line": 675,
               "column": 0
             },
             "end": {
-              "line": 726,
+              "line": 696,
               "column": 1
             }
           },
@@ -4911,11 +4797,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 732,
+              "line": 702,
               "column": 0
             },
             "end": {
-              "line": 748,
+              "line": 718,
               "column": 1
             }
           },
@@ -4940,11 +4826,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 754,
+              "line": 724,
               "column": 0
             },
             "end": {
-              "line": 766,
+              "line": 736,
               "column": 1
             }
           },
@@ -4969,11 +4855,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 772,
+              "line": 742,
               "column": 0
             },
             "end": {
-              "line": 816,
+              "line": 786,
               "column": 1
             }
           },
@@ -4988,11 +4874,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 825,
+              "line": 795,
               "column": 2
             },
             "end": {
-              "line": 850,
+              "line": 820,
               "column": 3
             }
           },
@@ -5011,11 +4897,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 851,
+              "line": 821,
               "column": 2
             },
             "end": {
-              "line": 856,
+              "line": 826,
               "column": 3
             }
           },
@@ -5030,11 +4916,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 858,
+              "line": 828,
               "column": 2
             },
             "end": {
-              "line": 896,
+              "line": 866,
               "column": 3
             }
           },
@@ -5062,11 +4948,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 906,
+              "line": 876,
               "column": 2
             },
             "end": {
-              "line": 924,
+              "line": 894,
               "column": 3
             }
           },
@@ -5091,11 +4977,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 932,
+              "line": 902,
               "column": 2
             },
             "end": {
-              "line": 940,
+              "line": 910,
               "column": 3
             }
           },
@@ -5117,11 +5003,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 942,
+              "line": 912,
               "column": 2
             },
             "end": {
-              "line": 945,
+              "line": 915,
               "column": 3
             }
           },
@@ -5134,17 +5020,59 @@
           "inheritedFrom": "PxVisBehaviorScale.scale"
         },
         {
+          "name": "_updateLogBase",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-vis/px-vis-behavior-scale.html",
+            "start": {
+              "line": 917,
+              "column": 2
+            },
+            "end": {
+              "line": 944,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "PxVisBehaviorScale.scale"
+        },
+        {
+          "name": "_fixLogExt",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-vis/px-vis-behavior-scale.html",
+            "start": {
+              "line": 946,
+              "column": 2
+            },
+            "end": {
+              "line": 968,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "ext"
+            }
+          ],
+          "inheritedFrom": "PxVisBehaviorScale.scale"
+        },
+        {
           "name": "_extentsDataRouter",
           "description": "FIXME import extentsAction",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1615,
+              "line": 1614,
               "column": 2
             },
             "end": {
-              "line": 1635,
+              "line": 1634,
               "column": 3
             }
           },
@@ -5159,11 +5087,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1679,
+              "line": 1678,
               "column": 2
             },
             "end": {
-              "line": 1682,
+              "line": 1681,
               "column": 3
             }
           },
@@ -5178,11 +5106,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1683,
+              "line": 1682,
               "column": 2
             },
             "end": {
-              "line": 1686,
+              "line": 1685,
               "column": 3
             }
           },
@@ -5197,11 +5125,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1687,
+              "line": 1686,
               "column": 2
             },
             "end": {
-              "line": 1689,
+              "line": 1688,
               "column": 3
             }
           },
@@ -5216,11 +5144,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1690,
+              "line": 1689,
               "column": 2
             },
             "end": {
-              "line": 1692,
+              "line": 1691,
               "column": 3
             }
           },
@@ -5235,11 +5163,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1745,
+              "line": 1744,
               "column": 2
             },
             "end": {
-              "line": 1756,
+              "line": 1755,
               "column": 3
             }
           },
@@ -5254,11 +5182,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1757,
+              "line": 1756,
               "column": 2
             },
             "end": {
-              "line": 1770,
+              "line": 1769,
               "column": 3
             }
           },
@@ -5273,11 +5201,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1771,
+              "line": 1770,
               "column": 2
             },
             "end": {
-              "line": 1782,
+              "line": 1781,
               "column": 3
             }
           },
@@ -5292,11 +5220,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1783,
+              "line": 1782,
               "column": 2
             },
             "end": {
-              "line": 1843,
+              "line": 1842,
               "column": 3
             }
           },
@@ -5315,11 +5243,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1844,
+              "line": 1843,
               "column": 2
             },
             "end": {
-              "line": 1850,
+              "line": 1849,
               "column": 3
             }
           },
@@ -5344,11 +5272,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1851,
+              "line": 1850,
               "column": 2
             },
             "end": {
-              "line": 1862,
+              "line": 1861,
               "column": 3
             }
           },
@@ -5367,11 +5295,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1863,
+              "line": 1862,
               "column": 2
             },
             "end": {
-              "line": 1896,
+              "line": 1895,
               "column": 3
             }
           },
@@ -5393,11 +5321,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1897,
+              "line": 1896,
               "column": 2
             },
             "end": {
-              "line": 1907,
+              "line": 1906,
               "column": 3
             }
           },
@@ -5422,11 +5350,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1908,
+              "line": 1907,
               "column": 2
             },
             "end": {
-              "line": 1914,
+              "line": 1913,
               "column": 3
             }
           },
@@ -5451,11 +5379,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1916,
+              "line": 1915,
               "column": 2
             },
             "end": {
-              "line": 1920,
+              "line": 1919,
               "column": 3
             }
           },
@@ -5470,11 +5398,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1925,
+              "line": 1924,
               "column": 2
             },
             "end": {
-              "line": 1928,
+              "line": 1927,
               "column": 3
             }
           },
@@ -5489,11 +5417,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1930,
+              "line": 1929,
               "column": 2
             },
             "end": {
-              "line": 1932,
+              "line": 1931,
               "column": 3
             }
           },
@@ -5508,11 +5436,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1938,
+              "line": 1937,
               "column": 2
             },
             "end": {
-              "line": 1951,
+              "line": 1950,
               "column": 3
             }
           },
@@ -5527,11 +5455,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1952,
+              "line": 1951,
               "column": 2
             },
             "end": {
-              "line": 1957,
+              "line": 1956,
               "column": 3
             }
           },
@@ -5550,11 +5478,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1980,
+              "line": 1979,
               "column": 2
             },
             "end": {
-              "line": 1991,
+              "line": 1990,
               "column": 3
             }
           },
@@ -5573,11 +5501,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1995,
+              "line": 1994,
               "column": 2
             },
             "end": {
-              "line": 2001,
+              "line": 2000,
               "column": 3
             }
           },
@@ -5596,11 +5524,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2059,
+              "line": 2058,
               "column": 2
             },
             "end": {
-              "line": 2084,
+              "line": 2083,
               "column": 3
             }
           },
@@ -5615,11 +5543,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2085,
+              "line": 2084,
               "column": 2
             },
             "end": {
-              "line": 2106,
+              "line": 2105,
               "column": 3
             }
           },
@@ -5634,11 +5562,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2137,
+              "line": 2136,
               "column": 2
             },
             "end": {
-              "line": 2143,
+              "line": 2142,
               "column": 3
             }
           },
@@ -5660,11 +5588,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2618,
+              "line": 2627,
               "column": 2
             },
             "end": {
-              "line": 2624,
+              "line": 2633,
               "column": 3
             }
           },
@@ -5679,11 +5607,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2625,
+              "line": 2634,
               "column": 2
             },
             "end": {
-              "line": 2652,
+              "line": 2661,
               "column": 3
             }
           },
@@ -5702,11 +5630,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 557,
+              "line": 556,
               "column": 4
             },
             "end": {
-              "line": 570,
+              "line": 569,
               "column": 5
             }
           },
@@ -5721,11 +5649,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3181,
+              "line": 3074,
               "column": 2
             },
             "end": {
-              "line": 3189,
+              "line": 3082,
               "column": 3
             }
           },
@@ -5740,11 +5668,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3191,
+              "line": 3084,
               "column": 2
             },
             "end": {
-              "line": 3193,
+              "line": 3086,
               "column": 3
             }
           },
@@ -5759,11 +5687,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 3195,
+              "line": 3088,
               "column": 2
             },
             "end": {
-              "line": 3206,
+              "line": 3099,
               "column": 3
             }
           },
@@ -6245,11 +6173,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 375,
+              "line": 345,
               "column": 6
             },
             "end": {
-              "line": 377,
+              "line": 347,
               "column": 7
             }
           },
@@ -6263,11 +6191,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 399,
+              "line": 384,
               "column": 7
             },
             "end": {
-              "line": 402,
+              "line": 387,
               "column": 8
             }
           },
@@ -6281,11 +6209,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 461,
+              "line": 446,
               "column": 4
             },
             "end": {
-              "line": 465,
+              "line": 450,
               "column": 5
             }
           },
@@ -6299,11 +6227,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 472,
+              "line": 457,
               "column": 5
             },
             "end": {
-              "line": 475,
+              "line": 460,
               "column": 5
             }
           },
@@ -6317,11 +6245,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 677,
+              "line": 662,
               "column": 4
             },
             "end": {
-              "line": 680,
+              "line": 665,
               "column": 5
             }
           },
@@ -6335,11 +6263,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 685,
+              "line": 670,
               "column": 4
             },
             "end": {
-              "line": 689,
+              "line": 674,
               "column": 5
             }
           },
@@ -6353,11 +6281,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 786,
+              "line": 771,
               "column": 4
             },
             "end": {
-              "line": 789,
+              "line": 774,
               "column": 5
             }
           },
@@ -6371,11 +6299,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 793,
+              "line": 778,
               "column": 4
             },
             "end": {
-              "line": 796,
+              "line": 781,
               "column": 5
             }
           },
@@ -6389,11 +6317,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2330,
+              "line": 2329,
               "column": 4
             },
             "end": {
-              "line": 2334,
+              "line": 2333,
               "column": 5
             }
           },
@@ -6407,11 +6335,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1180,
+              "line": 1172,
               "column": 4
             },
             "end": {
-              "line": 1183,
+              "line": 1175,
               "column": 5
             }
           },
@@ -6425,11 +6353,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1216,
+              "line": 1208,
               "column": 4
             },
             "end": {
-              "line": 1219,
+              "line": 1211,
               "column": 5
             }
           },
@@ -6583,15 +6511,15 @@
         },
         {
           "name": "x-axis-type",
-          "description": "Sets the type of data for the x values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `time`: for time domains.\n- `timeLocal`: for local time domains.\n- `linear`: for continuous input domains, such as numbers.\n- `pie`: for pie/donut charts",
+          "description": "Sets the type of data for the x values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `scaleBand`: another ordinal type meant to create a bar instead of a point.\n- `time`: for time domains.\n- `timeLocal`: for local time domains.\n- `linear`: for continuous input domains, such as numbers.\n- `log`: for continuous input domains displayed logarithmicly. NOTE: Per d3 docs, this scale cannot cross or include 0.\n- `pie`: for pie/donut charts",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1090,
+              "line": 1080,
               "column": 4
             },
             "end": {
-              "line": 1093,
+              "line": 1083,
               "column": 5
             }
           },
@@ -6601,15 +6529,15 @@
         },
         {
           "name": "y-axis-type",
-          "description": "Sets the type of data for the y values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `linear`: for continuous input domains, such as numbers.\n- `pie`: for pie/donut charts",
+          "description": "Sets the type of data for the y values\n\nValid entries are:\n- `ordinal`: for discrete input domains, such as names or categories.\n- `scaleBand`: another ordinal type meant to create a bar instead of a point.\n- `linear`: for continuous input domains, such as numbers.\n- `log`: for continuous input domains, such as numbers.\n- `pie`: for pie/donut charts",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1102,
+              "line": 1094,
               "column": 4
             },
             "end": {
-              "line": 1105,
+              "line": 1097,
               "column": 5
             }
           },
@@ -6619,15 +6547,15 @@
         },
         {
           "name": "series-config",
-          "description": "A configuration file to associate series order, name, type, and colors.\n\nAssociation of name, type, and seriesNumber should be developer set. Color and axis are optional.\n\n```\n {\n    \"seriesKey\": {  //seriesKey is a unique identifier for the configuration\n        \"type\": \"line\",  //line or scatter or both\n        \"markerSymbol\": \"diamond\" //if using scatter different markerSymbol can be used. See \"markerSymbol\" in px-vis-scatter\n        \"markerSize\": \"64\" //if using scatter allows to change the size of markers\n        \"markerScale\": \"2\" //if using scatter allows to scale the size of markers\n        \"markerFillOpacity\": \"0.5\" //if using scatter allows to specify the opacity of the inside of the marker\n        \"markerStrokeOpacity\": \"1\" //if using scatter allows to specify the opacity of the outside of the marker\n        \"strokeWidth\": \"1\" //if using line, allows you to specify the thickness of the line\n        \"mutedOpacity\": \"0.3\" //opacity value to use when muting a serie\n        \"name\": \"My Series\",  //human readable name\n        \"x\": \"x\",  //index or key name for independent variable\n        \"y\": \"y\",  //index or key name for dependent variable\n        \"xAxisUnit\": \"Volt\" //Unit to be used for the X axis. Can be ignored if x axis is time based\n        \"yAxisUnit\": \"Oranges\" //unit to be used for the Y axis.\n        \"xMin\": 0,  // minimum x value\n        \"xMax\": 100,  //maximum x value\n        \"yMin\": 5,  //minimum y value\n        \"yMax\": 50,  //maximum y value\n        \"hideInRegister\": true, //dont show in the register\n        \"color\": \"rgb(0,0,0)\", //color you want for the series\n        \"negativeColor\": \"rgb(255,255,255)\", //color you want negative values of the series to be (not all charts)\n        \"interpolationFunction\": Px.d3.curveBasis, //The line interpretor you want to use. See property 'interpolationFunction'\n        \"axis\": {\n            \"id\": \"AXIS_ID\"   //a unique identifier\n            \"side\": \"left\"    //the side that you want the axis to draw on, `left` or `right`\n            \"number\": 1       //the order of the axis on each side\n         }\n    }\n }\n```",
+          "description": "A configuration file to associate series order, name, type, and colors.\n\nAssociation of name, type, and seriesNumber should be developer set. Color and axis are optional.\n\n```\n {\n    \"seriesKey\": {  //seriesKey is a unique identifier for the configuration\n        \"type\": \"line\",  //line or scatter or both\n        \"priority\": 0, //relative priority is used to decide which series draw on top of each other. priority 0 => smaller priority. 2 draws over 1, which itself draws over 0, etc.. CANVAS ONLY\n        \"markerSymbol\": \"diamond\" //if using scatter different markerSymbol can be used. See \"markerSymbol\" in px-vis-scatter\n        \"markerSize\": \"64\" //if using scatter allows to change the size of markers\n        \"markerScale\": \"2\" //if using scatter allows to scale the size of markers\n        \"markerFillOpacity\": \"0.5\" //if using scatter allows to specify the opacity of the inside of the marker\n        \"markerStrokeOpacity\": \"1\" //if using scatter allows to specify the opacity of the outside of the marker\n        \"strokeWidth\": \"1\" //if using line, allows you to specify the thickness of the line\n        \"mutedOpacity\": \"0.3\" //opacity value to use when muting a serie\n        \"name\": \"My Series\",  //human readable name\n        \"x\": \"x\",  //index or key name for independent variable\n        \"y\": \"y\",  //index or key name for dependent variable\n        \"xAxisUnit\": \"Volt\" //Unit to be used for the X axis. Can be ignored if x axis is time based\n        \"yAxisUnit\": \"Oranges\" //unit to be used for the Y axis.\n        \"xMin\": 0,  // minimum x value\n        \"xMax\": 100,  //maximum x value\n        \"yMin\": 5,  //minimum y value\n        \"yMax\": 50,  //maximum y value\n        \"color\": \"rgb(0,0,0)\", //color you want the chart\n        \"interpolationFunction\": Px.d3.curveBasis, //The line interpretor you want to use. See property 'interpolationFunction'\n        \"axis\": {\n            \"id\": \"AXIS_ID\"   //a unique identifier\n            \"side\": \"left\"    //the side that you want the axis to draw on, `left` or `right`\n            \"number\": 1       //the order of the axis on each side\n         }\n    }\n }\n```",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 91,
+              "line": 90,
               "column": 6
             },
             "end": {
-              "line": 96,
+              "line": 95,
               "column": 7
             }
           },
@@ -6641,11 +6569,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 133,
+              "line": 132,
               "column": 6
             },
             "end": {
-              "line": 137,
+              "line": 136,
               "column": 7
             }
           },
@@ -6659,11 +6587,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 144,
+              "line": 143,
               "column": 6
             },
             "end": {
-              "line": 147,
+              "line": 146,
               "column": 7
             }
           },
@@ -6677,11 +6605,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 156,
+              "line": 155,
               "column": 6
             },
             "end": {
-              "line": 159,
+              "line": 158,
               "column": 7
             }
           },
@@ -6713,11 +6641,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1101,
+              "line": 1100,
               "column": 4
             },
             "end": {
-              "line": 1103,
+              "line": 1102,
               "column": 5
             }
           },
@@ -6731,11 +6659,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1109,
+              "line": 1108,
               "column": 4
             },
             "end": {
-              "line": 1111,
+              "line": 1110,
               "column": 5
             }
           },
@@ -6749,11 +6677,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1187,
+              "line": 1186,
               "column": 4
             },
             "end": {
-              "line": 1189,
+              "line": 1188,
               "column": 5
             }
           },
@@ -6767,11 +6695,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1195,
+              "line": 1194,
               "column": 4
             },
             "end": {
-              "line": 1197,
+              "line": 1196,
               "column": 5
             }
           },
@@ -6785,11 +6713,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1035,
+              "line": 1034,
               "column": 4
             },
             "end": {
-              "line": 1039,
+              "line": 1038,
               "column": 5
             }
           },
@@ -6803,11 +6731,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 763,
+              "line": 762,
               "column": 6
             },
             "end": {
-              "line": 767,
+              "line": 766,
               "column": 7
             }
           },
@@ -6821,11 +6749,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 777,
+              "line": 776,
               "column": 6
             },
             "end": {
-              "line": 780,
+              "line": 779,
               "column": 7
             }
           },
@@ -6839,11 +6767,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 790,
+              "line": 789,
               "column": 6
             },
             "end": {
-              "line": 793,
+              "line": 792,
               "column": 7
             }
           },
@@ -6857,11 +6785,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 805,
+              "line": 804,
               "column": 6
             },
             "end": {
-              "line": 808,
+              "line": 807,
               "column": 7
             }
           },
@@ -6875,11 +6803,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2845,
+              "line": 2738,
               "column": 4
             },
             "end": {
-              "line": 2847,
+              "line": 2740,
               "column": 5
             }
           },
@@ -6893,11 +6821,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 1614,
+              "line": 1607,
               "column": 4
             },
             "end": {
-              "line": 1616,
+              "line": 1609,
               "column": 5
             }
           },
@@ -6911,11 +6839,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1425,
+              "line": 1424,
               "column": 4
             },
             "end": {
-              "line": 1428,
+              "line": 1427,
               "column": 5
             }
           },
@@ -6929,11 +6857,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1429,
+              "line": 1428,
               "column": 4
             },
             "end": {
-              "line": 1431,
+              "line": 1430,
               "column": 5
             }
           },
@@ -6947,11 +6875,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1432,
+              "line": 1431,
               "column": 4
             },
             "end": {
-              "line": 1435,
+              "line": 1434,
               "column": 5
             }
           },
@@ -6965,11 +6893,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2073,
+              "line": 2072,
               "column": 4
             },
             "end": {
-              "line": 2075,
+              "line": 2074,
               "column": 5
             }
           },
@@ -7066,21 +6994,21 @@
           "inheritedFrom": "PxVisBehaviorScale.scale"
         },
         {
-          "name": "scale-padding",
-          "description": "The padding for ordinal type scales - effective controls the spacing between ordinal groups\n\nExpressed as a percent of the ordinal group width, so a value of 0.5 for a bar chart means your bar and the gap between bars are the same size",
+          "name": "log-base",
+          "description": "The base for logarithmic type scales",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-scale.html",
             "start": {
-              "line": 88,
+              "line": 86,
               "column": 4
             },
             "end": {
-              "line": 91,
+              "line": 89,
               "column": 5
             }
           },
           "metadata": {},
-          "type": "number",
+          "type": "string",
           "inheritedFrom": "PxVisBehaviorScale.scale"
         },
         {
@@ -7089,11 +7017,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 2096,
+              "line": 2095,
               "column": 4
             },
             "end": {
-              "line": 2099,
+              "line": 2098,
               "column": 5
             }
           },
@@ -7107,11 +7035,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1651,
+              "line": 1650,
               "column": 4
             },
             "end": {
-              "line": 1656,
+              "line": 1655,
               "column": 5
             }
           },
@@ -7125,11 +7053,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1661,
+              "line": 1660,
               "column": 4
             },
             "end": {
-              "line": 1664,
+              "line": 1663,
               "column": 5
             }
           },
@@ -7143,11 +7071,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1669,
+              "line": 1668,
               "column": 4
             },
             "end": {
-              "line": 1672,
+              "line": 1671,
               "column": 5
             }
           },
@@ -7161,11 +7089,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2019,
+              "line": 2018,
               "column": 4
             },
             "end": {
-              "line": 2021,
+              "line": 2020,
               "column": 5
             }
           },
@@ -7179,11 +7107,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1133,
+              "line": 1132,
               "column": 4
             },
             "end": {
-              "line": 1136,
+              "line": 1135,
               "column": 5
             }
           },
@@ -7197,11 +7125,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 1162,
+              "line": 1161,
               "column": 4
             },
             "end": {
-              "line": 1164,
+              "line": 1163,
               "column": 5
             }
           },
@@ -7215,11 +7143,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-chart.html",
             "start": {
-              "line": 2124,
+              "line": 2123,
               "column": 4
             },
             "end": {
-              "line": 2127,
+              "line": 2126,
               "column": 5
             }
           },
@@ -7233,11 +7161,11 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3136,
+              "line": 3132,
               "column": 4
             },
             "end": {
-              "line": 3139,
+              "line": 3135,
               "column": 5
             }
           },
@@ -7247,15 +7175,15 @@
         },
         {
           "name": "annotation-data",
-          "description": "The annotation data: x and y values + the series which scale should be used.\nData is an arbitrary object you want to store for use when showing the\nannotation\n```\n   [{\n       x: 1325897523,\n       y: 15.7,\n       series: y0,\n       data: {...}\n   },{\n    ...\n    }]\n```",
+          "description": "The annotation data: x and y values + the series which scale should be used.\nData is an arbitrary object you want to store for use when showing the\nannotation\n\n[{\n x: 1325897523,\n y: 15.7,\n series: y0,\n data: {\n\n },\n...\n}\n]",
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3389,
+              "line": 3379,
               "column": 4
             },
             "end": {
-              "line": 3394,
+              "line": 3384,
               "column": 5
             }
           },
@@ -7269,53 +7197,17 @@
           "sourceRange": {
             "file": "bower_components/px-vis/px-vis-behavior-common.html",
             "start": {
-              "line": 3396,
+              "line": 3386,
               "column": 4
             },
             "end": {
-              "line": 3399,
+              "line": 3389,
               "column": 5
             }
           },
           "metadata": {},
           "type": "boolean",
           "inheritedFrom": "PxVisBehavior.annotationData"
-        },
-        {
-          "name": "reference-data",
-          "description": "Data to create reference curves. Format matches chartData and requires a referenceConfig with similar props to seriesConfig.",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 3462,
-              "column": 4
-            },
-            "end": {
-              "line": 3462,
-              "column": 24
-            }
-          },
-          "metadata": {},
-          "type": "Array",
-          "inheritedFrom": "PxVisBehavior.referenceCurveProps"
-        },
-        {
-          "name": "reference-config",
-          "description": "A configuration object needed to draw reference curves. Format is similar to seriesConfig. Valid entries:\n- `x` : default: 'x'\n- `y`: default: 'y'\n- `interpolationFunction` : default: Px.d3.curveCardinal\n- `color` :\n- `strokeWidth` default: 1",
-          "sourceRange": {
-            "file": "bower_components/px-vis/px-vis-behavior-common.html",
-            "start": {
-              "line": 3473,
-              "column": 4
-            },
-            "end": {
-              "line": 3473,
-              "column": 27
-            }
-          },
-          "metadata": {},
-          "type": "Object",
-          "inheritedFrom": "PxVisBehavior.referenceCurveProps"
         },
         {
           "name": "chart-type",
