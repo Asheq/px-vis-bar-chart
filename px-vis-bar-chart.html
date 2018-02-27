@@ -124,7 +124,8 @@ Custom property | Description
           display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
           display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
           display-ordinal-value
-          disable-click>
+          disable-click
+          icon-color="[[_registerIconColor]]">
         </px-vis-register>
 
         <!-- chart -->
@@ -179,7 +180,8 @@ Custom property | Description
       series-keys="[[_seriesKeys]]"
       display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
       display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
-      display-ordinal-value>
+      display-ordinal-value
+      icon-color="[[_registerIconColor]]">
     </px-vis-tooltip>
 
     <px-vis-clip-path
@@ -225,7 +227,9 @@ Custom property | Description
         type="[[chartType]]"
         domain-changed="[[domainChanged]]"
         clip-path="[[seriesClipPath]]"
-        highlight-bar="[[_getOrdSet(tooltipData.*)]]">
+        highlight-bar="[[_getOrdSet(tooltipData.*)]]"
+        color-by-group="[[colorByGroup]]"
+        group-colors="[[_groupColors]]">
       </px-vis-bar-grouped-svg>
     </template>
 
@@ -516,6 +520,30 @@ Custom property | Description
             value: false
           },
 
+          /**
+           * Color each group one color rather than a series across groups having the same color
+           *
+           * */
+          colorByGroup: {
+            type: Boolean,
+            value: false
+          },
+          /**
+           * An object associating group colors to your groups
+           *
+           * ```
+           * {
+           *   group1: "rgb(255,0,0)",
+           *   group2: "rgb(0,255,0)",
+           *   group3: "rgb(0,0,255)",
+           * }
+           * ```
+           *
+           * */
+          groupColors: Object,
+          _groupColors: Object,
+          _registerIconColor: String,
+
           _baseline: Object,
 
           _defaultSeriesConfig: {
@@ -531,6 +559,7 @@ Custom property | Description
           '_returnStack(chartData.*, completeSeriesConfig.*)',
           '_setAxisTypes(chartType)',
           '_groupChanged(grouped)',
+          '_setGroupColors(grouped,colorByGroup,domainChanged)',
           '_setXScale(width, margin, xAxisType)',
           '_setYScale(height, margin, yAxisType)',
           '_setDomain(_chartDataHasChanged, x, y, completeSeriesConfig, _stackedDataExtentsTrigger)',
@@ -538,6 +567,7 @@ Custom property | Description
           '_updatePadding(scalePadding)',
           '_chartDataChanged(chartData.*)',
           '_calcTooltipPos(tooltipData.*)',
+          '_getRegisterIconColor(tooltipData.*)',
           '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
           '_createGroupScale(x,y, domainChanged, completeSeriesConfig, _seriesKeys, grouped)',
           '_drawBaseline(domainChanged)',
@@ -650,6 +680,29 @@ Custom property | Description
         this._setCompleteSeriesConfig();
       }
 
+      _setGroupColors() {
+        if(this.grouped && this.colorByGroup) {
+          this._dontCalcColors = true;
+          if(this.groupColors) {
+            this.set('_groupColors', this.groupColors);
+            return;
+          }
+
+          if(this.domainChanged !== null) {
+            const groups = this.x.domain();
+            const colors = {};
+
+            groups.forEach((group, i) => {
+              colors[group] = this.seriesColorList[i];
+            });
+
+            this.set('_groupColors', colors);
+          }
+        } else {
+          this._dontCalcColors = false;
+        }
+      }
+
       _getOrdKey() {
         if(this.hasUndefinedArguments(arguments)) {
           return;
@@ -700,6 +753,18 @@ Custom property | Description
           }
 
           this.set('mousePosition', [screenX, screenY]);
+        }
+      }
+
+      _getRegisterIconColor() {
+        if(this.grouped && this.colorByGroup) {
+          const set = this._getOrdSet();
+
+          if(set) {
+            this.set('_registerIconColor', this._groupColors[set]);
+          } else {
+            this.set('_registerIconColor', undefined);
+          }
         }
       }
 
