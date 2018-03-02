@@ -224,7 +224,7 @@ Custom property | Description
         y="[[y]]"
         ordinal-key="[[_ordinalKey]]"
         group-scale="[[_groupScale]]"
-        series-keys="[[_seriesKeys]]"
+        series-keys="[[_groupKeys]]"
         type="[[chartType]]"
         domain-changed="[[domainChanged]]"
         clip-path="[[seriesClipPath]]"
@@ -589,10 +589,7 @@ Custom property | Description
           _registerIconColor: String,
           _lineG: Object,
           _baseline: Object,
-          _hazLines: {
-            type: Boolean,
-            value: false
-          }
+          _groupKeys: Object
 
         };
       }
@@ -703,9 +700,9 @@ Custom property | Description
 
         // could use Object.values but there doesnt appear to be an official
         // shim for IE yet and value of shiming it vs just using entries ¯\_(ツ)_/¯
-        for(let [key,val] of Object.entries(this.completeSeriesConfig)) {
-          if(val.type === 'bar') {
-            barKeys.push(val[axis]);
+        for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
+          if(v.type === 'bar') {
+            barKeys.push(v[axis]);
           }
         }
 
@@ -869,10 +866,10 @@ Custom property | Description
           const valScale = this._getValueKey();
 
           // now check our line series to see if they are bigger/smaller than stacks
-          for(let [key,val] of Object.entries(this.completeSeriesConfig)) {
-            if(val.type === 'line') {
+          for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
+            if(v.type === 'line') {
               const ext = Px.d3.extent(this.chartData, (d) => {
-                return d[val[valScale]];
+                return d[v[valScale]];
               });
 
               exts[0] = Math.min(ext[0],exts[0]);
@@ -908,17 +905,22 @@ Custom property | Description
 
         const ordScale = this.xAxisType === 'scaleBand' ? 'x' : 'y';
         const valScale = this._getValueKey();
+        const domain = [];
         const keys = [];
 
-        this._seriesKeys.forEach((k) => {
-          keys.push(this.completeSeriesConfig[k][valScale]);
-        });
+        for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
+          if(v.type === 'bar') {
+            domain.push(v[valScale]);
+            keys.push(k);
+          }
+        };
 
         const scale = Px.d3.scaleBand()
           .padding(0.05)
           .rangeRound([0, this[ordScale].bandwidth()])
-          .domain(keys);
+          .domain(domain);
 
+        this.set('_groupKeys', keys);
         this.set('_groupScale', scale);
       }
 
@@ -1023,7 +1025,7 @@ Custom property | Description
             return;
           }
 
-          for(let [key,val] of Object.entries(this.$.referenceCurve._referenceConfig)) {
+          for(let [k,v] of Object.entries(this.$.referenceCurve._referenceConfig)) {
             let search = true,
                 i = 0;
 
@@ -1031,10 +1033,10 @@ Custom property | Description
               let xInvalid = true,
                   yInvalid = true;
 
-              if(this._isValidData(this.referenceData[i][val.x]) && this._isValidData(this.x(this.referenceData[i][val.x]))) {
+              if(this._isValidData(this.referenceData[i][v.x]) && this._isValidData(this.x(this.referenceData[i][v.x]))) {
                 xInvalid = false;
               }
-              if(this._isValidData(this.referenceData[i][val.y]) && this._isValidData(this.y(this.referenceData[i][val.y]))) {
+              if(this._isValidData(this.referenceData[i][v.y]) && this._isValidData(this.y(this.referenceData[i][v.y]))) {
                 yInvalid = false;
               }
 
