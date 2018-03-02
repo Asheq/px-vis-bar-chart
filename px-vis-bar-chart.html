@@ -21,6 +21,7 @@
 <link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
+<link rel="import" href="../px-vis/px-vis-line-svg.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html"/>
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html"/>
@@ -232,6 +233,27 @@ Custom property | Description
         group-colors="[[_groupColors]]">
       </px-vis-bar-grouped-svg>
     </template>
+    <!--
+      When the time comes to make this multi-y which will happen, we shouldnt make it multi-y using the methods for timeseries / xy. Instead, we should just create a second y axis, cloned from the first and then modified. This can then be applied to the line and only the line. We should never allow bars to be multi-axis.
+     -->
+    <template id="lineTemplate" is="dom-repeat" items="[[_seriesKeys]]">
+      <template is="dom-if" if="[[_chartTypeLine(item,completeSeriesConfig)]]" restamp>
+        <px-vis-line-svg
+          id="lineSVG"
+          svg="[[_lineG]]"
+          series-id="[[item]]"
+          chart-data="[[chartData]]"
+          complete-series-config="[[completeSeriesConfig]]"
+          domain-changed="[[domainChanged]]"
+          x="[[x]]"
+          y="[[y]]"
+          clip-path="[[seriesClipPath]]"
+          stroke-width="[[_returnStrokeWidth(item, completeSeriesConfig)]]"
+          interpolation-function="[[interpolationFunction]]"
+          serie-to-redraw-on-top="[[serieToRedrawOnTop]]">
+        </px-vis-line-svg>
+      </template>
+    </template>
 
     <px-vis-threshold
       svg="[[layer.3]]"
@@ -246,7 +268,6 @@ Custom property | Description
       domain-changed="[[domainChanged]]"
       clip-path="[[seriesClipPath]]"
       show-threshold-box="[[showThresholdBox]]"
-      type="[[_getValueKey(xAxisType)]]"
       language="[[language]]">
     </px-vis-threshold>
 
@@ -276,7 +297,6 @@ Custom property | Description
       width="[[width]]"
       height="[[height]]"
       orientation="[[yAxisLocation]]"
-      label-position="after"
       complete-series-config="[[completeSeriesConfig]]"
       prevent-series-bar>
     </px-vis-axis>
@@ -337,7 +357,7 @@ Custom property | Description
     <px-vis-reference-curve
       id="referenceCurve"
       chart-id="[[chartId]]"
-      svg="[[layer.3]]"
+      svg="[[_lineG]]"
       x="[[x]]"
       y="[[y]]"
       reverse-data="[[_isOrdinalType(yAxisType)]]"
@@ -349,6 +369,7 @@ Custom property | Description
 
   </template>
   <script>
+  (() => {
     const behaviours = [
       PxVisBehavior.observerCheck,
       PxVisBehavior.baseSize,
@@ -457,6 +478,29 @@ Custom property | Description
             readOnly: true
           },
           /**
+          * A default configuration file. It fills in the missing parts of seriesConfig. Any options from seriesConfig can be specified in the defaultSeriesConfig and will be automatically used if not defined in the seriesConfig
+          *
+          * Default:
+          *
+          * ```
+          *  {
+          *     "type": "bar",
+          *     "x": "x",
+          *     "y": "y"
+          *   }
+          * ```
+          */
+          _defaultSeriesConfig: {
+            type: Object,
+            value: function() {
+              return {
+                x: "x",
+                y: "y",
+                type: "bar"
+              }
+            }
+          },
+          /**
           * Specfies what type of bar chart:
           * - `bar`
           * - `column`
@@ -503,7 +547,7 @@ Custom property | Description
 
           _ordinalKey: {
             type: String,
-            computed: '_getOrdKey(completeSeriesConfig.*, _seriesKeys.*)'
+            computed: '_getOrdKey(completeSeriesConfig.*)'
           },
 
           _stackedDataExtentsTrigger: {
@@ -543,13 +587,12 @@ Custom property | Description
           groupColors: Object,
           _groupColors: Object,
           _registerIconColor: String,
-
+          _lineG: Object,
           _baseline: Object,
-
-          _defaultSeriesConfig: {
-            type: Object,
-            value: function() { return {x: "x"}; }
-          },
+          _hazLines: {
+            type: Boolean,
+            value: false
+          }
 
         };
       }
@@ -570,23 +613,39 @@ Custom property | Description
           '_getRegisterIconColor(tooltipData.*)',
           '_calcStackedDataExt(_stackedChartData, completeSeriesConfig, grouped)',
           '_createGroupScale(x,y, domainChanged, completeSeriesConfig, _seriesKeys, grouped)',
+          '_createLineGroup(layers, domainChanged)',
           '_drawBaseline(domainChanged)',
+          '_checkReference(referenceData.*)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
           '_yAxisConfigChanged(yAxisConfig.*)'
         ];
       }
 
-      ready() {
-        super.ready();
+      constructor() {
+        super();
+        this.__debouncers = {};
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
         this.set('numberOfLayers', 5);
         this.set('_verticalRegisterDrawingCanvasId', 'svg');
+        this.set('_verticalRegisterHeightDeductions', ['toolbar']);
+      }
+
+      ready() {
+        super.ready();
         this.addEventListener('iron-resize', this._onIronResize.bind(this));
+        this.$.referenceCurve.addEventListener('reference-changed', this._checkReference.bind(this));
+        if(this.referenceConfig) {
+          this._checkReference();
+        }
       }
 
       _debounce(name, cb, time) {
-        this[name] = Polymer.Debouncer.debounce(
-          this[name],
+        this.__debouncers[name] = Polymer.Debouncer.debounce(
+          this.__debouncers[name],
           Polymer.Async.timeOut.after(time),
           cb.bind(this));
       }
@@ -637,16 +696,21 @@ Custom property | Description
             !this.completeSeriesConfig) {
           return;
         }
+
         const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
         const stack = Px.d3.stack();
-        const keys = [];
+        const barKeys = [];
 
-        Object.keys(this.completeSeriesConfig).forEach((k) => {
-          keys.push(this.completeSeriesConfig[k][axis]);
-        });
+        // could use Object.values but there doesnt appear to be an official
+        // shim for IE yet and value of shiming it vs just using entries ¯\_(ツ)_/¯
+        for(let [key,val] of Object.entries(this.completeSeriesConfig)) {
+          if(val.type === 'bar') {
+            barKeys.push(val[axis]);
+          }
+        }
 
         stack.offset(Px.d3.stackOffsetDiverging);
-        stack.keys(keys);
+        stack.keys(barKeys);
         this.set('_stackedChartData', stack(this.chartData));
       }
 
@@ -793,6 +857,7 @@ Custom property | Description
         }
 
         if(this.completeSeriesConfig && this._doesObjHaveValues(this._stackedChartData)) {
+          // find the stacked values (which are generally bigger than raw chartData)
           const min = Px.d3.min(this._stackedChartData, (dataset) => {
             return Px.d3.min(dataset, (d) => { return Math.min(d[0],d[1]); });
           });
@@ -800,14 +865,29 @@ Custom property | Description
             return Px.d3.max(dataset, (d) => { return d[1]; });
           });
 
+          const exts = [min, max];
+          const valScale = this._getValueKey();
+
+          // now check our line series to see if they are bigger/smaller than stacks
+          for(let [key,val] of Object.entries(this.completeSeriesConfig)) {
+            if(val.type === 'line') {
+              const ext = Px.d3.extent(this.chartData, (d) => {
+                return d[val[valScale]];
+              });
+
+              exts[0] = Math.min(ext[0],exts[0]);
+              exts[1] = Math.max(ext[1],exts[1]);
+            }
+          }
+
           if(this.xAxisType === 'scaleBand') {
             this.dataExtents = {
               "x": this.dataExtents.x,
-              "y": [min,max]
+              "y": exts
             };
           } else {
             this.dataExtents = {
-              "x": [min,max],
+              "x": exts,
               "y": this.dataExtents.y
             };
           }
@@ -840,6 +920,29 @@ Custom property | Description
           .domain(keys);
 
         this.set('_groupScale', scale);
+      }
+
+      _createLineGroup() {
+        if(!this.layer || this._isD3Empty(this.layer[3]) || this.domainChanged === null) {
+          return;
+        }
+
+        var g;
+
+        if(this._isD3Empty(this._lineG)) {
+          g = this.layer[3].append('g')
+            .attr('class', 'lines');
+
+          this.set('_lineG', g);
+        }
+
+        if(this._isOrdinalType(this.x._scaleType)) {
+          this._lineG.attr('transform', 'translate(' + this.x.bandwidth()/2 + ',0)');
+
+        } else if(this._isOrdinalType(this.y._scaleType)) {
+          this._lineG.attr('transform', 'translate(0,' + this.y.bandwidth()/2 + ')');
+        }
+
       }
 
       _drawBaseline() {
@@ -913,8 +1016,43 @@ Custom property | Description
         return xAxisType === 'scaleBand' ? 'top' : 'right';
       }
 
+      _checkReference() {
+        this._debounce('_checkReference', () => {
+
+          if(!this.referenceData || !this.$.referenceCurve._referenceConfig) {
+            return;
+          }
+
+          for(let [key,val] of Object.entries(this.$.referenceCurve._referenceConfig)) {
+            let search = true,
+                i = 0;
+
+            while(search) {
+              let xInvalid = true,
+                  yInvalid = true;
+
+              if(this._isValidData(this.referenceData[i][val.x]) && this._isValidData(this.x(this.referenceData[i][val.x]))) {
+                xInvalid = false;
+              }
+              if(this._isValidData(this.referenceData[i][val.y]) && this._isValidData(this.y(this.referenceData[i][val.y]))) {
+                yInvalid = false;
+              }
+
+              search = xInvalid || yInvalid;
+              i += 1;
+
+              if(i === this.referenceData.length) {
+                console.warn('Something is wrong with your referenceConfig / referenceData. Did you flip the x and y?');
+                search = false;
+              }
+            }
+          }
+        }, 10);
+      }
+
     }
 
     window.customElements.define(PxVisBarChart.is, PxVisBarChart);
+  })();
   </script>
 </dom-module>

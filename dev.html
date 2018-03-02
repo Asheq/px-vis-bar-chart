@@ -103,6 +103,9 @@
             threshold-data='[
               {"type":"max", "value":0.45 }
             ]'
+            threshold-config='{
+              "max": {"direction": "vertical"}
+            }'
             margin='{
               "left": 50,
               "top": 10,
@@ -350,7 +353,33 @@
                 "x":"x",
                 "y":"y2"
               }
-            }'>
+            }'
+            reference-config='{
+              "myCurve": {
+                "name": "boffidy bof bof bof",
+                "y":"val",
+                "x":"ord"
+              }
+            }'
+            reference-data='[{
+              "ord": "A",
+              "val": 0.56
+            },{
+              "ord": "B",
+              "val": -0.4
+            },{
+              "ord": "C",
+              "val": 0.43
+            },{
+              "ord": "D",
+              "val": 0.33
+            },{
+              "ord": "E",
+              "val": 0.47
+            },{
+              "ord": "F",
+              "val": 0.41
+            }]'>
           </px-vis-bar-chart>
         </div>
         <div id="wrap">
@@ -373,7 +402,8 @@
               ]'
               threshold-config='{
                 "max": {
-                  "showThresholdBox": true
+                  "showThresholdBox": true,
+                  "direction": "vertical"
                 }
               }'
               chart-data='[{
