@@ -23,7 +23,7 @@
     "*.enc"
   ],
   "dependencies": {
-    "polymer": "^2.0.0",
+    "polymer": "^2.5.0",
     "px-vis": "^4.6.0",
     "iron-resizable-behavior": "^2.0.0",
     "app-localize-behavior": "^2.0.0"
