@@ -634,7 +634,6 @@ Custom property | Description
           '_createLineGroup(layers, domainChanged)',
           '_drawBaseline(domainChanged)',
           '_checkReference(referenceData.*)',
-          '_createCursorInfo(_hasLines)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
           '_yAxisConfigChanged(yAxisConfig.*)'
@@ -1090,6 +1089,8 @@ Custom property | Description
     }
 
     window.customElements.define(PxVisBarChart.is, PxVisBarChart);
+    window.PxVisBarChart = PxVisBarChart;
   })();
+
   </script>
 </dom-module>
