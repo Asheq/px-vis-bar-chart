@@ -367,6 +367,22 @@ Custom property | Description
       clip-path="[[seriesClipPath]]">
     </px-vis-reference-curve>
 
+    <template is="dom-if" if="[[_hasLines]]" restamp>
+      <px-vis-cursor
+        id="cursor"
+        svg="[[_lineG]]"
+        width="[[width]]"
+        height="[[height]]"
+        margin="[[margin]]"
+        complete-series-config="[[_cursorSeriesConfig]]"
+        chart-data="[[chartData]]"
+        tooltip-data="[[tooltipData]]"
+        clip-path="[[seriesClipPath]]"
+        series-keys="[[_seriesKeys]]"
+        horizontal-line="none"
+        vertical-line="none">
+      </px-vis-cursor>
+    </template>
   </template>
   <script>
   (() => {
@@ -589,7 +605,12 @@ Custom property | Description
           _registerIconColor: String,
           _lineG: Object,
           _baseline: Object,
-          _groupKeys: Object
+          _groupKeys: Object,
+          _cursorSeriesConfig: Object,
+          _hasLines: {
+            type: Boolean,
+            value: false
+          }
 
         };
       }
@@ -613,6 +634,7 @@ Custom property | Description
           '_createLineGroup(layers, domainChanged)',
           '_drawBaseline(domainChanged)',
           '_checkReference(referenceData.*)',
+          '_createCursorInfo(_hasLines)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
           '_yAxisConfigChanged(yAxisConfig.*)'
@@ -697,24 +719,31 @@ Custom property | Description
         const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
         const stack = Px.d3.stack();
         const barKeys = [];
+        let hasLines = false;
+        const cursorSeries = {};
 
         // could use Object.values but there doesnt appear to be an official
         // shim for IE yet and value of shiming it vs just using entries ¯\_(ツ)_/¯
         for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
           if(v.type === 'bar') {
             barKeys.push(v[axis]);
+          } else if(v.type === 'line') {
+            hasLines = true;
+            cursorSeries[k] = v;
           }
         }
 
         stack.offset(Px.d3.stackOffsetDiverging);
         stack.keys(barKeys);
         this.set('_stackedChartData', stack(this.chartData));
+        this.set('_hasLines', hasLines);
+        this.set('_cursorSeriesConfig', cursorSeries);
       }
 
       _setAxisTypes(chartType) {
-        if(this.domainChanged !== null) {
+        if(this.domainChanged) {
           this.setProperties({
-            domainChanged: null,
+            domainChanged: 0,
             x: null,
             y: null,
             dataExtents: null
@@ -749,7 +778,7 @@ Custom property | Description
             return;
           }
 
-          if(this.domainChanged !== null) {
+          if(this.domainChanged) {
             const groups = this.x.domain();
             const colors = {};
 
@@ -866,10 +895,10 @@ Custom property | Description
           const valScale = this._getValueKey();
 
           // now check our line series to see if they are bigger/smaller than stacks
-          for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
-            if(v.type === 'line') {
+          for(let [k,val] of Object.entries(this.completeSeriesConfig)) {
+            if(val.type === 'line') {
               const ext = Px.d3.extent(this.chartData, (d) => {
-                return d[v[valScale]];
+                return d[val[valScale]];
               });
 
               exts[0] = Math.min(ext[0],exts[0]);
@@ -899,7 +928,7 @@ Custom property | Description
             !this.y ||
             !this.completeSeriesConfig ||
             this._seriesKeys.length === 0 ||
-            this.domainChanged === null) {
+            !this.domainChanged) {
           return;
         }
 
@@ -907,11 +936,16 @@ Custom property | Description
         const valScale = this._getValueKey();
         const domain = [];
         const keys = [];
+        let hasLines = false;
+        const cursorSeries = {};
 
         for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
           if(v.type === 'bar') {
             domain.push(v[valScale]);
             keys.push(k);
+          } else if(v.type === 'line') {
+            hasLines = true;
+            cursorSeries[k] = v;
           }
         };
 
@@ -922,10 +956,12 @@ Custom property | Description
 
         this.set('_groupKeys', keys);
         this.set('_groupScale', scale);
+        this.set('_hasLines', hasLines);
+        this.set('_cursorSeriesConfig', cursorSeries);
       }
 
       _createLineGroup() {
-        if(!this.layer || this._isD3Empty(this.layer[3]) || this.domainChanged === null) {
+        if(!this.layer || this._isD3Empty(this.layer[3]) || !this.domainChanged) {
           return;
         }
 
@@ -948,7 +984,7 @@ Custom property | Description
       }
 
       _drawBaseline() {
-        if(this.domainChanged === undefined || this.domainChanged === null) {
+        if(!this.domainChanged) {
           return;
         }
 
@@ -1051,7 +1087,6 @@ Custom property | Description
           }
         }, 10);
       }
-
     }
 
     window.customElements.define(PxVisBarChart.is, PxVisBarChart);
