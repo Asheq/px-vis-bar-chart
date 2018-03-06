@@ -2,8 +2,7 @@
 <link rel="import" href="../polymer/lib/elements/dom-repeat.html"/>
 <link rel="import" href="../polymer/lib/elements/dom-if.html"/>
 <link rel="import" href="../polymer/lib/utils/async.html"/>
-
-<link rel="import" href="../px-component-helpers/polyfills/symbol-polyfill/symbol-polyfill.html"/>
+<link rel="import" href="../polymer/lib/utils/import-href.html"/>
 
 <link rel="import" href="../px-vis/px-vis-behavior-common.html"/>
 <link rel="import" href="../px-vis/px-vis-behavior-d3.html"/>
@@ -13,17 +12,10 @@
 <link rel="import" href="../px-vis/px-vis-axis.html"/>
 <link rel="import" href="../px-vis/px-vis-gridlines.html"/>
 <link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
-<link rel="import" href="../px-vis/px-vis-cursor.html"/>
-<link rel="import" href="../px-vis/px-vis-tooltip.html"/>
 <link rel="import" href="../px-vis/px-vis-register.html"/>
-<link rel="import" href="../px-vis/px-vis-threshold.html"/>
 <link rel="import" href="../px-vis/px-vis-clip-path.html"/>
 <link rel="import" href="../px-vis/px-vis-toolbar.html"/>
 <link rel="import" href="../px-vis/px-vis-annotations.html"/>
-<link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
-<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
-<link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
-<link rel="import" href="../px-vis/px-vis-line-svg.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html"/>
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html"/>
@@ -203,283 +195,340 @@ Custom property | Description
 
       static get template() {
         return Polymer.html`
-      <style include="px-vis-bar-chart-styles"></style>
+          <style include="px-vis-bar-chart-styles"></style>
 
-      <div id="wrapper" class$="{{_chartWrapperClass}}" >
-        <!--chart + register-->
-        <div class$="{{_registerWrapperClass}} safari-flex-fix">
-          <px-vis-register
-            id="register"
-            dynamic-menu-config="[[dynamicMenuConfig]]"
-            chart-width="[[width]]"
-            height="[[_verticalRegisterHeight]]"
+          <div id="wrapper" class$="{{_chartWrapperClass}}" >
+            <!--chart + register-->
+            <div class$="{{_registerWrapperClass}} safari-flex-fix">
+              <px-vis-register
+                id="register"
+                dynamic-menu-config="[[dynamicMenuConfig]]"
+                chart-width="[[width]]"
+                height="[[_verticalRegisterHeight]]"
+                margin="[[margin]]"
+                class$="{{_getHideClass(hideRegister)}}"
+                units="[[units]]"
+                tooltip-data="[[tooltipData]]"
+                chart-data="[[chartData]]"
+                complete-series-config="[[completeSeriesConfig]]"
+                muted-series="{{mutedSeries}}"
+                type="{{_registerType}}"
+                x-axis-type="[[xAxisType]]"
+                y-axis-type="[[yAxisType]]"
+                inert-register="[[hideRegister]]"
+                current-page="[[_registerCurrentPage]]"
+                total-pages="[[_registerTotalPages]]"
+                display-page-arrows="[[_registerDisplayPageArrows]]"
+                display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
+                display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
+                display-ordinal-value
+                disable-click
+                icon-color="[[_registerIconColor]]">
+              </px-vis-register>
+
+              <!-- chart -->
+              <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
+                <px-vis-toolbar
+                  id="toolbar"
+                  current-sub-config='[[toolbarSubConfig]]'
+                  action-config='{{actionConfig}}'
+                  within-chart
+                  chart-margin="[[margin]]"
+                  config='{"tooltip": true}'>
+                </px-vis-toolbar>
+                <px-vis-svg
+                  id="svg"
+                  class="flex__item--no-grow"
+                  width="[[width]]"
+                  height="[[height]]"
+                  margin="[[margin]]"
+                  svg="{{svg}}"
+                  px-svg-elem="{{pxSvgElem}}">
+                    <px-vis-annotations
+                      slot="4"
+                      svg="[[svg]]"
+                      x="[[x]]"
+                      y="[[y]]"
+                      margin="[[margin]]"
+                      domain-changed="[[domainChanged]]"
+                      complete-series-config="[[completeSeriesConfig]]"
+                      annotation-data="[[annotationData]]"
+                      show-strong-icon="[[showStrongIcon]]">
+                    </px-vis-annotations>
+                </px-vis-svg>
+              </div>
+            </div>
+          </div>
+
+          <px-vis-clip-path
+            svg="[[layer.2]]"
+            width="[[width]]"
+            height="[[height]]"
             margin="[[margin]]"
-            class$="{{_getHideClass(hideRegister)}}"
-            units="[[units]]"
-            tooltip-data="[[tooltipData]]"
-            chart-data="[[chartData]]"
+            clip-path="{{clipPath}}"
+            series-clip-path="{{seriesClipPath}}">
+          </px-vis-clip-path>
+
+          <px-vis-axis
+            id="xAxis"
+            svg="[[layer.1]]"
+            rebuild-on-draw
+            domain-changed="[[domainChanged]]"
+            axis="[[x]]"
+            axis-type="[[xAxisType]]"
+            margin="[[margin]]"
+            width="[[width]]"
+            height="[[height]]"
+            orientation="[[xAxisLocation]]"
+            label-position="after"
             complete-series-config="[[completeSeriesConfig]]"
-            muted-series="{{mutedSeries}}"
-            type="{{_registerType}}"
+            prevent-series-bar>
+          </px-vis-axis>
+          <px-vis-axis
+            id="yAxis"
+            svg="[[layer.1]]"
+            rebuild-on-draw
+            domain-changed="[[domainChanged]]"
+            axis="[[y]]"
+            axis-type="[[yAxisType]]"
+            margin="[[margin]]"
+            width="[[width]]"
+            height="[[height]]"
+            orientation="[[yAxisLocation]]"
+            complete-series-config="[[completeSeriesConfig]]"
+            prevent-series-bar>
+          </px-vis-axis>
+
+          <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'bar')]]" restamp>
+            <px-vis-gridlines
+              svg="[[layer.0]]"
+              axis="[[x]]"
+              margin="[[margin]]"
+              length="[[height]]"
+              orientation="bottom"
+              domain-changed="[[domainChanged]]">
+            </px-vis-gridlines>
+          </template>
+          <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'column')]]" restamp>
+            <px-vis-gridlines
+              svg="[[layer.0]]"
+              axis="[[y]]"
+              margin="[[margin]]"
+              length="[[width]]"
+              orientation="left"
+              domain-changed="[[domainChanged]]">
+            </px-vis-gridlines>
+          </template>
+
+          <px-vis-interaction-space
+            id="interactionSpace"
+            svg="[[layer.4]]"
+            width="[[width]]"
+            height="[[height]]"
+            margin="[[margin]]"
             x-axis-type="[[xAxisType]]"
             y-axis-type="[[yAxisType]]"
-            inert-register="[[hideRegister]]"
-            current-page="[[_registerCurrentPage]]"
-            total-pages="[[_registerTotalPages]]"
-            display-page-arrows="[[_registerDisplayPageArrows]]"
-            display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
-            display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
-            display-ordinal-value
-            disable-click
-            icon-color="[[_registerIconColor]]">
-          </px-vis-register>
+            series-keys="[[_seriesKeys]]"
+            complete-series-config="[[completeSeriesConfig]]"
+            chart-data="[[chartData]]"
+            chart-id="[[chartId]]"
+            x="[[x]]"
+            y="[[y]]"
+            domain-changed="[[domainChanged]]"
+            mouse-rect="{{mouseRect}}"
+            tooltip-data="{{tooltipData}}"
+            crosshair-data="{{crosshairData}}"
+            default-empty-data="[[defaultEmptyData]]"
+            generating-crosshair-data="{{generatingCrosshairData}}"
+            interaction-svg="{{interactionSvg}}"
+            extents-data="{{extentsData}}"
+            action-config="[[actionConfig]]"
+            selection-type="[[selectionType]]"
+            extents-action="{{extentsAction}}"
+            muted-series="[[mutedSeries]]"
+            hard-mute="[[hardMute]]"
+            is-bar
+            prevent-web-worker-synchronization="[[preventWebWorkerSynchronization]]"
+            ww-data-sync-counter="[[wwDataSyncCounter]]">
+          </px-vis-interaction-space>
 
-          <!-- chart -->
-          <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
-            <px-vis-toolbar
-              id="toolbar"
-              current-sub-config='[[toolbarSubConfig]]'
-              action-config='{{actionConfig}}'
-              within-chart
-              chart-margin="[[margin]]"
-              config='{"tooltip": true}'>
-            </px-vis-toolbar>
-            <px-vis-svg
-              id="svg"
-              class="flex__item--no-grow"
+          ${this.stackedBarTemplate}
+
+          ${this.groupedBarTemplate}
+
+          ${this.lineTemplate}
+
+          ${this.thresholdsTemplate}
+
+          ${this.referenceCurveTemplate}
+
+          ${this.tooltipTemplate}
+
+          ${this.extendBarChartTemplate}
+        `;
+      }
+
+
+      static get stackedBarTemplate() {
+        return Polymer.html`
+          <template is="dom-if" if="[[!grouped]]" restamp>
+            <template is="dom-repeat" items="[[_stackedChartData]]">
+              <px-vis-bar-svg
+                id="bars"
+                svg="[[layer.2]]"
+                complete-series-config="[[completeSeriesConfig]]"
+                chart-data="[[item]]"
+                series-key="[[item.key]]"
+                x="[[x]]"
+                y="[[y]]"
+                type="[[chartType]]"
+                domain-changed="[[domainChanged]]"
+                clip-path="[[seriesClipPath]]"
+                highlight-bar="[[_getOrdSet(tooltipData.*)]]">
+              </px-vis-bar-svg>
+            </template>
+          </template>
+        `;
+      }
+
+      static get groupedBarTemplate() {
+        return Polymer.html`
+          <template is="dom-if" if="[[grouped]]" restamp>
+            <px-vis-bar-grouped-svg
+              id="bars"
+              svg="[[layer.2]]"
+              height="[[height]]"
+              margin="[[margin]]"
+              complete-series-config="[[completeSeriesConfig]]"
+              chart-data="[[chartData]]"
+              x="[[x]]"
+              y="[[y]]"
+              ordinal-key="[[_ordinalKey]]"
+              group-scale="[[_groupScale]]"
+              series-keys="[[_groupKeys]]"
+              type="[[chartType]]"
+              domain-changed="[[domainChanged]]"
+              clip-path="[[seriesClipPath]]"
+              highlight-bar="[[_getOrdSet(tooltipData.*)]]"
+              color-by-group="[[colorByGroup]]"
+              group-colors="[[_groupColors]]">
+            </px-vis-bar-grouped-svg>
+          </template>
+        `;
+      }
+
+      static get lineTemplate() {
+        return Polymer.html`
+          <template is="dom-if" if="[[_hasLines]]" restamp>
+            <!--
+            When the time comes to make this multi-y which will happen, we shouldnt make it multi-y using the methods for timeseries / xy. Instead, we should just create a second y axis, cloned from the first and then modified. This can then be applied to the line and only the line. We should never allow bars to be multi-axis.
+              -->
+            <template id="lineTemplate" is="dom-repeat" items="[[_returLinenSeriesKeys(_lineSeriesConfig.*)]]">
+              <px-vis-line-svg
+                id="lineSVG"
+                svg="[[_lineG]]"
+                series-id="[[item]]"
+                chart-data="[[chartData]]"
+                complete-series-config="[[completeSeriesConfig]]"
+                domain-changed="[[domainChanged]]"
+                x="[[x]]"
+                y="[[y]]"
+                clip-path="[[seriesClipPath]]"
+                stroke-width="[[_returnStrokeWidth(item, completeSeriesConfig)]]"
+                interpolation-function="[[interpolationFunction]]"
+                serie-to-redraw-on-top="[[serieToRedrawOnTop]]">
+              </px-vis-line-svg>
+            </template>
+
+            <px-vis-cursor
+              id="cursor"
+              svg="[[_lineG]]"
               width="[[width]]"
               height="[[height]]"
               margin="[[margin]]"
-              svg="{{svg}}"
-              px-svg-elem="{{pxSvgElem}}">
-                <px-vis-annotations
-                  slot="4"
-                  svg="[[svg]]"
-                  x="[[x]]"
-                  y="[[y]]"
-                  margin="[[margin]]"
-                  domain-changed="[[domainChanged]]"
-                  complete-series-config="[[completeSeriesConfig]]"
-                  annotation-data="[[annotationData]]"
-                  show-strong-icon="[[showStrongIcon]]">
-                </px-vis-annotations>
-            </px-vis-svg>
-          </div>
-        </div>
-      </div>
-
-      <px-vis-tooltip
-        id="tooltip"
-        orientation="[[_getTooltipOrientation(xAxisType)]]"
-        hover-target=[[mouseRect]]
-        mouse-position="[[mousePosition]]"
-        width="250"
-        margin="[[margin]]"
-        chart-data="[[chartData]]"
-        tooltip-data="[[tooltipData]]"
-        complete-series-config="[[completeSeriesConfig]]"
-        x-axis-type="[[xAxisType]]"
-        y-axis-type="[[yAxisType]]"
-        tooltip-style="light"
-        muted-series="[[mutedSeries]]"
-        hide="[[!_computedShowTooltip]]"
-        series-keys="[[_seriesKeys]]"
-        display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
-        display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
-        display-ordinal-value
-        icon-color="[[_registerIconColor]]">
-      </px-vis-tooltip>
-
-      <px-vis-clip-path
-        svg="[[layer.2]]"
-        width="[[width]]"
-        height="[[height]]"
-        margin="[[margin]]"
-        clip-path="{{clipPath}}"
-        series-clip-path="{{seriesClipPath}}">
-      </px-vis-clip-path>
-
-      <template is="dom-if" if="[[!grouped]]" restamp>
-        <template is="dom-repeat" items="[[_stackedChartData]]">
-          <px-vis-bar-svg
-            id="bars"
-            svg="[[layer.2]]"
-            complete-series-config="[[completeSeriesConfig]]"
-            chart-data="[[item]]"
-            series-key="[[item.key]]"
-            x="[[x]]"
-            y="[[y]]"
-            type="[[chartType]]"
-            domain-changed="[[domainChanged]]"
-            clip-path="[[seriesClipPath]]"
-            highlight-bar="[[_getOrdSet(tooltipData.*)]]">
-          </px-vis-bar-svg>
-        </template>
-      </template>
-
-      <template is="dom-if" if="[[grouped]]" restamp>
-        <px-vis-bar-grouped-svg
-          id="bars"
-          svg="[[layer.2]]"
-          height="[[height]]"
-          margin="[[margin]]"
-          complete-series-config="[[completeSeriesConfig]]"
-          chart-data="[[chartData]]"
-          x="[[x]]"
-          y="[[y]]"
-          ordinal-key="[[_ordinalKey]]"
-          group-scale="[[_groupScale]]"
-          series-keys="[[_groupKeys]]"
-          type="[[chartType]]"
-          domain-changed="[[domainChanged]]"
-          clip-path="[[seriesClipPath]]"
-          highlight-bar="[[_getOrdSet(tooltipData.*)]]"
-          color-by-group="[[colorByGroup]]"
-          group-colors="[[_groupColors]]">
-        </px-vis-bar-grouped-svg>
-      </template>
-      <!--
-        When the time comes to make this multi-y which will happen, we shouldnt make it multi-y using the methods for timeseries / xy. Instead, we should just create a second y axis, cloned from the first and then modified. This can then be applied to the line and only the line. We should never allow bars to be multi-axis.
-      -->
-      <template id="lineTemplate" is="dom-repeat" items="[[_seriesKeys]]">
-        <template is="dom-if" if="[[_chartTypeLine(item,completeSeriesConfig)]]" restamp>
-          <px-vis-line-svg
-            id="lineSVG"
-            svg="[[_lineG]]"
-            series-id="[[item]]"
-            chart-data="[[chartData]]"
-            complete-series-config="[[completeSeriesConfig]]"
-            domain-changed="[[domainChanged]]"
-            x="[[x]]"
-            y="[[y]]"
-            clip-path="[[seriesClipPath]]"
-            stroke-width="[[_returnStrokeWidth(item, completeSeriesConfig)]]"
-            interpolation-function="[[interpolationFunction]]"
-            serie-to-redraw-on-top="[[serieToRedrawOnTop]]">
-          </px-vis-line-svg>
-        </template>
-      </template>
-
-      <px-vis-threshold
-        svg="[[layer.3]]"
-        complete-series-config="[[completeSeriesConfig]]"
-        threshold-data="[[thresholdData]]"
-        threshold-config="[[thresholdConfig]]"
-        width="[[width]]"
-        height="[[height]]"
-        margin="[[margin]]"
-        x="[[x]]"
-        y="[[y]]"
-        domain-changed="[[domainChanged]]"
-        clip-path="[[seriesClipPath]]"
-        show-threshold-box="[[showThresholdBox]]"
-        language="[[language]]">
-      </px-vis-threshold>
-
-      <px-vis-axis
-        id="xAxis"
-        svg="[[layer.1]]"
-        rebuild-on-draw
-        domain-changed="[[domainChanged]]"
-        axis="[[x]]"
-        axis-type="[[xAxisType]]"
-        margin="[[margin]]"
-        width="[[width]]"
-        height="[[height]]"
-        orientation="[[xAxisLocation]]"
-        label-position="after"
-        complete-series-config="[[completeSeriesConfig]]"
-        prevent-series-bar>
-      </px-vis-axis>
-      <px-vis-axis
-        id="yAxis"
-        svg="[[layer.1]]"
-        rebuild-on-draw
-        domain-changed="[[domainChanged]]"
-        axis="[[y]]"
-        axis-type="[[yAxisType]]"
-        margin="[[margin]]"
-        width="[[width]]"
-        height="[[height]]"
-        orientation="[[yAxisLocation]]"
-        complete-series-config="[[completeSeriesConfig]]"
-        prevent-series-bar>
-      </px-vis-axis>
-
-      <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'bar')]]" restamp>
-        <px-vis-gridlines
-          svg="[[layer.0]]"
-          axis="[[x]]"
-          margin="[[margin]]"
-          length="[[height]]"
-          orientation="bottom"
-          domain-changed="[[domainChanged]]">
-        </px-vis-gridlines>
-      </template>
-      <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'column')]]" restamp>
-        <px-vis-gridlines
-          svg="[[layer.0]]"
-          axis="[[y]]"
-          margin="[[margin]]"
-          length="[[width]]"
-          orientation="left"
-          domain-changed="[[domainChanged]]">
-        </px-vis-gridlines>
-      </template>
-
-      <px-vis-interaction-space
-        id="interactionSpace"
-        svg="[[layer.4]]"
-        width="[[width]]"
-        height="[[height]]"
-        margin="[[margin]]"
-        x-axis-type="[[xAxisType]]"
-        y-axis-type="[[yAxisType]]"
-        series-keys="[[_seriesKeys]]"
-        complete-series-config="[[completeSeriesConfig]]"
-        chart-data="[[chartData]]"
-        chart-id="[[chartId]]"
-        x="[[x]]"
-        y="[[y]]"
-        domain-changed="[[domainChanged]]"
-        mouse-rect="{{mouseRect}}"
-        tooltip-data="{{tooltipData}}"
-        crosshair-data="{{crosshairData}}"
-        default-empty-data="[[defaultEmptyData]]"
-        generating-crosshair-data="{{generatingCrosshairData}}"
-        interaction-svg="{{interactionSvg}}"
-        extents-data="{{extentsData}}"
-        action-config="[[actionConfig]]"
-        selection-type="[[selectionType]]"
-        extents-action="{{extentsAction}}"
-        muted-series="[[mutedSeries]]"
-        hard-mute="[[hardMute]]"
-        is-bar
-        prevent-web-worker-synchronization="[[preventWebWorkerSynchronization]]"
-        ww-data-sync-counter="[[wwDataSyncCounter]]">
-      </px-vis-interaction-space>
-
-      <px-vis-reference-curve
-        id="referenceCurve"
-        chart-id="[[chartId]]"
-        svg="[[_lineG]]"
-        x="[[x]]"
-        y="[[y]]"
-        reverse-data="[[_isOrdinalType(yAxisType)]]"
-        domain-changed="[[domainChanged]]"
-        reference-config="[[referenceConfig]]"
-        reference-data="[[referenceData]]"
-        clip-path="[[seriesClipPath]]">
-      </px-vis-reference-curve>
-
-
-      <div>
-        ${this.extendBar}
-      </div>
-    `;
+              complete-series-config="[[_lineSeriesConfig]]"
+              chart-data="[[chartData]]"
+              tooltip-data="[[tooltipData]]"
+              clip-path="[[seriesClipPath]]"
+              series-keys="[[_seriesKeys]]"
+              horizontal-line="none"
+              vertical-line="none">
+            </px-vis-cursor>
+          </template>
+        `;
       }
 
-      static get extendBar() { return Polymer.html``; }
+      static get thresholdsTemplate() {
+        return Polymer.html`
+          <template is="dom-if" if="[[_showThresholds(thresholdData.*)]]" restamp>
+            <px-vis-threshold
+              svg="[[layer.3]]"
+              complete-series-config="[[completeSeriesConfig]]"
+              threshold-data="[[thresholdData]]"
+              threshold-config="[[thresholdConfig]]"
+              width="[[width]]"
+              height="[[height]]"
+              margin="[[margin]]"
+              x="[[x]]"
+              y="[[y]]"
+              domain-changed="[[domainChanged]]"
+              clip-path="[[seriesClipPath]]"
+              show-threshold-box="[[showThresholdBox]]"
+              language="[[language]]">
+            </px-vis-threshold>
+          </template>
+        `;
+      }
+
+      static get referenceCurveTemplate() {
+        return Polymer.html`
+          <template is="dom-if" if="[[_showRef(referenceData.*)]]" restamp>
+            <px-vis-reference-curve
+              id="referenceCurve"
+              chart-id="[[chartId]]"
+              svg="[[_lineG]]"
+              x="[[x]]"
+              y="[[y]]"
+              reverse-data="[[_isOrdinalType(yAxisType)]]"
+              domain-changed="[[domainChanged]]"
+              reference-config="[[referenceConfig]]"
+              reference-data="[[referenceData]]"
+              clip-path="[[seriesClipPath]]"
+              on-_reference-config-changed="_checkReference">
+            </px-vis-reference-curve>
+          </template>
+        `;
+      }
+
+      static get tooltipTemplate() {
+        return Polymer.html`
+          <template is="dom-if" if="[[showTooltip]]" restamp>
+            <px-vis-tooltip
+              id="tooltip"
+              orientation="[[_getTooltipOrientation(xAxisType)]]"
+              hover-target=[[mouseRect]]
+              mouse-position="[[mousePosition]]"
+              width="250"
+              margin="[[margin]]"
+              chart-data="[[chartData]]"
+              tooltip-data="[[tooltipData]]"
+              complete-series-config="[[completeSeriesConfig]]"
+              x-axis-type="[[xAxisType]]"
+              y-axis-type="[[yAxisType]]"
+              tooltip-style="light"
+              muted-series="[[mutedSeries]]"
+              hide="[[!_computedShowTooltip]]"
+              series-keys="[[_seriesKeys]]"
+              display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
+              display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
+              display-ordinal-value
+              icon-color="[[_registerIconColor]]">
+            </px-vis-tooltip>
+          </template>
+        `;
+      }
+
+      static get extendBarChartTemplate() { return Polymer.html``; }
 
 
       static get properties() {
@@ -602,11 +651,19 @@ Custom property | Description
           _lineG: Object,
           _baseline: Object,
           _groupKeys: Object,
-          _cursorSeriesConfig: Object,
+          _lineSeriesConfig: Object,
           _hasLines: {
             type: Boolean,
             value: false
-          }
+          },
+          _hasThresholds: {
+            type: Boolean,
+            value: false
+          },
+          _hasReferenceCurve: {
+            type: Boolean,
+            value: false
+          },
 
         };
       }
@@ -629,10 +686,16 @@ Custom property | Description
           '_createGroupScale(x,y, domainChanged, completeSeriesConfig, _seriesKeys, grouped)',
           '_createLineGroup(layers, domainChanged)',
           '_drawBaseline(domainChanged)',
-          '_checkReference(referenceData.*)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
-          '_yAxisConfigChanged(yAxisConfig.*)'
+          '_yAxisConfigChanged(yAxisConfig.*)',
+
+          // dynamic loading
+          '_loadBars(grouped)',
+          '_loadLines(_hasLines)',
+          '_loadThresholds(thresholdData)',
+          '_loadReferenceCurve(referenceData)',
+          '_loadTooltip(showTooltip)',
         ];
       }
 
@@ -651,10 +714,6 @@ Custom property | Description
       ready() {
         super.ready();
         this.addEventListener('iron-resize', this._onIronResize.bind(this));
-        this.$.referenceCurve.addEventListener('reference-changed', this._checkReference.bind(this));
-        if(this.referenceConfig) {
-          this._checkReference();
-        }
       }
 
       _debounce(name, cb, time) {
@@ -715,7 +774,7 @@ Custom property | Description
         const stack = Px.d3.stack();
         const barKeys = [];
         let hasLines = false;
-        const cursorSeries = {};
+        const lineSeries = {};
 
         // could use Object.values but there doesnt appear to be an official
         // shim for IE yet and value of shiming it vs just using entries ¯\_(ツ)_/¯
@@ -724,7 +783,7 @@ Custom property | Description
             barKeys.push(val[axis]);
           } else if(val.type === 'line') {
             hasLines = true;
-            cursorSeries[k] = val;
+            lineSeries[k] = val;
           }
         });
 
@@ -732,7 +791,7 @@ Custom property | Description
         stack.keys(barKeys);
         this.set('_stackedChartData', stack(this.chartData));
         this.set('_hasLines', hasLines);
-        this.set('_cursorSeriesConfig', cursorSeries);
+        this.set('_lineSeriesConfig', lineSeries);
       }
 
       _setAxisTypes(chartType) {
@@ -827,13 +886,13 @@ Custom property | Description
             screenX += this.x.bandwidth()/2 + this.tooltipData.series[0]['coord'][0];
             screenY += this.grouped ?
                         this._getLargestCoord(1, 'min') :
-                        this.y(this._getSummedVal('x'));
+                        this.y(this._getSummedVal.bind(this)('x'));
 
           } else {
             screenY += this.y.bandwidth()/2 + this.tooltipData.series[0]['coord'][1];
             screenX += this.grouped ?
                         this._getLargestCoord(0, 'max') :
-                        this.x(this._getSummedVal('y'));
+                        this.x(this._getSummedVal.bind(this)('y'));
 
           }
 
@@ -858,7 +917,12 @@ Custom property | Description
       }
 
       _getSummedVal(axis) {
-        const index = Px.d3.bisectLeft(this[axis].domain(), this.tooltipData.ordinalSet);
+        let index = Px.d3.bisectLeft(this[axis].domain(), this.tooltipData.ordinalSet);
+
+        // periodic d3 overflow bug? When on the first item (so left should = -1), sets index to arr.length
+        if(index === this[axis].domain().length) {
+          index -= 1;
+        }
 
         return Px.d3.max(this._stackedChartData, (d) => { return Math.max(d[index][0],d[index][1]); });
       }
@@ -932,7 +996,7 @@ Custom property | Description
         const domain = [];
         const keys = [];
         let hasLines = false;
-        const cursorSeries = {};
+        const lineSeries = {};
 
         Object.entries(this.completeSeriesConfig).forEach(([k,val]) => {
           if(val.type === 'bar') {
@@ -940,7 +1004,7 @@ Custom property | Description
             keys.push(k);
           } else if(val.type === 'line') {
             hasLines = true;
-            cursorSeries[k] = val;
+            lineSeries[k] = val;
           }
         });
 
@@ -952,7 +1016,7 @@ Custom property | Description
         this.set('_groupKeys', keys);
         this.set('_groupScale', scale);
         this.set('_hasLines', hasLines);
-        this.set('_cursorSeriesConfig', cursorSeries);
+        this.set('_lineSeriesConfig', lineSeries);
       }
 
       _createLineGroup() {
@@ -1049,14 +1113,15 @@ Custom property | Description
         return xAxisType === 'scaleBand' ? 'top' : 'right';
       }
 
-      _checkReference() {
+      _checkReference(evt) {
+        let target = evt.target;
         this._debounce('_checkReference', () => {
 
-          if(!this.referenceData || !this.$.referenceCurve._referenceConfig) {
+          if(!this.referenceData || !target || !target._referenceConfig) {
             return;
           }
 
-          Object.entries(this.$.referenceCurve._referenceConfig).forEach(([k,val]) => {
+          Object.entries(target._referenceConfig).forEach(([k,val]) => {
             let search = true,
                 i = 0;
 
@@ -1080,7 +1145,79 @@ Custom property | Description
               }
             }
           });
-        }, 10);
+        }, 100);
+      }
+
+      _returnLineSeriesKeys() {
+        return Object.keys(this._lineSeriesConfig);
+      }
+
+      _showThresholds() {
+        return this.thresholdData && this.thresholdData.length ? true : false;
+      }
+
+      _showRef() {
+        return this.referenceData && this.referenceData.length ? true : false;
+      }
+
+      _loadGroupedBars() {
+        if(this._groupedBarLoaded) {
+          return;
+        }
+
+        this.importHref(this.resolveUrl('../px-vis/px-vis-bar-grouped-svg.html'), () => { this._groupedBarLoaded = true; }, null, true);
+      }
+
+      _loadStackedBars() {
+        if(this._stackedBarLoaded) {
+          return;
+        }
+
+        this.importHref(this.resolveUrl('../px-vis/px-vis-bar-svg.html'), () => { this._stackedBarLoaded = true; }, null, true);
+      }
+
+      _loadBars() {
+        if(this.grouped) {
+          this._loadGroupedBars();
+        } else {
+          this._loadStackedBars();
+        }
+      }
+
+      _loadLines() {
+        if(!this.hasLines || this._linesLoaded) {
+          return;
+        }
+
+        this.importHref(this.resolveUrl('../px-vis/px-vis-line-svg.html'), () => { this._linesLoaded = true; }, null, true);
+        this.importHref(this.resolveUrl('../px-vis/px-vis-cursor.html'), null, null, true);
+
+      }
+
+      _loadThresholds() {
+        if(!this.thresholdData || !this.thresholdData.length || this._thresholdsImported) {
+          return;
+        }
+
+        this.importHref(this.resolveUrl('../px-vis/px-vis-threshold.html'), () => { this._thresholdsImported = true; }, null, true);
+
+      }
+
+      _loadReferenceCurve() {
+        if(!this.referenceData || !this.referenceData.length || this._referenceCurveImported) {
+          return;
+        }
+
+        this.importHref(this.resolveUrl('../px-vis/px-vis-reference-curve.html'), () => { this._referenceCurveImported = true; }, null, true);
+
+      }
+
+      _loadTooltip() {
+        if(!this.showTooltip || this._tooltipImported) {
+          return;
+        }
+
+        this.importHref(this.resolveUrl('../px-vis/px-vis-tooltip.html'), () => { this._tooltipImported = true; }, null, true);
       }
     }
 
