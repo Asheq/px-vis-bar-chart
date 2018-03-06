@@ -423,7 +423,7 @@ Custom property | Description
             <!--
             When the time comes to make this multi-y which will happen, we shouldnt make it multi-y using the methods for timeseries / xy. Instead, we should just create a second y axis, cloned from the first and then modified. This can then be applied to the line and only the line. We should never allow bars to be multi-axis.
               -->
-            <template id="lineTemplate" is="dom-repeat" items="[[_returLinenSeriesKeys(_lineSeriesConfig.*)]]">
+            <template id="lineTemplate" is="dom-repeat" items="[[_returnLineSeriesKeys(_lineSeriesConfig.*)]]">
               <px-vis-line-svg
                 id="lineSVG"
                 svg="[[_lineG]]"
