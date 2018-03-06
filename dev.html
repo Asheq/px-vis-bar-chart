@@ -14,19 +14,12 @@
 
     <link rel="import" href="../promise-polyfill/promise-polyfill-lite.html">
     <link rel="import" href="px-vis-bar-chart.html" />
-    <link rel="import" href="../iron-ajax/iron-ajax.html" />
   </head>
 
   <body>
     <dom-bind>
       <template id="demo" is="dom-bind">
         <h3>Demo</h3>
-        <iron-ajax
-          url="../px-demo-data/demo-data/apm/polar.json"
-          handle-as="json"
-          last-response="{{data}}" auto>
-        </iron-ajax>
-
         <div id="wrap">
             <h2>Column chart</h2>
             <px-vis-bar-chart
