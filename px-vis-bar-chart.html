@@ -723,14 +723,14 @@ Custom property | Description
 
         // could use Object.values but there doesnt appear to be an official
         // shim for IE yet and value of shiming it vs just using entries ¯\_(ツ)_/¯
-        for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
-          if(v.type === 'bar') {
-            barKeys.push(v[axis]);
-          } else if(v.type === 'line') {
+        Object.entries(this.completeSeriesConfig).forEach(([k,val]) => {
+          if(val.type === 'bar') {
+            barKeys.push(val[axis]);
+          } else if(val.type === 'line') {
             hasLines = true;
-            cursorSeries[k] = v;
+            cursorSeries[k] = val;
           }
-        }
+        });
 
         stack.offset(Px.d3.stackOffsetDiverging);
         stack.keys(barKeys);
@@ -894,7 +894,7 @@ Custom property | Description
           const valScale = this._getValueKey();
 
           // now check our line series to see if they are bigger/smaller than stacks
-          for(let [k,val] of Object.entries(this.completeSeriesConfig)) {
+          Object.entries(this.completeSeriesConfig).forEach(([k,val]) => {
             if(val.type === 'line') {
               const ext = Px.d3.extent(this.chartData, (d) => {
                 return d[val[valScale]];
@@ -903,7 +903,7 @@ Custom property | Description
               exts[0] = Math.min(ext[0],exts[0]);
               exts[1] = Math.max(ext[1],exts[1]);
             }
-          }
+          });
 
           if(this.xAxisType === 'scaleBand') {
             this.dataExtents = {
@@ -938,15 +938,15 @@ Custom property | Description
         let hasLines = false;
         const cursorSeries = {};
 
-        for(let [k,v] of Object.entries(this.completeSeriesConfig)) {
-          if(v.type === 'bar') {
-            domain.push(v[valScale]);
+        Object.entries(this.completeSeriesConfig).forEach(([k,val]) => {
+          if(val.type === 'bar') {
+            domain.push(val[valScale]);
             keys.push(k);
-          } else if(v.type === 'line') {
+          } else if(val.type === 'line') {
             hasLines = true;
-            cursorSeries[k] = v;
+            cursorSeries[k] = val;
           }
-        };
+        });
 
         const scale = Px.d3.scaleBand()
           .padding(0.05)
@@ -1060,7 +1060,7 @@ Custom property | Description
             return;
           }
 
-          for(let [k,v] of Object.entries(this.$.referenceCurve._referenceConfig)) {
+          Object.entries(this.$.referenceCurve._referenceConfig).forEach(([k,val]) => {
             let search = true,
                 i = 0;
 
@@ -1068,10 +1068,10 @@ Custom property | Description
               let xInvalid = true,
                   yInvalid = true;
 
-              if(this._isValidData(this.referenceData[i][v.x]) && this._isValidData(this.x(this.referenceData[i][v.x]))) {
+              if(this._isValidData(this.referenceData[i][val.x]) && this._isValidData(this.x(this.referenceData[i][val.x]))) {
                 xInvalid = false;
               }
-              if(this._isValidData(this.referenceData[i][v.y]) && this._isValidData(this.y(this.referenceData[i][v.y]))) {
+              if(this._isValidData(this.referenceData[i][val.y]) && this._isValidData(this.y(this.referenceData[i][val.y]))) {
                 yInvalid = false;
               }
 
@@ -1083,7 +1083,7 @@ Custom property | Description
                 search = false;
               }
             }
-          }
+          });
         }, 10);
       }
     }
