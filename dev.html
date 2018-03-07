@@ -21,101 +21,6 @@
       <template id="demo" is="dom-bind">
         <h3>Demo</h3>
         <div id="wrap">
-            <h2>Column chart</h2>
-            <px-vis-bar-chart
-              width="800"
-              height="500"
-              margin='{
-                "left": 50,
-                "top": 10,
-                "bottom": 50,
-                "right": 0
-              }'
-              include-all-series
-              grouped
-              chart-data='[{
-                "x": "A",
-                "y": 0.56,
-                "y1": 0.3,
-                "y2": 0.1
-              },{
-                "x": "B",
-                "y": 0.4,
-                "y1": 0.4,
-                "y2": 0.2
-              },{
-                "x": "C",
-                "y": -0.43,
-                "y1": 0.3,
-                "y2": 0.3
-              },{
-                "x": "D",
-                "y": -0.33,
-                "y1": -0.4,
-                "y2": -0.5
-              },{
-                "x": "E",
-                "y": 0.47,
-                "y1": 0.4,
-                "y2": -0.6
-              },{
-                "x": "F",
-                "y": 0.41,
-                "y1": 0.2,
-                "y2": 0.5
-              }]'
-              series-config='{
-                "bar1": {
-                  "x":"x",
-                  "y":"y"
-                },
-                "bar2": {
-                  "x":"x",
-                  "y":"y1"
-                },
-                "bar3": {
-                  "x":"x",
-                  "y":"y2",
-                  "type":"line"
-                }
-              }'
-              threshold-data='[
-                {"type":"max", "value":0.45 }
-              ]'
-              threshold-config='{
-                "max": {
-                  "showThresholdBox": true
-                }
-              }'
-              reference-config='{
-                "myCurve": {
-                  "name": "boffidy bof bof bof"
-                }
-              }'
-              reference-data='[{
-                "x": "A",
-                "y": 0.56
-              },{
-                "x": "B",
-                "y": 0.4
-              },{
-                "x": "C",
-                "y": 0.43
-              },{
-                "x": "D",
-                "y": 0.33
-              },{
-                "x": "E",
-                "y": 0.47
-              },{
-                "x": "F",
-                "y": 0.41
-              }]'
-              show-tooltip>
-            </px-vis-bar-chart>
-          </div>
-
-        <!-- <div id="wrap">
           <h2>Column chart</h2>
           <px-vis-bar-chart
             width="800"
@@ -179,8 +84,8 @@
               "y": 0.41
             }]'>
           </px-vis-bar-chart>
-        </div> -->
-        <!-- <div id="wrap">
+        </div>
+        <div id="wrap">
           <h2>Bar chart</h2>
           <px-vis-bar-chart
             width="800"
@@ -607,7 +512,7 @@
                 }
               }'>
             </px-vis-bar-chart>
-          </div> -->
+          </div>
       </template>
     </dom-bind>
   </body>

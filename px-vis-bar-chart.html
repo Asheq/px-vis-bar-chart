@@ -12,10 +12,17 @@
 <link rel="import" href="../px-vis/px-vis-axis.html"/>
 <link rel="import" href="../px-vis/px-vis-gridlines.html"/>
 <link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
+<link rel="import" href="../px-vis/px-vis-cursor.html"/>
+<link rel="import" href="../px-vis/px-vis-tooltip.html"/>
 <link rel="import" href="../px-vis/px-vis-register.html"/>
+<link rel="import" href="../px-vis/px-vis-threshold.html"/>
 <link rel="import" href="../px-vis/px-vis-clip-path.html"/>
 <link rel="import" href="../px-vis/px-vis-toolbar.html"/>
 <link rel="import" href="../px-vis/px-vis-annotations.html"/>
+<link rel="import" href="../px-vis/px-vis-bar-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
+<link rel="import" href="../px-vis/px-vis-line-svg.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html"/>
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html"/>
@@ -363,8 +370,6 @@ Custom property | Description
           ${this.referenceCurveTemplate}
 
           ${this.tooltipTemplate}
-
-          ${this.extendBarChartTemplate}
         `;
       }
 
@@ -528,9 +533,6 @@ Custom property | Description
         `;
       }
 
-      static get extendBarChartTemplate() { return Polymer.html``; }
-
-
       static get properties() {
         return {
           preventWebWorkerSynchronization: {
@@ -688,14 +690,7 @@ Custom property | Description
           '_drawBaseline(domainChanged)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
-          '_yAxisConfigChanged(yAxisConfig.*)',
-
-          // dynamic loading
-          '_loadBars(grouped)',
-          '_loadLines(_hasLines)',
-          '_loadThresholds(thresholdData)',
-          '_loadReferenceCurve(referenceData)',
-          '_loadTooltip(showTooltip)',
+          '_yAxisConfigChanged(yAxisConfig.*)'
         ];
       }
 
@@ -1158,66 +1153,6 @@ Custom property | Description
 
       _showRef() {
         return this.referenceData && this.referenceData.length ? true : false;
-      }
-
-      _loadGroupedBars() {
-        if(this._groupedBarLoaded) {
-          return;
-        }
-
-        this.importHref(this.resolveUrl('../px-vis/px-vis-bar-grouped-svg.html'), () => { this._groupedBarLoaded = true; }, null, true);
-      }
-
-      _loadStackedBars() {
-        if(this._stackedBarLoaded) {
-          return;
-        }
-
-        this.importHref(this.resolveUrl('../px-vis/px-vis-bar-svg.html'), () => { this._stackedBarLoaded = true; }, null, true);
-      }
-
-      _loadBars() {
-        if(this.grouped) {
-          this._loadGroupedBars();
-        } else {
-          this._loadStackedBars();
-        }
-      }
-
-      _loadLines() {
-        if(!this.hasLines || this._linesLoaded) {
-          return;
-        }
-
-        this.importHref(this.resolveUrl('../px-vis/px-vis-line-svg.html'), () => { this._linesLoaded = true; }, null, true);
-        this.importHref(this.resolveUrl('../px-vis/px-vis-cursor.html'), null, null, true);
-
-      }
-
-      _loadThresholds() {
-        if(!this.thresholdData || !this.thresholdData.length || this._thresholdsImported) {
-          return;
-        }
-
-        this.importHref(this.resolveUrl('../px-vis/px-vis-threshold.html'), () => { this._thresholdsImported = true; }, null, true);
-
-      }
-
-      _loadReferenceCurve() {
-        if(!this.referenceData || !this.referenceData.length || this._referenceCurveImported) {
-          return;
-        }
-
-        this.importHref(this.resolveUrl('../px-vis/px-vis-reference-curve.html'), () => { this._referenceCurveImported = true; }, null, true);
-
-      }
-
-      _loadTooltip() {
-        if(!this.showTooltip || this._tooltipImported) {
-          return;
-        }
-
-        this.importHref(this.resolveUrl('../px-vis/px-vis-tooltip.html'), () => { this._tooltipImported = true; }, null, true);
       }
     }
 
