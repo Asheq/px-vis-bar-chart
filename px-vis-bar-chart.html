@@ -379,7 +379,7 @@ Custom property | Description
           <template is="dom-if" if="[[!grouped]]" restamp>
             <template is="dom-repeat" items="[[_stackedChartData]]">
               <px-vis-bar-svg
-                id="bars"
+                class="bars"
                 svg="[[layer.2]]"
                 complete-series-config="[[completeSeriesConfig]]"
                 chart-data="[[item]]"
@@ -400,7 +400,7 @@ Custom property | Description
         return Polymer.html`
           <template is="dom-if" if="[[grouped]]" restamp>
             <px-vis-bar-grouped-svg
-              id="bars"
+              class="bars"
               svg="[[layer.2]]"
               height="[[height]]"
               margin="[[margin]]"
@@ -708,7 +708,6 @@ Custom property | Description
 
       ready() {
         super.ready();
-        this.addEventListener('iron-resize', this._onIronResize.bind(this));
       }
 
       _debounce(name, cb, time) {
@@ -718,40 +717,25 @@ Custom property | Description
           cb.bind(this));
       }
 
-      _onIronResize() {
-        if(this.preventResize) {
-          return;
+      _resizeCalculations() {
+        var wrapperRect = this.$.wrapper.getBoundingClientRect(),
+            registerRect = this.$.register.getBoundingClientRect(),
+            toolbarRect = this.$.toolbar.getBoundingClientRect(),
+            heightDeduct = 0,
+            widthDeduct = 0;
+
+
+        if(this.$.register.type === 'horizontal') {
+          heightDeduct += registerRect.height;
+        } else {
+          widthDeduct += registerRect.width;
         }
 
-        this._debounce('ironresize', this._onIronResizeDebounced, this.debounceResizeTiming);
-      }
+        heightDeduct += toolbarRect.height;
 
-      _onIronResizeDebounced() {
-        //make sure we are not preventing resize in case it changed while debouncing
-        if(this.preventResize) {
-          return;
-        }
-
-        requestAnimationFrame(() => {
-          var wrapperRect = this.$.wrapper.getBoundingClientRect(),
-              registerRect = this.$.register.getBoundingClientRect(),
-              toolbarRect = this.$.toolbar.getBoundingClientRect(),
-              heightDeduct = 0,
-              widthDeduct = 0;
-
-
-          if(this.$.register.type === 'horizontal') {
-            heightDeduct += registerRect.height;
-          } else {
-            widthDeduct += registerRect.width;
-          }
-
-          heightDeduct += toolbarRect.height;
-
-          this.set('width', Math.max(wrapperRect.width - widthDeduct, 0));
-          this.set('height', Math.max(wrapperRect.height - heightDeduct, 0));
-          this._computeVerticalRegisterHeight([toolbarRect.height]);
-        });
+        this.set('width', Math.max(wrapperRect.width - widthDeduct, 0));
+        this.set('height', Math.max(wrapperRect.height - heightDeduct, 0));
+        this._computeVerticalRegisterHeight([toolbarRect.height]);
       }
 
       _returnStack() {
