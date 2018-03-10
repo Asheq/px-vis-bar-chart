@@ -207,31 +207,32 @@ Custom property | Description
           <div id="wrapper" class$="{{_chartWrapperClass}}" >
             <!--chart + register-->
             <div class$="{{_registerWrapperClass}} safari-flex-fix">
-              <px-vis-register
-                id="register"
-                dynamic-menu-config="[[dynamicMenuConfig]]"
-                chart-width="[[width]]"
-                height="[[_verticalRegisterHeight]]"
-                margin="[[margin]]"
-                class$="{{_getHideClass(hideRegister)}}"
-                units="[[units]]"
-                tooltip-data="[[tooltipData]]"
-                chart-data="[[chartData]]"
-                complete-series-config="[[completeSeriesConfig]]"
-                muted-series="{{mutedSeries}}"
-                type="{{_registerType}}"
-                x-axis-type="[[xAxisType]]"
-                y-axis-type="[[yAxisType]]"
-                inert-register="[[hideRegister]]"
-                current-page="[[_registerCurrentPage]]"
-                total-pages="[[_registerTotalPages]]"
-                display-page-arrows="[[_registerDisplayPageArrows]]"
-                display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
-                display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
-                display-ordinal-value
-                disable-click
-                icon-color="[[_registerIconColor]]">
-              </px-vis-register>
+              <template is="dom-if" if="[[!hideRegister]]">
+                <px-vis-register
+                  id="register"
+                  dynamic-menu-config="[[dynamicMenuConfig]]"
+                  chart-width="[[width]]"
+                  height="[[_verticalRegisterHeight]]"
+                  margin="[[margin]]"
+                  class$="{{_getHideClass(hideRegister)}}"
+                  units="[[units]]"
+                  tooltip-data="[[tooltipData]]"
+                  chart-data="[[chartData]]"
+                  complete-series-config="[[completeSeriesConfig]]"
+                  type="{{_registerType}}"
+                  x-axis-type="[[xAxisType]]"
+                  y-axis-type="[[yAxisType]]"
+                  inert-register="[[hideRegister]]"
+                  current-page="[[_registerCurrentPage]]"
+                  total-pages="[[_registerTotalPages]]"
+                  display-page-arrows="[[_registerDisplayPageArrows]]"
+                  display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
+                  display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
+                  display-ordinal-value
+                  disable-click
+                  icon-color="[[_registerIconColor]]">
+                </px-vis-register>
+              </template>
 
               <!-- chart -->
               <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
@@ -690,7 +691,9 @@ Custom property | Description
           '_drawBaseline(domainChanged)',
 
           '_xAxisConfigChanged(xAxisConfig.*)',
-          '_yAxisConfigChanged(yAxisConfig.*)'
+          '_yAxisConfigChanged(yAxisConfig.*)',
+          '_registerConfigChanged(registerConfig.*)',
+          '_tooltipConfigChanged(tooltipConfig.*)'
         ];
       }
 
@@ -718,14 +721,15 @@ Custom property | Description
       }
 
       _resizeCalculations() {
-        var wrapperRect = this.$.wrapper.getBoundingClientRect(),
-            registerRect = this.$.register.getBoundingClientRect(),
-            toolbarRect = this.$.toolbar.getBoundingClientRect(),
-            heightDeduct = 0,
-            widthDeduct = 0;
+        const wrapperRect = this.$.wrapper.getBoundingClientRect();
+        const register = this.shadowRoot.querySelector('#register');
+        const registerRect = register.getBoundingClientRect();
+        const toolbarRect = this.$.toolbar.getBoundingClientRect();
+        let heightDeduct = 0;
+        let widthDeduct = 0;
 
 
-        if(this.$.register.type === 'horizontal') {
+        if(register.type === 'horizontal') {
           heightDeduct += registerRect.height;
         } else {
           widthDeduct += registerRect.width;
@@ -1003,20 +1007,19 @@ Custom property | Description
           return;
         }
 
-        var g;
-
         if(this._isD3Empty(this._lineG)) {
-          g = this.layer[3].append('g')
+          const g = this.layer[3].append('g')
             .attr('class', 'lines');
 
           this.set('_lineG', g);
         }
 
         if(this._isOrdinalType(this.x._scaleType)) {
-          this._lineG.attr('transform', 'translate(' + this.x.bandwidth()/2 + ',0)');
+          this._lineG.attr('transform', `translate(${this.x.bandwidth()/2},0)`);
 
         } else if(this._isOrdinalType(this.y._scaleType)) {
-          this._lineG.attr('transform', 'translate(0,' + this.y.bandwidth()/2 + ')');
+          this._lineG.attr('transform', `translate(0,${this.y.bandwidth()/2})`);
+
         }
 
       }
@@ -1086,6 +1089,30 @@ Custom property | Description
         }
 
         this._applyConfigToElement(this.yAxisConfig, this.$.yAxis);
+      }
+
+      _registerConfigChanged(conf) {
+        if(this.hasUndefinedArguments(arguments)) {
+          return;
+        }
+
+        const register = this.shadowRoot.querySelector('#register');
+
+        this._applyConfigToElement(this.registerConfig, register);
+      }
+
+      _tooltipConfigChanged(conf) {
+        if(this.hasUndefinedArguments(arguments)) {
+          return;
+        }
+
+        if(!this.showTooltip) {
+          return;
+        }
+
+        const tooltip = this.shadowRoot.querySelector('#tooltip');
+
+        this._applyConfigToElement(this.tooltipConfig, tooltip);
       }
 
       _getTooltipOrientation(xAxisType) {
