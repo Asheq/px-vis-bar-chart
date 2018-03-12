@@ -63,6 +63,7 @@ suite('Basic Column with include all series', () => {
       y: {
         color: "rgb(90,191,248)",
         name: "y",
+        type: "bar",
         x: "x",
         y: "y"
       }
@@ -192,6 +193,7 @@ suite('Basic bar chart', () => {
       bars: {
         x: "val",
         y: "ord",
+        type: "bar",
         name: "bars",
         color: "rgb(147,205,74)",
         negativeColor: "rgb(227,129,138)"
@@ -339,18 +341,21 @@ suite('Stacked Column', () => {
       bar1: {
         color: "rgb(90,191,248)",
         name: "bar1",
+        type: "bar",
         x: "x",
         y: "y"
       },
       bar2: {
         color: "rgb(226,141,23)",
         name: "bar2",
+        type: "bar",
         x: "x",
         y: "y1"
       },
       bar3: {
         color: "rgb(123,188,0)",
         name: "bar3",
+        type: "bar",
         x: "x",
         y: "y2"
       }
@@ -518,18 +523,21 @@ suite('Stacked Bar', () => {
       bar1: {
         color: "rgb(90,191,248)",
         name: "bar1",
+        type: "bar",
         y: "x",
         x: "y"
       },
       bar2: {
         color: "rgb(226,141,23)",
         name: "bar2",
+        type: "bar",
         y: "x",
         x: "y1"
       },
       bar3: {
         color: "rgb(123,188,0)",
         name: "bar3",
+        type: "bar",
         y: "x",
         x: "y2"
       }
@@ -696,18 +704,21 @@ suite('Stacked Column', () => {
       bar1: {
         color: "rgb(90,191,248)",
         name: "bar1",
+        type: "bar",
         x: "x",
         y: "y"
       },
       bar2: {
         color: "rgb(226,141,23)",
         name: "bar2",
+        type: "bar",
         x: "x",
         y: "y1"
       },
       bar3: {
         color: "rgb(123,188,0)",
         name: "bar3",
+        type: "bar",
         x: "x",
         y: "y2"
       }
@@ -845,18 +856,21 @@ suite('Stacked Bar', () => {
       bar1: {
         color: "rgb(90,191,248)",
         name: "bar1",
+        type: "bar",
         y: "x",
         x: "y"
       },
       bar2: {
         color: "rgb(226,141,23)",
         name: "bar2",
+        type: "bar",
         y: "x",
         x: "y1"
       },
       bar3: {
         color: "rgb(123,188,0)",
         name: "bar3",
+        type: "bar",
         y: "x",
         x: "y2"
       }

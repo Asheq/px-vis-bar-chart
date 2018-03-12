@@ -668,6 +668,11 @@ Custom property | Description
             value: false
           },
 
+          _supressStacked: {
+            type: Boolean,
+            value: false
+          }
+
         };
       }
 
@@ -743,7 +748,7 @@ Custom property | Description
       }
 
       _returnStack() {
-        if(this.grouped) {
+        if(this.grouped || this._supressStacked) {
           this.set('_stackedChartData', []);
           return;
         }
