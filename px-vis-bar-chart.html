@@ -23,6 +23,8 @@
 <link rel="import" href="../px-vis/px-vis-bar-grouped-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-reference-curve.html"/>
 <link rel="import" href="../px-vis/px-vis-line-svg.html"/>
+<link rel="import" href="../px-vis/px-vis-central-tooltip-content.html"/>
+<link rel="import" href="../px-tooltip/px-tooltip.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html"/>
 
 <link rel="import" href="css/px-vis-bar-chart-styles.html"/>
@@ -145,7 +147,8 @@ Custom property | Description
       PxVisBehavior.updateStylesOverride,
       PxVisBehavior.annotationData,
       PxVisBehaviorChart.tooltipSizing,
-      PxVisBehavior.referenceCurveProps
+      PxVisBehavior.referenceCurveProps,
+      PxVisBehaviorChart.centralTooltip
     ];
 
     /**
@@ -196,6 +199,7 @@ Custom property | Description
     * @appliesMixin PxVisBehavior.annotationData
     * @appliesMixin PxVisBehaviorChart.tooltipSizing
     * @appliesMixin PxVisBehavior.referenceCurveProps
+    * @appliesMixin PxVisBehaviorChart.centralTooltip
     */
     class PxVisBarChart extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
       static get is() { return 'px-vis-bar-chart'; }
@@ -359,6 +363,22 @@ Custom property | Description
             prevent-web-worker-synchronization="[[preventWebWorkerSynchronization]]"
             ww-data-sync-counter="[[wwDataSyncCounter]]">
           </px-vis-interaction-space>
+
+          <px-tooltip
+            id="centralTooltip"
+            smart-orientation
+            ignore-target-events
+            orientation="[[tooltipOrientation]]">
+            <px-vis-central-tooltip-content
+              resources="[[resources]]"
+              use-key-if-missing="[[useKeyIfMissing]]"
+              language="[[language]]"
+              first-date-time-format="[[firstDateTimeFormat]]"
+              second-date-time-format="[[secondDateTimeFormat]]"
+              separator="[[separator]]"
+              timezone="[[timezone]]">
+            </px-vis-central-tooltip-content>
+          </px-tooltip>
 
           ${this.stackedBarTemplate}
 
