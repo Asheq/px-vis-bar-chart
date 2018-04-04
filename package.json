@@ -7,7 +7,7 @@
   "extName": null,
   "repository": {
     "type": "git",
-    "url": "https://github.com/PredixDev/px-vis-bar-chart.git"
+    "url": "https://github.com/predixdesignsystem/px-vis-bar-chart.git"
   },
   "homepage": "http://predix.io/",
   "devDependencies": {
