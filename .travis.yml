@@ -22,3 +22,6 @@ script:
 - xvfb-run wct --skip-plugin sauce
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
   local; fi
+env:
+  global:
+    secure: H5PlivGGuKU5pRaGChFnpv5GRzdR4Aqk1ooU5WHakdzw+t/+G4PTDMpl3mSnENElan9up3Kxiq6qsGbP5ECzFic7q9YmzNSjH/mRVBS7R6jxcslvekIr9ZtL1fqFrNR2gP5NEdCOFVKNgwXvyXVbEso3LLKX/FhtWOe4IRMTVXxxmnKmu6e9xG5+BoOVDMhvav0cwbNIFGwJtG8LITFYDk7GTecLrKO3t15i5R1d+0Y3WErwe+Ua8uk1cM4Dnmf9OAskZi00fiXozNdDiv7aeDs5jeXUPnNBtp8EhTzwyyW1wn3Oh15z1iblIySCOLM65fPNagi4yPf4uBjg+GfzeXKN6DyUdSgJYZQXePJwF2J2n6kI7ep7mSxmtA2KycXpUeHthjmZNCesfva6b5WDG2Yl4rVPnAMPRpnZlNEMeICyYE9zuQGEUlrWpm1zgt4yVGob3YOwf1tMofgeFh3VhsZefZCESXK+OTph/gETpYSnrUZiQ0VMOn7Bj5usEkxyyrfUa9WPadOFr37m78uJNZt5ZdyOZ5/PR4WJn1t2ohZ2QxblnxOOHipkYSUMlgE8AwJJHwZTC6C0owBY46sdQsZW2XS6PSVyIdgrHAqgX3HtP3RbhtylHtXDZbdzb1U58qdjGZEqgGsAnsdOeJDhXzOHO4irygcPw+8V9loKNQw=
