@@ -200,7 +200,7 @@ suite('Basic bar chart', () => {
       }
     };
 
-    assert.deepEqual(barChart.completeSeriesConfig, csc);
+    assert.deepEqual(barChart.completeSeriesConfig.bars, csc.bars);
   });
 
   test('_stackedChartData', () => {
