@@ -34,7 +34,7 @@
     }
   },
   "suites": [
-    "test/px-vis-bar-chart-test-fixture.html"
+    "test/index.html"
   ]
 
 }
