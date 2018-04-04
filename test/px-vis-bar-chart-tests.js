@@ -59,16 +59,11 @@ suite('Basic Column with include all series', () => {
   });
 
   test('completeSeriesConfig', () => {
-    const csc = {
-      y: {
-        color: "rgb(90,191,248)",
-        name: "y",
-        type: "bar",
-        x: "x",
-        y: "y"
-      }
-    };
-    assert.deepEqual(barChart.completeSeriesConfig.y, csc.y);
+    assert.equal(barChart.completeSeriesConfig.y.color.replace(/ /g,''), "rgb(90,191,248)");
+    assert.equal(barChart.completeSeriesConfig.y.name, "y");
+    assert.equal(barChart.completeSeriesConfig.y.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.y.x, "x");
+    assert.equal(barChart.completeSeriesConfig.y.y, "y");
   });
 
   test('_stackedChartData', () => {
@@ -189,18 +184,12 @@ suite('Basic bar chart', () => {
   });
 
   test('completeSeriesConfig', () => {
-    const csc = {
-      bars: {
-        x: "val",
-        y: "ord",
-        type: "bar",
-        name: "bars",
-        color: "rgb(147,205,74)",
-        negativeColor: "rgb(227,129,138)"
-      }
-    };
-
-    assert.deepEqual(barChart.completeSeriesConfig.bars, csc.bars);
+    assert.equal(barChart.completeSeriesConfig.bars.color.replace(/ /g,''), "rgb(147,205,74)");
+    assert.equal(barChart.completeSeriesConfig.bars.negativeColor.replace(/ /g,''), "rgb(227,129,138)");
+    assert.equal(barChart.completeSeriesConfig.bars.name, "bars");
+    assert.equal(barChart.completeSeriesConfig.bars.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bars.x, "val");
+    assert.equal(barChart.completeSeriesConfig.bars.y, "ord");
   });
 
   test('_stackedChartData', () => {
@@ -337,30 +326,25 @@ suite('Stacked Column', () => {
   });
 
   test('completeSeriesConfig', () => {
-    const csc = {
-      bar1: {
-        color: "rgb(90,191,248)",
-        name: "bar1",
-        type: "bar",
-        x: "x",
-        y: "y"
-      },
-      bar2: {
-        color: "rgb(226,141,23)",
-        name: "bar2",
-        type: "bar",
-        x: "x",
-        y: "y1"
-      },
-      bar3: {
-        color: "rgb(123,188,0)",
-        name: "bar3",
-        type: "bar",
-        x: "x",
-        y: "y2"
-      }
-    };
-    assert.deepEqual(barChart.completeSeriesConfig, csc);
+
+    assert.equal(barChart.completeSeriesConfig.bar1.color.replace(/ /g,''), "rgb(90,191,248)");
+    assert.equal(barChart.completeSeriesConfig.bar1.name, "bar1");
+    assert.equal(barChart.completeSeriesConfig.bar1.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar1.x, "x");
+    assert.equal(barChart.completeSeriesConfig.bar1.y, "y");
+
+    assert.equal(barChart.completeSeriesConfig.bar2.color.replace(/ /g,''), "rgb(226,141,23)");
+    assert.equal(barChart.completeSeriesConfig.bar2.name, "bar2");
+    assert.equal(barChart.completeSeriesConfig.bar2.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar2.x, "x");
+    assert.equal(barChart.completeSeriesConfig.bar2.y, "y1");
+
+    assert.equal(barChart.completeSeriesConfig.bar3.color.replace(/ /g,''), "rgb(123,188,0)");
+    assert.equal(barChart.completeSeriesConfig.bar3.name, "bar3");
+    assert.equal(barChart.completeSeriesConfig.bar3.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar3.x, "x");
+    assert.equal(barChart.completeSeriesConfig.bar3.y, "y2");
+
   });
 
   test('_stackedChartData', () => {
@@ -519,30 +503,24 @@ suite('Stacked Bar', () => {
   });
 
   test('completeSeriesConfig', () => {
-    const csc = {
-      bar1: {
-        color: "rgb(90,191,248)",
-        name: "bar1",
-        type: "bar",
-        y: "x",
-        x: "y"
-      },
-      bar2: {
-        color: "rgb(226,141,23)",
-        name: "bar2",
-        type: "bar",
-        y: "x",
-        x: "y1"
-      },
-      bar3: {
-        color: "rgb(123,188,0)",
-        name: "bar3",
-        type: "bar",
-        y: "x",
-        x: "y2"
-      }
-    };
-    assert.deepEqual(barChart.completeSeriesConfig, csc);
+
+    assert.equal(barChart.completeSeriesConfig.bar1.color.replace(/ /g,''), "rgb(90,191,248)");
+    assert.equal(barChart.completeSeriesConfig.bar1.name, "bar1");
+    assert.equal(barChart.completeSeriesConfig.bar1.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar1.y, "x");
+    assert.equal(barChart.completeSeriesConfig.bar1.x, "y");
+
+    assert.equal(barChart.completeSeriesConfig.bar2.color.replace(/ /g,''), "rgb(226,141,23)");
+    assert.equal(barChart.completeSeriesConfig.bar2.name, "bar2");
+    assert.equal(barChart.completeSeriesConfig.bar2.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar2.y, "x");
+    assert.equal(barChart.completeSeriesConfig.bar2.x, "y1");
+
+    assert.equal(barChart.completeSeriesConfig.bar3.color.replace(/ /g,''), "rgb(123,188,0)");
+    assert.equal(barChart.completeSeriesConfig.bar3.name, "bar3");
+    assert.equal(barChart.completeSeriesConfig.bar3.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar3.y, "x");
+    assert.equal(barChart.completeSeriesConfig.bar3.x, "y2");
   });
 
   test('_stackedChartData', () => {
@@ -700,30 +678,24 @@ suite('Stacked Column', () => {
   });
 
   test('completeSeriesConfig', () => {
-    const csc = {
-      bar1: {
-        color: "rgb(90,191,248)",
-        name: "bar1",
-        type: "bar",
-        x: "x",
-        y: "y"
-      },
-      bar2: {
-        color: "rgb(226,141,23)",
-        name: "bar2",
-        type: "bar",
-        x: "x",
-        y: "y1"
-      },
-      bar3: {
-        color: "rgb(123,188,0)",
-        name: "bar3",
-        type: "bar",
-        x: "x",
-        y: "y2"
-      }
-    };
-    assert.deepEqual(barChart.completeSeriesConfig, csc);
+
+    assert.equal(barChart.completeSeriesConfig.bar1.color.replace(/ /g,''), "rgb(90,191,248)");
+    assert.equal(barChart.completeSeriesConfig.bar1.name, "bar1");
+    assert.equal(barChart.completeSeriesConfig.bar1.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar1.x, "x");
+    assert.equal(barChart.completeSeriesConfig.bar1.y, "y");
+
+    assert.equal(barChart.completeSeriesConfig.bar2.color.replace(/ /g,''), "rgb(226,141,23)");
+    assert.equal(barChart.completeSeriesConfig.bar2.name, "bar2");
+    assert.equal(barChart.completeSeriesConfig.bar2.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar2.x, "x");
+    assert.equal(barChart.completeSeriesConfig.bar2.y, "y1");
+
+    assert.equal(barChart.completeSeriesConfig.bar3.color.replace(/ /g,''), "rgb(123,188,0)");
+    assert.equal(barChart.completeSeriesConfig.bar3.name, "bar3");
+    assert.equal(barChart.completeSeriesConfig.bar3.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar3.x, "x");
+    assert.equal(barChart.completeSeriesConfig.bar3.y, "y2");
   });
 
   test('_stackedChartData', () => {
@@ -852,30 +824,24 @@ suite('Stacked Bar', () => {
   });
 
   test('completeSeriesConfig', () => {
-    const csc = {
-      bar1: {
-        color: "rgb(90,191,248)",
-        name: "bar1",
-        type: "bar",
-        y: "x",
-        x: "y"
-      },
-      bar2: {
-        color: "rgb(226,141,23)",
-        name: "bar2",
-        type: "bar",
-        y: "x",
-        x: "y1"
-      },
-      bar3: {
-        color: "rgb(123,188,0)",
-        name: "bar3",
-        type: "bar",
-        y: "x",
-        x: "y2"
-      }
-    };
-    assert.deepEqual(barChart.completeSeriesConfig, csc);
+
+    assert.equal(barChart.completeSeriesConfig.bar1.color.replace(/ /g,''), "rgb(90,191,248)");
+    assert.equal(barChart.completeSeriesConfig.bar1.name, "bar1");
+    assert.equal(barChart.completeSeriesConfig.bar1.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar1.y, "x");
+    assert.equal(barChart.completeSeriesConfig.bar1.x, "y");
+
+    assert.equal(barChart.completeSeriesConfig.bar2.color.replace(/ /g,''), "rgb(226,141,23)");
+    assert.equal(barChart.completeSeriesConfig.bar2.name, "bar2");
+    assert.equal(barChart.completeSeriesConfig.bar2.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar2.y, "x");
+    assert.equal(barChart.completeSeriesConfig.bar2.x, "y1");
+
+    assert.equal(barChart.completeSeriesConfig.bar3.color.replace(/ /g,''), "rgb(123,188,0)");
+    assert.equal(barChart.completeSeriesConfig.bar3.name, "bar3");
+    assert.equal(barChart.completeSeriesConfig.bar3.type, "bar");
+    assert.equal(barChart.completeSeriesConfig.bar3.y, "x");
+    assert.equal(barChart.completeSeriesConfig.bar3.x, "y2");
   });
 
   test('_stackedChartData', () => {
