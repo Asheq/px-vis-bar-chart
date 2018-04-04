@@ -68,7 +68,7 @@ suite('Basic Column with include all series', () => {
         y: "y"
       }
     };
-    assert.deepEqual(barChart.completeSeriesConfig, csc);
+    assert.deepEqual(barChart.completeSeriesConfig.y, csc.y);
   });
 
   test('_stackedChartData', () => {
