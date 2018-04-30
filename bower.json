@@ -41,5 +41,5 @@
     "promise-polyfill": "polymerlabs/promise-polyfill#^2.0.1",
     "web-component-tester": "^6.3.0"
   },
-  "license": "BSD-3-Clause"
+  "license": "Apache-2.0"
 }
