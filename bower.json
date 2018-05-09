@@ -1,6 +1,6 @@
 {
   "name": "px-vis-bar-chart",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": [
     "px-vis-bar-chart.html"
   ],
@@ -41,5 +41,5 @@
     "promise-polyfill": "polymerlabs/promise-polyfill#^2.0.1",
     "web-component-tester": "^6.3.0"
   },
-  "license": "BSD-3-Clause"
+  "license": "Apache-2.0"
 }

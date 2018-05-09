@@ -2,7 +2,7 @@
   "name": "px-vis-bar-chart",
   "author": "General Electric",
   "description": "A Px component",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "extName": null,
   "repository": {
@@ -30,5 +30,5 @@
     "polymer-cli": "^1.5.7"
   },
   "dependencies": {},
-  "license": "BSD-3-Clause"
+  "license": "Apache-2.0"
 }
