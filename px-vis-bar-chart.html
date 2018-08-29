@@ -255,14 +255,16 @@ Custom property | Description
 
               <!-- chart -->
               <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
-                <px-vis-toolbar
-                  id="toolbar"
-                  current-sub-config='[[toolbarSubConfig]]'
-                  action-config='{{actionConfig}}'
-                  within-chart
-                  chart-margin="[[margin]]"
-                  config='{"tooltip": true}'>
-                </px-vis-toolbar>
+                <template is="dom-if" if="[[!hideTooltip]]">
+                  <px-vis-toolbar
+                    id="toolbar"
+                    current-sub-config='[[toolbarSubConfig]]'
+                    action-config='{{actionConfig}}'
+                    within-chart
+                    chart-margin="[[margin]]"
+                    config='{"tooltip": true}'>
+                  </px-vis-toolbar>
+                </template>
                 <px-vis-svg
                   id="svg"
                   class="flex__item--no-grow"
@@ -763,23 +765,28 @@ Custom property | Description
       _resizeCalculations() {
         const wrapperRect = this.$.wrapper.getBoundingClientRect();
         const register = this.shadowRoot.querySelector('#register');
-        const registerRect = register.getBoundingClientRect();
-        const toolbarRect = this.$.toolbar.getBoundingClientRect();
+        const toolbar = this.$.toolbar;
+
         let heightDeduct = 0;
         let widthDeduct = 0;
 
-
-        if(register.type === 'horizontal') {
-          heightDeduct += registerRect.height;
-        } else {
-          widthDeduct += registerRect.width;
+        if (register) {
+          const registerRect = register.getBoundingClientRect();
+          if(register.type === 'horizontal') {
+            heightDeduct += registerRect.height;
+          } else {
+            widthDeduct += registerRect.width;
+          }
         }
 
-        heightDeduct += toolbarRect.height;
+        if (toolbar) {
+          const toolbarRect = toolbar.getBoundingClientRect();
+          heightDeduct += toolbarRect.height;
+          this._computeVerticalRegisterHeight([toolbarRect.height]);
+        }
 
         this.set('width', Math.max(wrapperRect.width - widthDeduct, 0));
         this.set('height', Math.max(wrapperRect.height - heightDeduct, 0));
-        this._computeVerticalRegisterHeight([toolbarRect.height]);
       }
 
       _returnStack() {

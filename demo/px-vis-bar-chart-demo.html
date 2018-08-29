@@ -62,6 +62,8 @@ limitations under the License.
           show-tooltip="{{props.showTooltip.value}}"
           tooltip-config="{{props.tooltipConfig.value}}"
           hide-register="{{props.hideRegister.value}}"
+          hide-tooltip="{{props.hideTooltip.value}}"
+          register-config="{{props.registerConfig.value}}"
           register-config="{{props.registerConfig.value}}"
           chart-data="{{props.chartData.value}}"
           series-config="{{props.seriesConfig.value}}"
@@ -500,7 +502,7 @@ limitations under the License.
     demoProps: {
       preventResize: {
         type: Boolean,
-        defaultValue: true,
+        defaultValue: false,
         inputType: 'toggle'
       },
       width: {
@@ -553,7 +555,13 @@ limitations under the License.
 
       hideRegister: {
         type: Boolean,
-        defaultValue: false,
+        defaultValue: true,
+        inputType: 'toggle'
+      },
+
+      hideTooltip: {
+        type: Boolean,
+        defaultValue: true,
         inputType: 'toggle'
       },
 
